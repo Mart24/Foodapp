@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Doet deze commit het wel?'),
+      home: MyHomePage(title: '|JAAAAAAA?'),
     );
   }
 }
