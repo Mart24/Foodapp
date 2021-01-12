@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Pages.dart';
+import 'package:food_app/home_view.dart';
 
 class Home extends StatefulWidget {
   @override
