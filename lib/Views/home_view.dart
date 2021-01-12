@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:food_app/ingredients.dart';
+import 'package:food_app/Models/ingredients.dart';
 
 class HomePage extends StatelessWidget {
-  final List<ingredient> Voedingsmiddelen = [
-    ingredient('banaan', 'fruit', 152, 33, 1.8, 0.5, 0.01),
-    ingredient('Appel', 'fruit', 152, 33, 1.8, 0.5, 0.01),
-    ingredient('Brood', 'Brood', 152, 33, 1.8, 0.5, 0.01),
-    ingredient('Hagelslag', 'Broodbeleg', 152, 33, 1.8, 0.5, 0.01),
-    ingredient('Ei', 'Eieren', 152, 33, 1.8, 0.5, 0.01),
+  final List<Ingredient> Voedingsmiddelen = [
+    Ingredient('banaan', 'fruit', 152, 33, 1.8, 0.5, 0.01),
+    Ingredient('Appel', 'fruit', 152, 33, 1.8, 0.5, 0.01),
+    Ingredient('Brood', 'Brood', 152, 33, 1.8, 0.5, 0.01),
+    Ingredient('Hagelslag', 'Broodbeleg', 152, 33, 1.8, 0.5, 0.01),
+    Ingredient('Ei', 'Eieren', 152, 33, 1.8, 0.5, 0.01),
   ];
 
   @override

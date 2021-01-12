@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
-import 'package:food_app/home_view.dart';
+import 'package:food_app/Views/home_view.dart';
+import 'package:food_app/Views/new_ingredient/ingredient_input.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,9 +21,23 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final newIngred = new Ingredient('Mandarijn', 'Fruit', 0, 0, 0, 0, 0);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Voedingsapp"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          NewIngredient(ingredient: newIngred),
+                    ));
+              })
+        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
