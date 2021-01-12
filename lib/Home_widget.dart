@@ -3,6 +3,8 @@ import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
 import 'package:food_app/Views/home_view.dart';
 import 'package:food_app/Views/new_ingredient/ingredient_input.dart';
+import 'package:food_app/Widgets/Provider_Auth.dart';
+import 'package:food_app/Services/auth_service.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -36,7 +38,19 @@ class _HomeState extends State<Home> {
                       builder: (context) =>
                           NewIngredient(ingredient: newIngred),
                     ));
-              })
+              }),
+          IconButton(
+            icon: Icon(Icons.undo),
+            onPressed: () async {
+              try {
+                AuthService auth = Provider.of(context).auth;
+                await auth.signOut();
+                print("Signed Out!");
+              } catch (e) {
+                print(e);
+              }
+            },
+          )
         ],
       ),
       body: _children[_currentIndex],
