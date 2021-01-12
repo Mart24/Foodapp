@@ -49,3 +49,36 @@ class AuthService {
     return await _firebaseAuth.signOut();
   }
 }
+
+class NameValidator {
+  static String validate(String value) {
+    if (value.isEmpty) {
+      return "Name can't be empty";
+    }
+    if (value.length < 3) {
+      return "Naam moet minsten 3 karakters lang zijn";
+    }
+    if (value.length > 20) {
+      return "Naam mag niet langer zijn dan 20 karakters";
+    }
+    return null;
+  }
+}
+
+class EmailValidator {
+  static String validate(String value) {
+    if (value.isEmpty) {
+      return "Email mag niet leeg zijn";
+    }
+    return null;
+  }
+}
+
+class PasswordValidator {
+  static String validate(String value) {
+    if (value.isEmpty) {
+      return "Wachtwoord mag niet leeg zijn";
+    }
+    return null;
+  }
+}

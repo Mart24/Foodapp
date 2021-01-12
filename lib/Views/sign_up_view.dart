@@ -40,23 +40,34 @@ class _SignUpViewState extends State<SignUpView> {
     }
   }
 
-  void submit() async {
+  bool validate() {
     final form = formKey.currentState;
     form.save();
-    try {
-      final auth = Provider.of(context).auth;
-      if (authFormType == AuthFormType.signIn) {
-        String uid = await auth.signInWithEmailAndPassword(_email, _password);
-        print("Signed In with ID $uid");
-        Navigator.of(context).pushReplacementNamed('/home');
-      } else {
-        String uid =
-            await auth.createUserWithEmailAndPassword(_email, _password, _name);
-        print("Signed up with New ID $uid");
-        Navigator.of(context).pushReplacementNamed('/home');
+    if (form.validate()) {
+      form.save();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void submit() async {
+    if (validate()) {
+      try {
+        final auth = Provider.of(context).auth;
+        if (authFormType == AuthFormType.signIn) {
+          String uid = await auth.signInWithEmailAndPassword(_email, _password);
+          print("Signed In with ID $uid");
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          String uid = await auth.createUserWithEmailAndPassword(
+              _email, _password, _name);
+          print("Signed up with New ID $uid");
+          Navigator.of(context).pushReplacementNamed('/home');
+        }
+      } catch (e) {
+        print(e);
       }
-    } catch (e) {
-      print(e);
     }
   }
 
@@ -95,9 +106,9 @@ class _SignUpViewState extends State<SignUpView> {
   AutoSizeText buildHeaderText() {
     String _headerText;
     if (authFormType == AuthFormType.signUp) {
-      _headerText = "Create New Account";
+      _headerText = "Maak een nieuw account";
     } else {
-      _headerText = "Sign In";
+      _headerText = "Log In";
     }
     return AutoSizeText(
       _headerText,
@@ -117,8 +128,9 @@ class _SignUpViewState extends State<SignUpView> {
     if (authFormType == AuthFormType.signUp) {
       textFields.add(
         TextFormField(
+          validator: NameValidator.validate,
           style: TextStyle(fontSize: 22.0),
-          decoration: buildSignUpInputDecoration("Name"),
+          decoration: buildSignUpInputDecoration("Naam"),
           onSaved: (value) => _name = value,
         ),
       );
@@ -128,6 +140,7 @@ class _SignUpViewState extends State<SignUpView> {
     // add email & password
     textFields.add(
       TextFormField(
+        validator: EmailValidator.validate,
         style: TextStyle(fontSize: 22.0),
         decoration: buildSignUpInputDecoration("Email"),
         onSaved: (value) => _email = value,
@@ -136,8 +149,9 @@ class _SignUpViewState extends State<SignUpView> {
     textFields.add(SizedBox(height: 20));
     textFields.add(
       TextFormField(
+        validator: PasswordValidator.validate,
         style: TextStyle(fontSize: 22.0),
-        decoration: buildSignUpInputDecoration("Password"),
+        decoration: buildSignUpInputDecoration("Wachtwoord"),
         obscureText: true,
         onSaved: (value) => _password = value,
       ),
@@ -164,13 +178,13 @@ class _SignUpViewState extends State<SignUpView> {
     String _switchButtonText, _newFormState, _submitButtonText;
 
     if (authFormType == AuthFormType.signIn) {
-      _switchButtonText = "Create New Account";
+      _switchButtonText = "Nog geen account? registreer hier";
       _newFormState = "signUp";
-      _submitButtonText = "Sign In";
+      _submitButtonText = "Log in";
     } else {
-      _switchButtonText = "Have an Account? Sign In";
+      _switchButtonText = "Heb je al een account? Log in";
       _newFormState = "signIn";
-      _submitButtonText = "Sign Up";
+      _submitButtonText = "Registreer";
     }
 
     return [
