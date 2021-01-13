@@ -25,7 +25,7 @@ class _SignUpViewState extends State<SignUpView> {
   _SignUpViewState({this.authFormType});
 
   final formKey = GlobalKey<FormState>();
-  String _email, _password, _name;
+  String _email, _password, _name, _error;
 
   void switchFormState(String state) {
     formKey.currentState.reset();
@@ -66,7 +66,9 @@ class _SignUpViewState extends State<SignUpView> {
           Navigator.of(context).pushReplacementNamed('/home');
         }
       } catch (e) {
-        print(e);
+        setState(() {
+          _error = e.message;
+        });
       }
     }
   }
@@ -82,24 +84,66 @@ class _SignUpViewState extends State<SignUpView> {
         height: _height,
         width: _width,
         child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: _height * 0.05),
-              // buildHeaderText(),
-              SizedBox(height: _height * 0.05),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: buildInputs() + buildButtons(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: _height * 0.025),
+                showAlert(),
+                SizedBox(height: _height * 0.025),
+                buildHeaderText(),
+                SizedBox(height: _height * 0.05),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: buildInputs() + buildButtons(),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget showAlert() {
+    if (_error != null) {
+      return Container(
+        color: Colors.amberAccent,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: AutoSizeText(
+                _error,
+                maxLines: 3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    _error = null;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
     );
   }
 
@@ -141,6 +185,7 @@ class _SignUpViewState extends State<SignUpView> {
     textFields.add(
       TextFormField(
         validator: EmailValidator.validate,
+        keyboardType: TextInputType.emailAddress,
         style: TextStyle(fontSize: 22.0),
         decoration: buildSignUpInputDecoration("Email"),
         onSaved: (value) => _email = value,
