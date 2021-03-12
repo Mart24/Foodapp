@@ -4,6 +4,7 @@ import 'Home_widget.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Views/sign_up_view.dart';
+import 'package:food_app/Views/introduction_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return Provider(
       auth: AuthService(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Test123',
         theme: ThemeData(
           primarySwatch: Colors.green,
@@ -44,9 +46,7 @@ class HomeController extends StatelessWidget {
       builder: (context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final bool signedIn = snapshot.hasData;
-          return signedIn
-              ? Home()
-              : SignUpView(authFormType: AuthFormType.signIn);
+          return signedIn ? Home() : OnBoardingPage();
         }
         return CircularProgressIndicator();
       },

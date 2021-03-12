@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
+import 'package:auth_buttons/auth_buttons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // TODO move this to tone location
 final primaryColor = const Color(0xFF7AA573);
+const colorlightgreen = const Color(0xFFE0EFD9);
+const colordarkgreen = const Color(0xFF7AA573);
 
 enum AuthFormType { signIn, signUp, reset }
 
@@ -14,7 +18,6 @@ class SignUpView extends StatefulWidget {
   SignUpView({Key key, @required this.authFormType}) : super(key: key);
 
   @override
-  // TODO signupstate vervangen
   _SignUpViewState createState() =>
       _SignUpViewState(authFormType: this.authFormType);
 }
@@ -87,7 +90,7 @@ class _SignUpViewState extends State<SignUpView> {
 
     return Scaffold(
       body: Container(
-        color: primaryColor,
+        color: colorlightgreen,
         height: _height,
         width: _width,
         child: SafeArea(
@@ -107,7 +110,7 @@ class _SignUpViewState extends State<SignUpView> {
                       children: buildInputs() + buildButtons(),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -157,11 +160,11 @@ class _SignUpViewState extends State<SignUpView> {
   AutoSizeText buildHeaderText() {
     String _headerText;
     if (authFormType == AuthFormType.signUp) {
-      _headerText = "Maak een nieuw account";
+      _headerText = "Start jouw missie";
     } else if (authFormType == AuthFormType.reset) {
       _headerText = "Reset Wachtwoord";
     } else {
-      _headerText = "Log In";
+      _headerText = "Welkom terug";
     }
     return AutoSizeText(
       _headerText,
@@ -169,7 +172,7 @@ class _SignUpViewState extends State<SignUpView> {
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 35,
-        color: Colors.white,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -245,6 +248,7 @@ class _SignUpViewState extends State<SignUpView> {
   List<Widget> buildButtons() {
     String _switchButtonText, _newFormState, _submitButtonText;
     bool _showForgotPassword = false;
+    bool _showSocial = true;
 
     if (authFormType == AuthFormType.signIn) {
       _switchButtonText = "Nog geen account? registreer hier";
@@ -255,6 +259,7 @@ class _SignUpViewState extends State<SignUpView> {
       _switchButtonText = "Terug naar inloggen";
       _newFormState = "signIn";
       _submitButtonText = "Vraag email";
+      _showSocial = false;
     } else {
       _switchButtonText = "Heb je al een account? Log in";
       _newFormState = "signIn";
@@ -283,12 +288,13 @@ class _SignUpViewState extends State<SignUpView> {
       FlatButton(
         child: Text(
           _switchButtonText,
-          style: TextStyle(color: Colors.white),
+          //      style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
           switchFormState(_newFormState);
         },
-      )
+      ),
+      buildSocialIcons(_showSocial),
     ];
   }
 
@@ -297,7 +303,7 @@ class _SignUpViewState extends State<SignUpView> {
       child: FlatButton(
         child: Text(
           "Wachtwoord vergeten?",
-          style: TextStyle(color: Colors.white),
+          //   style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
           setState(() {
@@ -306,6 +312,39 @@ class _SignUpViewState extends State<SignUpView> {
         },
       ),
       visible: visible,
+    );
+  }
+
+  Widget buildSocialIcons(bool visibility) {
+    final _auth = Provider.of(context).auth;
+    return Visibility(
+      child: Column(
+        children: <Widget>[
+          Divider(
+            color: Colors.white,
+          ),
+          SizedBox(height: 10),
+          GoogleAuthButton(
+            onPressed: () async {
+              try {
+                //     if(authFormType == AuthFormType.convert) {
+                await _auth.signInWithGoogle();
+                Navigator.of(context).pushReplacementNamed('/home');
+                //    } else {
+                //       await _auth.signInWithGoogle();
+                //      Navigator.of(context).pushReplacementNamed('/home');
+                //     }
+              } catch (e) {
+                setState(() {
+                  //       print(e);
+                  _warning = e.message;
+                });
+              }
+            },
+          )
+        ],
+      ),
+      // visible: visible,
     );
   }
 }

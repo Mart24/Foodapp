@@ -1,27 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Stream<String> get onAuthStateChanged => _firebaseAuth.authStateChanges().map(
         (User user) => user?.uid,
       );
 
-  // // GET UID
-  // Future<String> getCurrentUID() async {
-  //   return (_firebaseAuth.currentUser).uid;
-  // }
+  // GET UID
+  Future<String> getCurrentUID() async {
+    return (_firebaseAuth.currentUser).uid;
+  }
 
-  // // GET CURRENT USER
-  // Future getCurrentUser() async {
-  //   return _firebaseAuth.currentUser;
-  // }
+  // GET CURRENT USER
+  Future getCurrentUser() async {
+    return _firebaseAuth.currentUser;
+  }
 
   // Email & Password Sign Up
   Future<String> createUserWithEmailAndPassword(
       String email, String password, String name) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email.trim(),
+      email: email,
       password: password,
     );
 
@@ -39,7 +43,7 @@ class AuthService {
   Future<String> signInWithEmailAndPassword(
       String email, String password) async {
     return (await _firebaseAuth.signInWithEmailAndPassword(
-            email: email.trim(), password: password))
+            email: email, password: password))
         .user
         .uid;
   }
@@ -53,6 +57,17 @@ class AuthService {
   Future sendPasswordResetEmail(String email) async {
     return _firebaseAuth.sendPasswordResetEmail(email: email);
   }
+
+  // GOOGLE
+  Future<String> signInWithGoogle() async {
+    final GoogleSignInAccount account = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication _googleAuth = await account.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      idToken: _googleAuth.idToken,
+      accessToken: _googleAuth.accessToken,
+    );
+    return (await _firebaseAuth.signInWithCredential(credential)).user.uid;
+  }
 }
 
 class NameValidator {
@@ -60,11 +75,11 @@ class NameValidator {
     if (value.isEmpty) {
       return "Name can't be empty";
     }
-    if (value.length < 3) {
-      return "Naam moet minsten 3 karakters lang zijn";
+    if (value.length < 2) {
+      return "Name must be at least 2 characters long";
     }
-    if (value.length > 20) {
-      return "Naam mag niet langer zijn dan 20 karakters";
+    if (value.length > 50) {
+      return "Name must be less than 50 characters long";
     }
     return null;
   }
@@ -73,7 +88,7 @@ class NameValidator {
 class EmailValidator {
   static String validate(String value) {
     if (value.isEmpty) {
-      return "Email mag niet leeg zijn";
+      return "Email can't be empty";
     }
     return null;
   }
@@ -82,7 +97,7 @@ class EmailValidator {
 class PasswordValidator {
   static String validate(String value) {
     if (value.isEmpty) {
-      return "Wachtwoord mag niet leeg zijn";
+      return "Password can't be empty";
     }
     return null;
   }

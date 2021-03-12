@@ -1,12 +1,17 @@
-class Ingredient {
-  String name;
-  String categorie;
-  double kcal;
-  double koolhy;
-  double protein;
-  double fat;
-  double co2;
+class Trip {
+  String title;
+  DateTime startDate;
+  DateTime endDate;
+  double budget;
+  String travelType;
 
-  Ingredient(this.name, this.categorie, this.kcal, this.koolhy, this.protein,
-      this.fat, this.co2);
+  Trip(this.title, this.startDate, this.endDate, this.budget, this.travelType);
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'startDate': startDate,
+        'endDate': endDate,
+        'budget': budget,
+        'travelType': travelType,
+      };
 }

@@ -1,63 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
+import 'package:date_range_picker/date_range_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:food_app/Widgets/Provider_Auth.dart';
 
 class HomePage extends StatelessWidget {
-  final List<Ingredient> Voedingsmiddelen = [
-    Ingredient('banaan', 'fruit', 152, 33, 1.8, 0.5, 0.01),
-    Ingredient('Appel', 'fruit', 152, 33, 1.8, 0.5, 0.01),
-    Ingredient('Brood', 'Brood', 152, 33, 1.8, 0.5, 0.01),
-    Ingredient('Hagelslag', 'Broodbeleg', 152, 33, 1.8, 0.5, 0.01),
-    Ingredient('Ei', 'Eieren', 152, 33, 1.8, 0.5, 0.01),
-  ];
+  // final List<Trip> Voedingsmiddelen = [
+  //   Trip("New York", DateTime.now(), DateTime.now(), 200.00, "car"),
+  //   Trip("Boston", DateTime.now(), DateTime.now(), 450.00, "plane"),
+  //   Trip("Washington D.C.", DateTime.now(), DateTime.now(), 900.00, "bus"),
+  //   Trip("Austin", DateTime.now(), DateTime.now(), 170.00, "car"),
+  //   Trip("Scranton", DateTime.now(), DateTime.now(), 180.00, "car"),
+  //];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView.builder(
-          itemCount: Voedingsmiddelen.length,
-          itemBuilder: (BuildContext context, int index) =>
-              buildVoedingsmiddelenLijst(context, index)),
+      child: StreamBuilder(
+          stream: getUsersTripsStreamSnapshots(context),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const Text("Loading...");
+            return new ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    buildTripCard(context, snapshot.data.docs[index]));
+          }),
     );
   }
 
-  Widget buildVoedingsmiddelenLijst(BuildContext context, int index) {
-    final ingredient = Voedingsmiddelen[index];
-    return Container(
+  Stream<QuerySnapshot> getUsersTripsStreamSnapshots(
+      BuildContext context) async* {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    yield* FirebaseFirestore.instance
+        .collection('userData')
+        .doc(uid)
+        .collection('trips')
+        .snapshots();
+  }
+
+  Widget buildTripCard(BuildContext context, DocumentSnapshot trip) {
+    return new Container(
       child: Card(
-          child: Row(
-        children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
-              children: [
-                Text(
-                  ingredient.name,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                )
-              ],
-            ),
-            Row(
-              children: [Text(ingredient.categorie)],
-            ),
-          ]),
-          Spacer(),
-          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            Text(
-              ingredient.kcal.toString(),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-            )
-          ]),
-          SizedBox(width: 30.0),
-          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            Text(
-              ingredient.co2.toString(),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-            ),
-          ]),
-        ],
-        //   children: [
-        // Row(  Text(ingredient.kcal.toString()),
-        // ),],
-      )),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                child: Row(children: <Widget>[
+                  Text(
+                    trip['title'],
+                    style: new TextStyle(fontSize: 30.0),
+                  ),
+                  Spacer(),
+                ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0, bottom: 80.0),
+                child: Row(children: <Widget>[
+                  Text(
+                      "${DateFormat('dd/MM/yyyy').format(trip['startDate'].toDate()).toString()} - ${DateFormat('dd/MM/yyyy').format(trip['endDate'].toDate()).toString()}"),
+                  Spacer(),
+                ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "\$${(trip['budget'] == null) ? "n/a" : trip['budget'].toStringAsFixed(2)}",
+                      style: new TextStyle(fontSize: 35.0),
+                    ),
+                    Spacer(),
+                    Icon(Icons.directions_car),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

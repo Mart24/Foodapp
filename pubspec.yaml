@@ -28,6 +28,14 @@ dependencies:
   firebase_core : ^0.6.0
   firebase_auth: ^0.19.0+1
   auto_size_text: ^2.1.0
+  auth_buttons: ^0.0.4
+  google_sign_in: ^4.5.9
+  date_range_picker: ^1.0.6
+  intl: ^0.16.1
+  spincircle_bottom_bar: ^1.0.0
+  introduction_screen: ^1.0.9
+  google_fonts: ^1.1.2
+  
 
 
  
@@ -42,6 +50,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+dependency_overrides:
+  date_range_picker:
+    git:
+      url: git://github.com/justkawal/date_range_picker.git
+      ref: master
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -58,7 +71,8 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
+  assets:
+    - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

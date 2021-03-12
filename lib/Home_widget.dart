@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
 import 'package:food_app/Views/home_view.dart';
-import 'package:food_app/Views/new_ingredient/ingredient_input.dart';
+import 'package:food_app/Views/new_ingredient/budget_view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
+import 'package:food_app/Views/new_ingredient/location_view.dart';
+import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
+
+const colordarkgreen = const Color(0xFF7AA573);
 
 class Home extends StatefulWidget {
   @override
@@ -23,11 +27,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final newIngred = new Ingredient('Mandarijn', 'Fruit', 0, 0, 0, 0, 0);
+    final newTrip = Trip(null, null, null, null, null);
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Voedingsapp"),
+        backgroundColor: colordarkgreen,
         actions: [
           IconButton(
               icon: Icon(Icons.add),
@@ -35,8 +40,9 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          NewIngredient(ingredient: newIngred),
+                      builder: (context) => NewTripLocationView(
+                        trip: newTrip,
+                      ),
                     ));
               }),
           IconButton(
