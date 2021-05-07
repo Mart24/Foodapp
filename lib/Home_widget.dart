@@ -8,6 +8,9 @@ import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/new_ingredient/location_view.dart';
 import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
 
+import 'Views/foodlist.dart';
+import 'Views/voortgang.dart';
+
 const colordarkgreen = const Color(0xFF7AA573);
 
 class Home extends StatefulWidget {
@@ -19,7 +22,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomePage(),
-    Voeding(),
+    Foodpage(),
     Voortgang(),
     Profiel(),
     Lijstje(),

@@ -43,21 +43,21 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       pages: [
         PageViewModel(
           title: "Het eten op ons bord komt van over de hele wereld",
-          body: "Hier Martijn en Neel nog even een leuk tekstje bij zetten.",
+          body: "Via vliegtuigen, treinen, vrachtwagen, noem maar op",
           image: _buildImage('img1'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Veel schade aan de wereld door voedselconsumptie",
           body:
-              "Download the Stockpile app and master the market with our mini-lesson.",
+              "Niet overal wordt goed rekening gehouden met duurzame productie van voedingswaren",
           image: _buildImage('img2'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Ontwikkel een duurzaam en vooral gezond lifestyle",
           body:
-              "Kids and teens can track their stocks 24/7 and place trades that you approve.",
+              "Met Eetmissie weet je zeker dat een een duurzaam voedingspatroon opbouwd",
           image: _buildImage('img3'),
           footer: RaisedButton(
             onPressed: () {
