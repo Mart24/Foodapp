@@ -10,9 +10,9 @@ class NewTripLocationView extends StatelessWidget {
   NewTripLocationView({Key key, @required this.trip}) : super(key: key);
 
   final List<Foodsuggestion> _foodlist = [
-    Foodsuggestion("Banana", 0.07566, 100),
-    Foodsuggestion("Apple", 0.0543, 100),
-    Foodsuggestion("Pear", 0.0429, 100),
+    Foodsuggestion("Banana", 0.07566, 152, 33, 0.3, 1.8),
+    Foodsuggestion("Apple", 0.0543, 76, 16.2, 0.3, 0.4),
+    Foodsuggestion("Pear", 0.0429, 57, 15, 0.1, 0.4),
   ];
 
   @override
@@ -54,45 +54,58 @@ class NewTripLocationView extends StatelessWidget {
   }
 
   Widget buildFoodCard(BuildContext context, int index) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Card(
+    return Hero(
+      tag: "SelectedTrip-${_foodlist[index].name}",
+      transitionOnUserGestures: true,
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: Card(
             child: InkWell(
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    //  Text(index.toString()),
-                    Row(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
                       children: [
-                        Text(
-                          _foodlist[index].name,
-                          style: TextStyle(fontSize: 16.0),
+                        //  Text(index.toString()),
+                        Row(
+                          children: [
+                            Text(
+                              _foodlist[index].name,
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                          ],
                         ),
+                        Row(
+                          children: [
+                            Text(
+                                "Climate impact ${_foodlist[index].co2.toString()}"),
+                          ],
+                        )
                       ],
                     ),
-                    Row(
-                      children: [
-                        Text(
-                            "Climate impact ${_foodlist[index].co2.toString()}"),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Column(
-                children: <Widget>[
-                  Placeholder(
-                    fallbackHeight: 50,
-                    fallbackWidth: 50,
                   ),
+                  Column(
+                    children: <Widget>[
+                      Placeholder(
+                        fallbackHeight: 50,
+                        fallbackWidth: 50,
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+              onTap: () {
+                trip.title = _foodlist[index].name;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NewTripDateView(trip: trip)),
+                );
+              },
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

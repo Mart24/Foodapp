@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
@@ -37,14 +38,16 @@ class _NewTripDateViewState extends State<NewTripDateView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFF7AA573),
-          title: Text('Create Trip - Date'),
-        ),
-        body: Center(
-            child: Column(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF7AA573),
+        title: Text('Food - Date'),
+      ),
+      body: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            buildSelectedDetails(context, widget.trip),
+            Spacer(),
             Text("Location ${widget.trip.title}"),
             RaisedButton(
               child: Text("Select Dates"),
@@ -74,7 +77,87 @@ class _NewTripDateViewState extends State<NewTripDateView> {
                 );
               },
             ),
+            Spacer(),
           ],
-        )));
+        ),
+      ),
+    );
+  }
+
+  Widget buildSelectedDetails(BuildContext context, Trip trip) {
+    return Hero(
+      tag: "SelectedTrip-${trip.title}",
+      transitionOnUserGestures: true,
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 8.0,
+            right: 8.0,
+          ),
+          child: SingleChildScrollView(
+            child: Card(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 16.0, left: 16.0, bottom: 16.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              AutoSizeText(trip.title,
+                                  style: TextStyle(fontSize: 30.0)),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("100 gram "),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Kcal"),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Carbs"),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Fat"),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Protein"),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Text("Co2"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Placeholder(
+                        fallbackHeight: 100,
+                        fallbackWidth: 100,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
