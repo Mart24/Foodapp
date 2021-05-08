@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/food.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Models/suggestion.dart';
+import 'package:food_app/Widgets/divider_with_text_widget.dart';
 import 'date_view.dart';
 
 class NewTripLocationView extends StatelessWidget {
@@ -45,48 +46,59 @@ class NewTripLocationView extends StatelessWidget {
             ),
             Expanded(
                 child: ListView.builder(
-              itemCount: _foodlist.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  child: Card(
-                      child: Column(
-                    children: [
-                      Text(index.toString()),
-                      Text(_foodlist[index].name)
-                    ],
-                  )),
-                );
-              },
-            ))
+                    itemCount: _foodlist.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        buildFoodCard(context, index)))
           ],
         )));
   }
-}
 
-class DividerWithText extends StatelessWidget {
-  final String dividerText;
-  const DividerWithText({Key key, @required this.dividerText})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Divider(),
+  Widget buildFoodCard(BuildContext context, int index) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+        child: Card(
+            child: InkWell(
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    //  Text(index.toString()),
+                    Row(
+                      children: [
+                        Text(
+                          _foodlist[index].name,
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            "Climate impact ${_foodlist[index].co2.toString()}"),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  Placeholder(
+                    fallbackHeight: 50,
+                    fallbackWidth: 50,
+                  ),
+                ],
+              )
+            ],
+          ),
         )),
-        Text("Sugggestions"),
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Divider(),
-        )),
-      ],
+      ),
     );
   }
 }
+
+
 
 // RaisedButton(
 //               child: Text("Continue"),
