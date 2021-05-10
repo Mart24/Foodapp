@@ -38,8 +38,8 @@ class DatabaseService {
 
   Future<List<FooddataSQL>> getFooddata() async {
     await initDatabase();
-    List<Map> list = await _db.rawQuery('SELECT * FROM exampledata2variables');
-    return list.map((fooddata) => FooddataSQL.fromJson(fooddata)).toList();
+    List<Map> list = await _db.rawQuery('SELECT * FROM exampledata');
+    return list.map((foodddata) => FooddataSQL.fromJson(foodddata)).toList();
   }
 
   dispose() {

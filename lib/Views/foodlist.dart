@@ -30,8 +30,8 @@ class _FoodpageState extends State<Foodpage> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      subtitle: Text(snapshot.data[index].productid),
-                      title: Text(snapshot.data[index].foodname),
+                      title: Text(snapshot.data[index].productid.toString()),
+                      subtitle: Text(snapshot.data[index].foodname),
                     );
                   });
             }));
