@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-// class Voeding extends StatelessWidget {
-//   final dbService = DatabaseService();
+import 'package:food_app/Models/fooddata.dart';
+import 'package:food_app/Services/fooddata_service.dart';
 
 class Foodpage extends StatefulWidget {
   @override
@@ -9,8 +8,32 @@ class Foodpage extends StatefulWidget {
 }
 
 class _FoodpageState extends State<Foodpage> {
+  final dbService = DatabaseService();
+
+  @override
+  void dispose() {
+    dbService.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        body: FutureBuilder<List<FooddataSQL>>(
+            future: dbService.getFooddata(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      subtitle: Text(snapshot.data[index].productid),
+                      title: Text(snapshot.data[index].foodname),
+                    );
+                  });
+            }));
   }
 }
