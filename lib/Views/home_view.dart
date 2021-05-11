@@ -17,15 +17,31 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: StreamBuilder(
-          stream: getUsersTripsStreamSnapshots(context),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return const Text("Loading...");
-            return new ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    buildTripCard(context, snapshot.data.docs[index]));
-          }),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Text('Kcal Eaten: 400'),
+          ),
+          Text('Carbs Eaten: 59'),
+          Text('Fat Eaten: 9'),
+          Text('Proteins Eaten: 39'),
+          Text('Climate Impact: 1,2kg Co2'),
+          Divider(),
+          Text("What you have eaten", style: TextStyle(fontSize: 20)),
+          Expanded(
+            child: StreamBuilder(
+                stream: getUsersTripsStreamSnapshots(context),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return const Text("Loading...");
+                  return new ListView.builder(
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          buildTripCard(context, snapshot.data.docs[index]));
+                }),
+          ),
+        ],
+      ),
     );
   }
 
@@ -40,14 +56,14 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildTripCard(BuildContext context, DocumentSnapshot trip) {
-    return new Container(
+    return Container(
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                 child: Row(children: <Widget>[
                   Text(
                     trip['title'],
@@ -57,10 +73,19 @@ class HomePage extends StatelessWidget {
                 ]),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 80.0),
+                padding: const EdgeInsets.only(top: 4.0, bottom: 30.0),
                 child: Row(children: <Widget>[
                   Text(
                       "${DateFormat('dd/MM/yyyy').format(trip['startDate'].toDate()).toString()} - ${DateFormat('dd/MM/yyyy').format(trip['endDate'].toDate()).toString()}"),
+                  Spacer(),
+                ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0, bottom: 30.0),
+                child: Row(children: <Widget>[
+                  Text(
+                      "${DateFormat('dd/MM/yyyy').format(trip['eatDate'].toDate()).toString()}" ??
+                          null),
                   Spacer(),
                 ]),
               ),

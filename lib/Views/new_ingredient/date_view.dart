@@ -18,6 +18,7 @@ class NewTripDateView extends StatefulWidget {
 
 class _NewTripDateViewState extends State<NewTripDateView> {
   DateTime _startDate = DateTime.now();
+  DateTime _eattime = DateTime.now();
   DateTime _endDate = DateTime.now().add(Duration(days: 7));
 
   Future displayDateRangePicker(BuildContext context) async {
@@ -33,6 +34,18 @@ class _NewTripDateViewState extends State<NewTripDateView> {
         _endDate = picked[1];
       });
     }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime pickedDate = await showDatePicker(
+        context: context,
+        initialDate: _eattime,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2050));
+    if (pickedDate != null && pickedDate != _eattime)
+      setState(() {
+        _eattime = pickedDate;
+      });
   }
 
   @override
@@ -55,6 +68,12 @@ class _NewTripDateViewState extends State<NewTripDateView> {
                 await displayDateRangePicker(context);
               },
             ),
+            RaisedButton(
+              child: Text("Eat Date"),
+              onPressed: () => _selectDate(context),
+              // await displayDateRangePicker(context);
+              //   },
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -64,11 +83,19 @@ class _NewTripDateViewState extends State<NewTripDateView> {
                     "End Date: ${DateFormat('MM/dd/yyyy').format(_endDate).toString()}"),
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                    "Eating data: ${DateFormat('MM/dd/yyyy').format(_eattime).toString()}"),
+              ],
+            ),
             RaisedButton(
               child: Text("Continue"),
               onPressed: () {
                 widget.trip.startDate = _startDate;
                 widget.trip.endDate = _endDate;
+                widget.trip.eatDate = _eattime;
                 Navigator.push(
                   context,
                   MaterialPageRoute(

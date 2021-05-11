@@ -31,7 +31,7 @@ class _FoodpageState extends State<Foodpage> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(snapshot.data[index].productid.toString()),
-                      subtitle: Text(snapshot.data[index].foodname),
+                      trailing: Text(snapshot.data[index].foodname),
                     );
                   });
             }));
