@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
 import 'package:food_app/Views/home_view.dart';
-import 'package:food_app/Views/new_ingredient/budget_view.dart';
+import 'package:food_app/Views/new_food_intake/food_amount_intake_view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
-import 'package:food_app/Views/new_ingredient/location_view.dart';
+import 'package:food_app/Views/new_food_intake/search_food_view.dart';
 import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
 
-import 'Views/foodlist.dart';
-import 'Views/voortgang.dart';
+import 'Views/foodlistSQL.dart';
+import 'Views/progress_view.dart';
 
 const colordarkgreen = const Color(0xFF7AA573);
 
@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     HomePage(),
     Foodpage(),
-    Voortgang(),
+    Progress(),
     Profiel(),
     Lijstje(),
   ];

@@ -186,7 +186,7 @@ class _SignUpViewState extends State<SignUpView> {
           validator: EmailValidator.validate,
           keyboardType: TextInputType.emailAddress,
           style: TextStyle(fontSize: 22.0),
-          decoration: buildSignUpInputDecoration("Email"),
+          decoration: buildSignUpInputDecoration("Email".trim()),
           onSaved: (value) => _email = value,
         ),
       );
@@ -213,7 +213,7 @@ class _SignUpViewState extends State<SignUpView> {
         validator: EmailValidator.validate,
         keyboardType: TextInputType.emailAddress,
         style: TextStyle(fontSize: 22.0),
-        decoration: buildSignUpInputDecoration("Email"),
+        decoration: buildSignUpInputDecoration("Email".trim()),
         onSaved: (value) => _email = value,
       ),
     );

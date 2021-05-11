@@ -14,7 +14,7 @@ class NewTripBudgetView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF7AA573),
-          title: Text('Create Trip - Budget'),
+          title: Text('Create food - amount'),
         ),
         body: Center(
             child: Column(
@@ -22,12 +22,13 @@ class NewTripBudgetView extends StatelessWidget {
           children: <Widget>[
             Text("Finish"),
             Text("Location ${trip.title}"),
-            Text("Start Date ${trip.startDate}"),
-            Text("End Date ${trip.endDate}"),
+            // Text("Start Date ${trip.startDate}"),
+            //Text("End Date ${trip.endDate}"),
+            Text("Intake data ${trip.eatDate}"),
             RaisedButton(
               child: Text("Finish"),
               onPressed: () async {
-                // save data to fiebase
+                // save data to fisebase
                 final uid = await Provider.of(context).auth.getCurrentUID();
                 await db
                     .collection("userData")

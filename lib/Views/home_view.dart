@@ -72,14 +72,14 @@ class HomePage extends StatelessWidget {
                   Spacer(),
                 ]),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 30.0),
-                child: Row(children: <Widget>[
-                  Text(
-                      "${DateFormat('dd/MM/yyyy').format(trip['startDate'].toDate()).toString()} - ${DateFormat('dd/MM/yyyy').format(trip['endDate'].toDate()).toString()}"),
-                  Spacer(),
-                ]),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 4.0, bottom: 30.0),
+              //   child: Row(children: <Widget>[
+              //     Text(
+              //         "${DateFormat('dd/MM/yyyy').format(trip['startDate'].toDate()).toString()} - ${DateFormat('dd/MM/yyyy').format(trip['endDate'].toDate()).toString()}"),
+              //     Spacer(),
+              //   ]),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, bottom: 30.0),
                 child: Row(children: <Widget>[

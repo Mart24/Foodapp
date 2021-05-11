@@ -3,7 +3,7 @@ import 'package:food_app/Models/food.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Models/suggestion.dart';
 import 'package:food_app/Widgets/divider_with_text_widget.dart';
-import 'date_view.dart';
+import 'food_date_intake.dart';
 
 class NewTripLocationView extends StatelessWidget {
   final Trip trip;
@@ -52,6 +52,10 @@ class NewTripLocationView extends StatelessWidget {
           ],
         )));
   }
+
+// return ListTile(
+//                       title: Text(snapshot.data[index].productid.toString()),
+//                       trailing: Text(snapshot.data[index].foodname),
 
   Widget buildFoodCard(BuildContext context, int index) {
     return Hero(

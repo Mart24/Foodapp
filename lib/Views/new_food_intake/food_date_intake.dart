@@ -5,7 +5,7 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:intl/intl.dart';
 import 'dart:async';
 
-import 'budget_view.dart';
+import 'food_amount_intake_view.dart';
 
 class NewTripDateView extends StatefulWidget {
   final Trip trip;
@@ -61,28 +61,28 @@ class _NewTripDateViewState extends State<NewTripDateView> {
           children: <Widget>[
             buildSelectedDetails(context, widget.trip),
             Spacer(),
-            Text("Location ${widget.trip.title}"),
-            RaisedButton(
-              child: Text("Select Dates"),
-              onPressed: () async {
-                await displayDateRangePicker(context);
-              },
-            ),
+            Text("Food ${widget.trip.title}"),
+            // RaisedButton(
+            //   child: Text("Select Dates"),
+            //   onPressed: () async {
+            //     await displayDateRangePicker(context);
+            //   },
+            // ),
             RaisedButton(
               child: Text("Eat Date"),
               onPressed: () => _selectDate(context),
               // await displayDateRangePicker(context);
               //   },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                    "Start Date: ${DateFormat('MM/dd/yyyy').format(_startDate).toString()}"),
-                Text(
-                    "End Date: ${DateFormat('MM/dd/yyyy').format(_endDate).toString()}"),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: <Widget>[
+            //     Text(
+            //         "Start Date: ${DateFormat('MM/dd/yyyy').format(_startDate).toString()}"),
+            //     Text(
+            //         "End Date: ${DateFormat('MM/dd/yyyy').format(_endDate).toString()}"),
+            //   ],
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -93,7 +93,7 @@ class _NewTripDateViewState extends State<NewTripDateView> {
             RaisedButton(
               child: Text("Continue"),
               onPressed: () {
-                widget.trip.startDate = _startDate;
+                //  widget.trip.startDate = _startDate;
                 widget.trip.endDate = _endDate;
                 widget.trip.eatDate = _eattime;
                 Navigator.push(
