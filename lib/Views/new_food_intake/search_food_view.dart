@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/Models/food.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Models/suggestion.dart';
 import 'package:food_app/Widgets/divider_with_text_widget.dart';
 import 'food_date_intake.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
+// This is the class for a new Food intake by the user
+// It will go from NewTripLocationView (Search_food_view)
+//// to NewTripDateView (food_location_view)
+/// To
 class NewTripLocationView extends StatelessWidget {
   final Trip trip;
   NewTripLocationView({Key key, @required this.trip}) : super(key: key);
@@ -26,6 +29,19 @@ class NewTripLocationView extends StatelessWidget {
         appBar: AppBar(
           title: Text('Create Food'),
           backgroundColor: Color(0xFF7AA573),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.camera_alt_outlined),
+                onPressed: () {
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => NewTripLocationView(
+                  //         trip: newTrip,
+                  //       ),
+                  //     ));
+                })
+          ],
         ),
         body: Center(
             child: Column(
@@ -40,7 +56,6 @@ class NewTripLocationView extends StatelessWidget {
                 ),
               ),
             ),
-            Text('Barcode scanner'),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: DividerWithText(
@@ -55,10 +70,6 @@ class NewTripLocationView extends StatelessWidget {
           ],
         )));
   }
-
-// return ListTile(
-//                       title: Text(snapshot.data[index].productid.toString()),
-//                       trailing: Text(snapshot.data[index].foodname),
 
   Widget buildFoodCard(BuildContext context, int index) {
     return Hero(
@@ -104,6 +115,7 @@ class NewTripLocationView extends StatelessWidget {
               ),
               onTap: () {
                 trip.title = _foodlist[index].name;
+                // push the amount value to the summary page
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -117,17 +129,3 @@ class NewTripLocationView extends StatelessWidget {
     );
   }
 }
-
-
-
-// RaisedButton(
-//               child: Text("Continue"),
-//               onPressed: () {
-//                 trip.title = _titleController.text;
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => NewTripDateView(trip: trip)),
-//                 );
-//               },
-//             ),

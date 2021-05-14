@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
+import 'package:path/path.dart';
 
 class NewTripSummaryView extends StatelessWidget {
   final db = FirebaseFirestore.instance;
@@ -20,15 +21,23 @@ class NewTripSummaryView extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Finish"),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                "Overview of intake",
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
             Text("food ${trip.title}"),
             // Text("Start Date ${trip.startDate}"),
             //Text("End Date ${trip.endDate}"),
-            Text("Intake data ${trip.eatDate}"),
+            Text(
+                "Food intake data ${trip.eatDate.day}-${trip.eatDate.month}-${trip.eatDate.year}"),
+            Text("amount ${trip.budget.toStringAsFixed(0)} gram"),
             RaisedButton(
               child: Text("Continue"),
               onPressed: () async {
-                // save data to fisebase
+                // save data to firebase
                 final uid = await Provider.of(context).auth.getCurrentUID();
                 await db
                     .collection("userData")
@@ -42,71 +51,3 @@ class NewTripSummaryView extends StatelessWidget {
         )));
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:food_app/Models/ingredients.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:food_app/Widgets/Provider_Auth.dart';
-
-// class NewIngredient extends StatelessWidget {
-//   final db = FirebaseFirestore.instance;
-
-//   final Ingredient ingredient;
-//   NewIngredient({Key key = const Key("any_key"), @required this.ingredient})
-//       : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     TextEditingController _nameController = new TextEditingController();
-//     //   _nameController.text = ingredient.name;
-//     TextEditingController _categoryController = new TextEditingController();
-//     //  _categoryController.text = ingredient.categorie;
-
-//     ingredient.name = _nameController.text;
-//     ingredient.categorie = _categoryController.text;
-
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: Text('Create Ingredient'),
-//         ),
-//         body: Center(
-//             child: Column(
-//           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: <Widget>[
-//             Text("Enter a Name"),
-//             Padding(
-//               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-//               child: TextField(
-//                 controller: _nameController,
-//                 autofocus: true,
-//               ),
-//             ),
-//             Text("Enter a Category"),
-//             Padding(
-//               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-//               child: TextField(
-//                 controller: _categoryController,
-//                 autofocus: true,
-//               ),
-//             ),
-//             RaisedButton(
-//               child: Text("Continue"),
-//               onPressed: () async {
-//                 //save to firebase
-//                 final uid = await Provider.of(context).auth.getCurrentUID();
-//                 await db
-//                     .collection("userData")
-//                     .doc(uid)
-//                     .collection("ingredient")
-//                     .add({
-//                   'name': ingredient.name,
-//                   'category': ingredient.categorie
-//                 });
-
-//                 Navigator.of(context).popUntil((route) => route.isFirst);
-//               },
-//             ),
-//           ],
-//         )));
-//   }
-// }
