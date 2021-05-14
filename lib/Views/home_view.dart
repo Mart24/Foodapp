@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
               //   ]),
               // ),
               Padding(
-                padding: const EdgeInsets.only(top: 4.0, bottom: 30.0),
+                padding: const EdgeInsets.only(top: 4.0, bottom: 15.0),
                 child: Row(children: <Widget>[
                   Text(
                       "${DateFormat('dd/MM/yyyy').format(trip['eatDate'].toDate()).toString()}" ??
@@ -90,15 +90,15 @@ class HomePage extends StatelessWidget {
                 ]),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                padding: const EdgeInsets.only(top: 2.0, bottom: 8.0),
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "\$${(trip['budget'] == null) ? "n/a" : trip['budget'].toStringAsFixed(2)}",
-                      style: new TextStyle(fontSize: 35.0),
+                      "${(trip['budget'] == null) ? "n/a" : trip['budget'].toStringAsFixed(0)} grams",
+                      style: new TextStyle(fontSize: 25.0),
                     ),
                     Spacer(),
-                    Icon(Icons.directions_car),
+                    Icon(Icons.emoji_nature),
                   ],
                 ),
               )

@@ -4,6 +4,7 @@ import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Models/suggestion.dart';
 import 'package:food_app/Widgets/divider_with_text_widget.dart';
 import 'food_date_intake.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class NewTripLocationView extends StatelessWidget {
   final Trip trip;
@@ -19,6 +20,7 @@ class NewTripLocationView extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController _titleController = new TextEditingController();
     _titleController.text = trip.title;
+    String barcode = 'Unknown';
 
     return Scaffold(
         appBar: AppBar(
@@ -38,6 +40,7 @@ class NewTripLocationView extends StatelessWidget {
                 ),
               ),
             ),
+            Text('Barcode scanner'),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: DividerWithText(

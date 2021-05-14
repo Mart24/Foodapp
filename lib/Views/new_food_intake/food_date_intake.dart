@@ -5,7 +5,7 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:intl/intl.dart';
 import 'dart:async';
 
-import 'food_amount_intake_view.dart';
+import 'Food_amount_intake.view.dart';
 
 class NewTripDateView extends StatefulWidget {
   final Trip trip;

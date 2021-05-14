@@ -160,11 +160,11 @@ class _SignUpViewState extends State<SignUpView> {
   AutoSizeText buildHeaderText() {
     String _headerText;
     if (authFormType == AuthFormType.signUp) {
-      _headerText = "Start jouw missie";
+      _headerText = "Start your mission";
     } else if (authFormType == AuthFormType.reset) {
-      _headerText = "Reset Wachtwoord";
+      _headerText = "Reset Password";
     } else {
-      _headerText = "Welkom terug";
+      _headerText = "Welkom back";
     }
     return AutoSizeText(
       _headerText,
@@ -200,7 +200,7 @@ class _SignUpViewState extends State<SignUpView> {
         TextFormField(
           validator: NameValidator.validate,
           style: TextStyle(fontSize: 22.0),
-          decoration: buildSignUpInputDecoration("Naam"),
+          decoration: buildSignUpInputDecoration("Name"),
           onSaved: (value) => _name = value,
         ),
       );
@@ -222,7 +222,7 @@ class _SignUpViewState extends State<SignUpView> {
       TextFormField(
         validator: PasswordValidator.validate,
         style: TextStyle(fontSize: 22.0),
-        decoration: buildSignUpInputDecoration("Wachtwoord"),
+        decoration: buildSignUpInputDecoration("Password"),
         obscureText: true,
         onSaved: (value) => _password = value,
       ),
@@ -251,19 +251,19 @@ class _SignUpViewState extends State<SignUpView> {
     bool _showSocial = true;
 
     if (authFormType == AuthFormType.signIn) {
-      _switchButtonText = "Nog geen account? registreer hier";
+      _switchButtonText = "No account yet? Register here";
       _newFormState = "signUp";
       _submitButtonText = "Log in";
       _showForgotPassword = true;
     } else if (authFormType == AuthFormType.reset) {
-      _switchButtonText = "Terug naar inloggen";
+      _switchButtonText = "Back to log in";
       _newFormState = "signIn";
-      _submitButtonText = "Vraag email";
+      _submitButtonText = "Ask email";
       _showSocial = false;
     } else {
-      _switchButtonText = "Heb je al een account? Log in";
+      _switchButtonText = "Already an account? Log in";
       _newFormState = "signIn";
-      _submitButtonText = "Registreer";
+      _submitButtonText = "Registrer";
     }
 
     return [
@@ -302,7 +302,7 @@ class _SignUpViewState extends State<SignUpView> {
     return Visibility(
       child: FlatButton(
         child: Text(
-          "Wachtwoord vergeten?",
+          "Forgot Password?",
           //   style: TextStyle(color: Colors.white),
         ),
         onPressed: () {

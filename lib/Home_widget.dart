@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
 import 'package:food_app/Views/home_view.dart';
-import 'package:food_app/Views/new_food_intake/food_amount_intake_view.dart';
+import 'package:food_app/Views/new_food_intake/Food_amount_intake.view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/new_food_intake/search_food_view.dart';
@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Voedingsapp"),
+        title: Text("Foodapp"),
         backgroundColor: colordarkgreen,
         actions: [
           IconButton(
@@ -68,15 +68,14 @@ class _HomeState extends State<Home> {
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Dagboek"),
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Diary"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.restaurant), label: "Voeding"),
+                icon: Icon(Icons.restaurant), label: "Food"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.leaderboard), label: "Voortgang"),
+                icon: Icon(Icons.leaderboard), label: "Progress"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person_pin), label: "Profiel"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.list_alt), label: "Lijstje"),
+                icon: Icon(Icons.person_pin), label: "Profile"),
+            BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
           ]),
     );
   }

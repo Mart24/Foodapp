@@ -42,29 +42,29 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       key: introKey,
       pages: [
         PageViewModel(
-          title: "Het eten op ons bord komt van over de hele wereld",
-          body: "Via vliegtuigen, treinen, vrachtwagen, noem maar op",
+          title: "The food on our plates comes from all over the world",
+          body: "Through planes, trains, trucks, you name it",
           image: _buildImage('img1'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Veel schade aan de wereld door voedselconsumptie",
+          title: "Much damage to the world from food consumption",
           body:
-              "Niet overal wordt goed rekening gehouden met duurzame productie van voedingswaren",
+              "Sustainable food production is not well taken into account everywhere",
           image: _buildImage('img2'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Ontwikkel een duurzaam en vooral gezond lifestyle",
+          title: "Develop a sustainable and especially a healthy lifestyle",
           body:
-              "Met Eetmissie weet je zeker dat een een duurzaam voedingspatroon opbouwd",
+              "With Eetmissie you can be sure that you have built up a sustainable eating pattern.",
           image: _buildImage('img3'),
           footer: RaisedButton(
             onPressed: () {
               _onIntroEnd(context);
             },
             child: const Text(
-              'Laten we beginnen!',
+              'Lets go!',
               style: TextStyle(color: Colors.white),
             ),
             color: colordarkgreen,
