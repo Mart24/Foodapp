@@ -1,5 +1,6 @@
 //Just an example listview to see how it works to push certain values to a next page
-// an how to put them in firebase database.
+// and also how to put them in firebase database.
+// If you add a food in the app, the suggestions come from this model.
 
 class Foodsuggestion {
   String name;

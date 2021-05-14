@@ -1,3 +1,7 @@
+// I used the database of a tripbudget app to learn about Firebase
+// Renaming the objects results in a broken app, so for now I leave it as it is.
+// Trip = Foodintake. The new_food_intake folder contains the views how to select a food.
+
 class Trip {
   String title;
   DateTime startDate;
