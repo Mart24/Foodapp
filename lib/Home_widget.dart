@@ -77,6 +77,20 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.person_pin), label: "Profile"),
             BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
           ]),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewTripLocationView(
+                  trip: newTrip,
+                ),
+              ));
+        },
+        label: const Text('Food'),
+        icon: const Icon(Icons.fastfood_outlined),
+        backgroundColor: Colors.green,
+      ),
     );
   }
 
