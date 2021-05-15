@@ -42,7 +42,7 @@ class NewTripSummaryView extends StatelessWidget {
                 await db
                     .collection("userData")
                     .doc(uid)
-                    .collection("trips")
+                    .collection("food_intake")
                     .add(trip.toJson());
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },

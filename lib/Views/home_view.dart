@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
     yield* FirebaseFirestore.instance
         .collection('userData')
         .doc(uid)
-        .collection('trips')
+        .collection('food_intake')
         .snapshots();
   }
 
