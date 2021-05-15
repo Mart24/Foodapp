@@ -22,7 +22,7 @@ class NewTripLocationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController _titleController = new TextEditingController();
-    _titleController.text = trip.title;
+    _titleController.text = trip.name;
     String barcode = 'Unknown';
 
     return Scaffold(
@@ -114,7 +114,7 @@ class NewTripLocationView extends StatelessWidget {
                 ],
               ),
               onTap: () {
-                trip.title = _foodlist[index].name;
+                trip.name = _foodlist[index].name;
                 // push the amount value to the summary page
                 Navigator.push(
                   context,

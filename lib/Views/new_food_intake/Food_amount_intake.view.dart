@@ -15,7 +15,7 @@ class NewTripBudgetView extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController _amountcontroller = TextEditingController();
     _amountcontroller.text =
-        (trip.budget == null) ? "" : trip.budget.toString();
+        (trip.amount == null) ? "" : trip.amount.toString();
 
     return Scaffold(
         appBar: AppBar(
@@ -45,7 +45,7 @@ class NewTripBudgetView extends StatelessWidget {
               child: Text("Finish"),
               onPressed: () async {
                 // save data to fisebase
-                trip.budget = (_amountcontroller.text == "")
+                trip.amount = (_amountcontroller.text == "")
                     ? 0
                     : double.parse(_amountcontroller.text);
                 Navigator.push(

@@ -28,12 +28,12 @@ class NewTripSummaryView extends StatelessWidget {
                 style: TextStyle(fontSize: 20.0),
               ),
             ),
-            Text("food ${trip.title}"),
+            Text("food ${trip.name}"),
             // Text("Start Date ${trip.startDate}"),
             //Text("End Date ${trip.endDate}"),
             Text(
                 "Food intake data ${trip.eatDate.day}-${trip.eatDate.month}-${trip.eatDate.year}"),
-            Text("amount ${trip.budget.toStringAsFixed(0)} gram"),
+            Text("amount ${trip.amount.toStringAsFixed(0)} gram"),
             RaisedButton(
               child: Text("Continue"),
               onPressed: () async {

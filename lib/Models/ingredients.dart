@@ -3,22 +3,21 @@
 // Trip = Foodintake. The new_food_intake folder contains the views how to select a food.
 
 class Trip {
-  String title;
-  DateTime startDate;
-  DateTime endDate;
+  String name;
+//  DateTime startDate;
+//  DateTime endDate;
   DateTime eatDate;
-  double budget;
+  double amount;
   String travelType;
 
-  Trip(this.title, this.startDate, this.endDate, this.eatDate, this.budget,
-      this.travelType);
+  Trip(this.name, this.eatDate, this.amount, this.travelType);
 
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'startDate': startDate,
-        'endDate': endDate,
+        'name': name,
+        //     'startDate': startDate,
+        //     'endDate': endDate,
         'eatDate': eatDate,
-        'budget': budget,
+        'amount': amount,
         'travelType': travelType,
       };
 }

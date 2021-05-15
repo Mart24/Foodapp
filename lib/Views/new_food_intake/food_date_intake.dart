@@ -19,19 +19,19 @@ class NewTripDateView extends StatefulWidget {
 class _NewTripDateViewState extends State<NewTripDateView> {
   DateTime _startDate = DateTime.now();
   DateTime _eattime = DateTime.now();
-  DateTime _endDate = DateTime.now().add(Duration(days: 7));
+  // DateTime _endDate = DateTime.now().add(Duration(days: 7));
 
   Future displayDateRangePicker(BuildContext context) async {
     final List<DateTime> picked = await DateRagePicker.showDatePicker(
         context: context,
         initialFirstDate: _startDate,
-        initialLastDate: _endDate,
+        //  initialLastDate: _endDate,
         firstDate: new DateTime(DateTime.now().year - 50),
         lastDate: new DateTime(DateTime.now().year + 50));
     if (picked != null && picked.length == 2) {
       setState(() {
         _startDate = picked[0];
-        _endDate = picked[1];
+        //   _endDate = picked[1];
       });
     }
   }
@@ -61,7 +61,7 @@ class _NewTripDateViewState extends State<NewTripDateView> {
           children: <Widget>[
             buildSelectedDetails(context, widget.trip),
             Spacer(),
-            Text("Food ${widget.trip.title}"),
+            Text("Food ${widget.trip.name}"),
             // RaisedButton(
             //   child: Text("Select Dates"),
             //   onPressed: () async {
@@ -94,7 +94,7 @@ class _NewTripDateViewState extends State<NewTripDateView> {
               child: Text("Continue"),
               onPressed: () {
                 //  widget.trip.startDate = _startDate;
-                widget.trip.endDate = _endDate;
+                // widget.trip.endDate = _endDate;
                 widget.trip.eatDate = _eattime;
                 Navigator.push(
                   context,
@@ -113,7 +113,7 @@ class _NewTripDateViewState extends State<NewTripDateView> {
 
   Widget buildSelectedDetails(BuildContext context, Trip trip) {
     return Hero(
-      tag: "SelectedTrip-${trip.title}",
+      tag: "SelectedTrip-${trip.name}",
       transitionOnUserGestures: true,
       child: Container(
         child: Padding(
@@ -133,7 +133,7 @@ class _NewTripDateViewState extends State<NewTripDateView> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              AutoSizeText(trip.title,
+                              AutoSizeText(trip.name,
                                   style: TextStyle(fontSize: 30.0)),
                             ],
                           ),

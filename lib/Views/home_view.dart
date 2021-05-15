@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                 child: Row(children: <Widget>[
                   Text(
-                    trip['title'],
+                    trip['name'],
                     style: new TextStyle(fontSize: 30.0),
                   ),
                   Spacer(),
@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "${(trip['budget'] == null) ? "n/a" : trip['budget'].toStringAsFixed(0)} grams",
+                      "${(trip['amount'] == null) ? "n/a" : trip['amount'].toStringAsFixed(0)} grams",
                       style: new TextStyle(fontSize: 25.0),
                     ),
                     Spacer(),
