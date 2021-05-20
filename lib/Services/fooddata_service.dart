@@ -42,6 +42,13 @@ class DatabaseService {
     return list.map((foodddata) => FooddataSQL.fromJson(foodddata)).toList();
   }
 
+  Future<List<FooddataSQL>> searchFooddata(String keyword) async {
+    final db = await initDatabase();
+    List<Map> list = await _db
+        .query('exampledata', where: 'name LIKE ?', whereArgs: ['%keyword%']);
+    return list.map((foodddata) => FooddataSQL.fromJson(foodddata)).toList();
+  }
+
   dispose() {
     _db.close();
   }

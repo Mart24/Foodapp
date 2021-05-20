@@ -7,7 +7,6 @@ import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/new_food_intake/search_food_view.dart';
 import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
-
 import 'Views/foodlistSQL.dart';
 import 'Views/progress_view.dart';
 

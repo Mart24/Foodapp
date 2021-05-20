@@ -19,13 +19,13 @@ class NewTripDateView extends StatefulWidget {
 class _NewTripDateViewState extends State<NewTripDateView> {
   DateTime _startDate = DateTime.now();
   DateTime _eattime = DateTime.now();
-  // DateTime _endDate = DateTime.now().add(Duration(days: 7));
+  DateTime _endDate = DateTime.now().add(Duration(days: 7));
 
   Future displayDateRangePicker(BuildContext context) async {
     final List<DateTime> picked = await DateRagePicker.showDatePicker(
         context: context,
         initialFirstDate: _startDate,
-        //  initialLastDate: _endDate,
+        initialLastDate: _endDate,
         firstDate: new DateTime(DateTime.now().year - 50),
         lastDate: new DateTime(DateTime.now().year + 50));
     if (picked != null && picked.length == 2) {
