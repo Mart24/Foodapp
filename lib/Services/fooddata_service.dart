@@ -5,10 +5,23 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseService {
-  Database _db;
+  DatabaseService();
+
+  static final DatabaseService instance = DatabaseService();
+
+  Database db;
+  final dbProvider = DatabaseService.instance;
+
+  Future<Database> get database async {
+    if (db != null) {
+      return db;
+    } else {
+      db = await initDatabase();
+    }
+  }
 
   initDatabase() async {
-    _db = await openDatabase('assets/fooddata.db');
+    db = await openDatabase('assets/fooddata.db');
     var databasePath = await getDatabasesPath();
     var path = join(databasePath, 'fooddata.db');
 
@@ -33,23 +46,27 @@ class DatabaseService {
     }
 
     //Open the database
-    _db = await openDatabase(path, readOnly: true);
+    db = await openDatabase(path, readOnly: true);
   }
 
   Future<List<FooddataSQL>> getFooddata() async {
     await initDatabase();
-    List<Map> list = await _db.rawQuery('SELECT * FROM exampledata');
-    return list.map((foodddata) => FooddataSQL.fromJson(foodddata)).toList();
+    List<Map<String, dynamic>> allRows = await db.query('exampledata');
+    List<FooddataSQL> fooddatas =
+        allRows.map((fooddata) => FooddataSQL.fromMap(fooddata)).toList();
+    return fooddatas;
   }
 
-  Future<List<FooddataSQL>> searchFooddata(String keyword) async {
-    final db = await initDatabase();
-    List<Map> list = await _db
-        .query('exampledata', where: 'name LIKE ?', whereArgs: ['%keyword%']);
-    return list.map((foodddata) => FooddataSQL.fromJson(foodddata)).toList();
+  Future<List<FooddataSQL>> searchContacts(String keyword) async {
+    await initDatabase();
+    List<Map<String, dynamic>> allRows = await db.query('exampledata',
+        where: 'productName LIKE ?', whereArgs: ['%$keyword%']);
+    List<FooddataSQL> fooddatas =
+        allRows.map((fooddata) => FooddataSQL.fromMap(fooddata)).toList();
+    return fooddatas;
   }
 
   dispose() {
-    _db.close();
+    db.close();
   }
 }

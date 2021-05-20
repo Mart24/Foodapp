@@ -4,12 +4,21 @@
 // Then I want to connect the product ID to the food values in the Firebase database
 
 class FooddataSQL {
-  final int productid;
-  final String foodname;
+  num productid;
+  String foodname;
 
   FooddataSQL({this.productid, this.foodname});
 
-  factory FooddataSQL.fromJson(Map<String, dynamic> json) {
-    return FooddataSQL(productid: json['productid'], foodname: json['name']);
+  FooddataSQL.fromMap(dynamic obj) {
+    this.productid = obj['productId'];
+    this.foodname = obj['productName'];
+  }
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'productid': productid,
+      'foodname': foodname,
+    };
+
+    return map;
   }
 }

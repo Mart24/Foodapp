@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/Services/database_operations.dart';
-import 'package:food_app/Models/foodname.dart';
+import 'package:food_app/Models/fooddata.dart';
+import 'package:food_app/Services/fooddata_service.dart';
 
-class ContactsList extends StatelessWidget {
-  List<Contact> contacts;
+class FoodList extends StatelessWidget {
+  List<FooddataSQL> fooddatas;
 
-  ContactsList(List<Contact> this.contacts, {Key key}) : super(key: key);
-//ContactOperations contactOperations = ContactOperations();
+  FoodList(List<FooddataSQL> this.fooddatas, {Key key}) : super(key: key);
+  DatabaseService contactOperations = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +14,10 @@ class ContactsList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: contacts.length,
+        itemCount: fooddatas.length,
         itemBuilder: (BuildContext context, int index) {
           return Dismissible(
-            key: Key('${contacts[index].id}'),
+            key: Key('${fooddatas[index].productid}'),
             child: Padding(
               padding: const EdgeInsets.all(6.0),
               child: Container(
@@ -32,19 +31,19 @@ class ContactsList extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          ' ${contacts[index].id} ',
+                          ' ${fooddatas[index].foodname} ',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          ' ${contacts[index].name}  ${contacts[index].surname}',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        // Text(
+                        //   ' ${contacts[index].name}  ${contacts[index].surname}',
+                        //   style: TextStyle(
+                        //       color: Colors.white,
+                        //       fontSize: 18,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
