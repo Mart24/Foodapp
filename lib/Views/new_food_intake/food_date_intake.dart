@@ -134,7 +134,7 @@ class _NewTripDateViewState extends State<NewTripDateView> {
                           Row(
                             children: <Widget>[
                               AutoSizeText(trip.name,
-                                  style: TextStyle(fontSize: 30.0)),
+                                  style: TextStyle(fontSize: 20.0)),
                             ],
                           ),
                           Row(

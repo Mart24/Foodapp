@@ -8,6 +8,7 @@ import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/new_food_intake/search_food_view.dart';
 import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
 import 'Views/foodlistSQL.dart';
+import 'Views/new_food_registration.dart/0000food_search.dart';
 import 'Views/progress_view.dart';
 
 const colordarkgreen = const Color(0xFF7AA573);
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final newTrip = Trip(null, null, null, null);
+    final newTrip = Trip(null, null, null, null, null);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,6 +44,17 @@ class _HomeState extends State<Home> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => NewTripLocationView(
+                        trip: newTrip,
+                      ),
+                    ));
+              }),
+          IconButton(
+              icon: Icon(Icons.thumb_up),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewFoodIntake(
                         trip: newTrip,
                       ),
                     ));

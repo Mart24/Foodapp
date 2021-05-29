@@ -2,17 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Services/fooddata_service_json_.dart';
-// import 'package:food_app/Services/database_operations.dart';
-// import 'package:food_app/Services/fooddata_service.dart';
-// import 'package:food_app/Widgets/bestes_widget.dart';
-// import 'package:food_app/Widgets/food_list.dart';
-// import 'package:food_app/Widgets/horizontal_button_bar.dart';
+import 'package:food_app/Views/food_good_amount.dart';
 
 class Foodpage extends StatefulWidget {
-  Foodpage({Key key})
-      : super(
-          key: key,
-        );
+  final FooddataSQLJSON food;
+  Foodpage({Key key, @required this.food}) : super(key: key);
 
   @override
   _FoodpageState createState() => _FoodpageState();
@@ -20,7 +14,7 @@ class Foodpage extends StatefulWidget {
 
 class _FoodpageState extends State<Foodpage> {
   final dbService = DatabaseService();
-
+  String keyword;
   @override
   void dispose() {
     dbService.dispose();
@@ -30,54 +24,71 @@ class _FoodpageState extends State<Foodpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<List<FooddataSQLJSON>>(
-            future: dbService.getFooddata(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData)
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(snapshot.data[index].productid.toString()),
-                      trailing: Text(snapshot.data[index].foodname),
-                    );
-                  });
-            }));
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), labelText: 'Typ hier iets'),
+                  onChanged: (value) {
+                    keyword = value;
+                    setState(() {});
+                  },
+                ),
+              ),
+              Container(
+                height: 800,
+                child: Testwidget(dbService: dbService, keyword: keyword),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
-//   DatabaseService contactOperations = DatabaseService();
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('SQFLite Tutorial'),
-//       ),
-//       body: SingleChildScrollView(
-//         child: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: <Widget>[
-//               HorizontalButtonBar(),
-//               FutureBuilder(
-//                 future: contactOperations.getFooddata(),
-//                 builder: (context, snapshot) {
-//                   if (snapshot.hasError) print('error');
-//                   var data = snapshot.data;
-//                   return snapshot.hasData
-//                       ? FoodList(data)
-//                       : new Center(
-//                           child: Text('You have no contacts'),
-//                         );
-//                 },
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+class Testwidget extends StatelessWidget {
+  const Testwidget({
+    Key key,
+    @required this.dbService,
+    @required this.keyword,
+  }) : super(key: key);
+
+  final DatabaseService dbService;
+  final String keyword;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<FooddataSQLJSON>>(
+      future: dbService.searchFooddata(keyword),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData)
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(snapshot.data[index].foodname),
+                // trailing: Text(snapshot.data[index].productid.toString()),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          Foodamound(snapshot.data[index].foodname),
+                    ),
+                  );
+                },
+              );
+            });
+      },
+    );
+  }
+}

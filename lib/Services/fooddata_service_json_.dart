@@ -44,6 +44,14 @@ class DatabaseService {
         .toList();
   }
 
+  Future<List<FooddataSQLJSON>> searchFooddata(String keyword) async {
+    await initDatabase();
+    List<Map> list = await _db
+        .rawQuery("SELECT * FROM exampledata WHERE name LIKE '%$keyword%'");
+    return list
+        .map((foodddata) => FooddataSQLJSON.fromJson(foodddata))
+        .toList();
+  }
   // Future<List<FooddataSQLJSON>> searchFooddata(String keyword) async {
   //   final db = await initDatabase();
   //   List<Map> list = await _db

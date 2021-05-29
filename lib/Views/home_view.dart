@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart';
@@ -52,6 +53,7 @@ class HomePage extends StatelessWidget {
         .collection('userData')
         .doc(uid)
         .collection('food_intake')
+        .orderBy("eatDate", descending: true)
         .snapshots();
   }
 
@@ -67,7 +69,7 @@ class HomePage extends StatelessWidget {
                 child: Row(children: <Widget>[
                   Text(
                     trip['name'],
-                    style: new TextStyle(fontSize: 30.0),
+                    style: new TextStyle(fontSize: 20.0),
                   ),
                   Spacer(),
                 ]),
@@ -95,7 +97,7 @@ class HomePage extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       "${(trip['amount'] == null) ? "n/a" : trip['amount'].toStringAsFixed(0)} grams",
-                      style: new TextStyle(fontSize: 25.0),
+                      style: new TextStyle(fontSize: 15.0),
                     ),
                     Spacer(),
                     Icon(Icons.emoji_nature),

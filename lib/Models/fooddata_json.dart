@@ -4,8 +4,8 @@
 // Then I want to connect the product ID to the food values in the Firebase database
 
 class FooddataSQLJSON {
-  final int productid;
-  final String foodname;
+  int productid;
+  String foodname;
 
   FooddataSQLJSON({this.productid, this.foodname});
 

@@ -63,10 +63,12 @@ class NewTripLocationView extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-                    itemCount: _foodlist.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        buildFoodCard(context, index)))
+              child: ListView.builder(
+                itemCount: _foodlist.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    buildFoodCard(context, index),
+              ),
+            )
           ],
         )));
   }
