@@ -3,7 +3,6 @@ import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Models/suggestion.dart';
 import 'package:food_app/Services/fooddata_service_json_.dart';
-import 'package:food_app/Views/new_food_intake/food_date_intake.dart';
 import 'package:food_app/Views/new_food_registration.dart/0000food_amount.dart';
 import 'package:food_app/Widgets/divider_with_text_widget.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
-import 'package:food_app/Views/new_food_intake/Food_amount_intake.view.dart';
+import 'package:food_app/Views/new_food_registration.dart/0000summary.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -22,6 +22,8 @@ class _FoodDateState extends State<FoodDate> {
   DateTime _startDate = DateTime.now();
   DateTime _eattime = DateTime.now();
   DateTime _endDate = DateTime.now().add(Duration(days: 7));
+  int _budgetTotal = 100;
+  final db = FirebaseFirestore.instance;
 
   Future displayDateRangePicker(BuildContext context) async {
     final List<DateTime> picked = await DateRagePicker.showDatePicker(
@@ -49,17 +51,6 @@ class _FoodDateState extends State<FoodDate> {
       });
   }
 
-  Stream<QuerySnapshot> getFoodDataStreamSnapshots(
-      BuildContext context) async* {
-    final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* FirebaseFirestore.instance
-        .collection('fdd')
-        .doc(uid)
-        .collection('food_intake')
-        .orderBy("eatDate", descending: true)
-        .snapshots();
-  }
-
   Stream<QuerySnapshot> getUsersTripsStreamSnapshots(
       BuildContext context) async* {
     DocumentSnapshot fooddata = await FirebaseFirestore.instance
@@ -68,11 +59,23 @@ class _FoodDateState extends State<FoodDate> {
         .get();
   }
 
+  TextEditingController _budgetController = TextEditingController()
+    ..text = '100';
+
+  @override
+  void initState() {
+    super.initState();
+    _budgetController.addListener(_setBudgetTotal);
+  }
+
+  _setBudgetTotal() {
+    setState(() {
+      _budgetTotal = int.parse(_budgetController.text);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _amountcontroller = TextEditingController();
-    //  _amountcontroller.text = (trip.amount == null) ? "" : trip.amount.toString();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF7AA573),
@@ -87,52 +90,109 @@ class _FoodDateState extends State<FoodDate> {
             builder: (context, snapshot) {
               if (!snapshot.hasData) return const Text("Loading...");
               var foodDocument = snapshot.data;
-              int kcal = foodDocument['kcal'];
-              double kcal2 = (kcal.toDouble() / 100) * 300;
-              //   int kcal1 = (kcal * int.parse(_amountcontroller.text));
+              // Calorieën double
+              double kcal = ((foodDocument['kcal'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+              // Calorieën CO2
+              double co2 = ((foodDocument['co2'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+              // Calorieën Koolhydraten
+              double koolhy = ((foodDocument['carbs'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+              // Calorieën Eiwitten
+              double protein = ((foodDocument['proteins'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+              // Calorieën Vetten
+              double fat = ((foodDocument['fat'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+
               return Container(
                 child: Column(children: <Widget>[
                   Text(
                     "Naam ${foodDocument['name']}",
-                    // "${DateFormat('dd/MM/yyyy').format(trip['eatDate'].toDate()).toString()}"
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Calorieen ${kcal.toString()}",
+                    "Calorieën ${kcal.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Calorieen ${kcal2.toStringAsFixed(0)}",
+                    "Co2 ${co2.toStringAsFixed(2)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Co2 ${foodDocument['co2'].toString()}",
+                    "Koolhydraten ${koolhy.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Koolhydraten ${foodDocument['carbs'].toString()}",
+                    "Eiwitten ${protein.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Eiwitten ${foodDocument['proteins'].toString()}",
+                    "Vetten ${fat.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
-                  Text(
-                    "Vetten ${foodDocument['fat'].toString()}",
-                    style: new TextStyle(fontSize: 20.0),
-                  ),
-                  TextField(
-                    controller: _amountcontroller,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.linear_scale),
-                      helperText: "Put in the amount eaten in grams",
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: TextField(
+                      controller: _budgetController,
+                      maxLines: 1,
+                      maxLength: 4,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.linear_scale),
+                        helperText: "Hoeveel gram?",
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      autofocus: true,
                     ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    autofocus: true,
                   ),
-                  Spacer(),
+                  // Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: [
+                        RaisedButton(
+                          child: Text("Datum inname"),
+                          onPressed: () => _selectDate(context),
+                          // await displayDateRangePicker(context);
+                          //   },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                              "Datum: ${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
+                        )
+                      ],
+                    ),
+                  ),
+                  RaisedButton(
+                    child: Text("Sla op"),
+                    onPressed: () {
+                      //  widget.trip.startDate = _startDate;
+                      // widget.trip.endDate = _endDate;
+                      widget.trip.kcal = kcal;
+                      widget.trip.co2 = co2;
+                      widget.trip.carbs = koolhy;
+                      widget.trip.protein = protein;
+                      widget.trip.fat = fat;
+                      widget.trip.eatDate = _eattime;
+                      widget.trip.amount = (_budgetController.text == "")
+                          ? 0
+                          : double.parse(_budgetController.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                NewFoodSummaryView(trip: widget.trip)),
+                      );
+                    },
+                  ),
                 ]),
               );
             }),
@@ -140,19 +200,3 @@ class _FoodDateState extends State<FoodDate> {
     );
   }
 }
-
-//               ],
-//             ),
-//             RaisedButton(
-//               child: Text("Continue"),
-//               onPressed: () {
-//                 widget.trip.eatDate = _eattime;
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) =>
-//                           NewTripBudgetView(trip: widget.trip)),
-//                 );
-//               },
-//             ),
-        // .doc(widget.trip.id.toString())
