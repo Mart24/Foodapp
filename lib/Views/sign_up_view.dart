@@ -32,7 +32,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   void switchFormState(String state) {
     formKey.currentState.reset();
-    if (state == "signUp") {
+    if (state == "Registreer") {
       setState(() {
         authFormType = AuthFormType.signUp;
       });
@@ -65,7 +65,8 @@ class _SignUpViewState extends State<SignUpView> {
         } else if (authFormType == AuthFormType.reset) {
           await auth.sendPasswordResetEmail(_email);
           print("Password reset email sent");
-          _warning = "A password reset link has been sent to $_email";
+          _warning =
+              "Een herstel mail voor je wachtwoord is gestuurd naar $_email";
           setState(() {
             authFormType = AuthFormType.signIn;
           });
@@ -160,11 +161,11 @@ class _SignUpViewState extends State<SignUpView> {
   AutoSizeText buildHeaderText() {
     String _headerText;
     if (authFormType == AuthFormType.signUp) {
-      _headerText = "Start your mission";
+      _headerText = "Start jouw eetmissie";
     } else if (authFormType == AuthFormType.reset) {
-      _headerText = "Reset Password";
+      _headerText = "Reset Wachtwoord";
     } else {
-      _headerText = "Welkom back";
+      _headerText = "Welkom terug!";
     }
     return AutoSizeText(
       _headerText,
@@ -200,7 +201,7 @@ class _SignUpViewState extends State<SignUpView> {
         TextFormField(
           validator: NameValidator.validate,
           style: TextStyle(fontSize: 22.0),
-          decoration: buildSignUpInputDecoration("Name"),
+          decoration: buildSignUpInputDecoration("Naam"),
           onSaved: (value) => _name = value,
         ),
       );
@@ -222,7 +223,7 @@ class _SignUpViewState extends State<SignUpView> {
       TextFormField(
         validator: PasswordValidator.validate,
         style: TextStyle(fontSize: 22.0),
-        decoration: buildSignUpInputDecoration("Password"),
+        decoration: buildSignUpInputDecoration("Wachtwoord"),
         obscureText: true,
         onSaved: (value) => _password = value,
       ),
@@ -251,19 +252,19 @@ class _SignUpViewState extends State<SignUpView> {
     bool _showSocial = true;
 
     if (authFormType == AuthFormType.signIn) {
-      _switchButtonText = "No account yet? Register here";
-      _newFormState = "signUp";
+      _switchButtonText = "Nog geen account? Registeer hier";
+      _newFormState = "Registreer";
       _submitButtonText = "Log in";
       _showForgotPassword = true;
     } else if (authFormType == AuthFormType.reset) {
-      _switchButtonText = "Back to log in";
-      _newFormState = "signIn";
+      _switchButtonText = "Terug naar log in";
+      _newFormState = "Log in";
       _submitButtonText = "Ask email";
       _showSocial = false;
     } else {
-      _switchButtonText = "Already an account? Log in";
-      _newFormState = "signIn";
-      _submitButtonText = "Registrer";
+      _switchButtonText = "Al een account? Log in";
+      _newFormState = "Log in";
+      _submitButtonText = "Registreer";
     }
 
     return [
@@ -302,7 +303,7 @@ class _SignUpViewState extends State<SignUpView> {
     return Visibility(
       child: FlatButton(
         child: Text(
-          "Forgot Password?",
+          "Wachtwoord vergeten?",
           //   style: TextStyle(color: Colors.white),
         ),
         onPressed: () {

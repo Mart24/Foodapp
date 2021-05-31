@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
 import 'package:food_app/Views/home_view.dart';
-import 'package:food_app/Views/new_food_intake/Food_amount_intake.view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
-import 'package:food_app/Views/new_food_intake/search_food_view.dart';
-import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
+import 'package:food_app/Views/old_food_intake/search_food_view.dart';
 import 'Views/foodlistSQL.dart';
 import 'Views/new_food_registration.dart/0000food_search.dart';
 import 'Views/progress_view.dart';
@@ -30,7 +28,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final newTrip = Trip(null, null, null, null, null);
+    final newTrip =
+        Trip(null, null, null, null, null, null, null, null, null, null);
 
     return Scaffold(
       appBar: AppBar(
@@ -79,14 +78,14 @@ class _HomeState extends State<Home> {
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Diary"),
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Dagboek"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.restaurant), label: "Food"),
+                icon: Icon(Icons.restaurant), label: "Recepten"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.leaderboard), label: "Progress"),
+                icon: Icon(Icons.leaderboard), label: "Doelen"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person_pin), label: "Profile"),
-            BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
+                icon: Icon(Icons.person_pin), label: "Profiel"),
+            // BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
           ]),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

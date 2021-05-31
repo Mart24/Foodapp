@@ -4,6 +4,8 @@
 class FoodDataFirebase {
   final num productid;
   final String name;
+  DateTime eatDate;
+  double amound;
   final String categorie;
   final num ean;
   final bool plantbased;
@@ -88,4 +90,11 @@ class FoodDataFirebase {
       this.niacine,
       this.jodium,
       this.fosfor});
+
+  Map<String, dynamic> toJson() => {
+        'productname': productid,
+        'name': name,
+        'eatDate': eatDate,
+        'amount': amound,
+      };
 }

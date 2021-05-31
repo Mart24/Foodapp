@@ -74,13 +74,13 @@ class AuthService {
 class NameValidator {
   static String validate(String value) {
     if (value.isEmpty) {
-      return "Name can't be empty";
+      return "Naam kan niet leeg zijn";
     }
     if (value.length < 2) {
-      return "Name must be at least 2 characters long";
+      return "Minsten 2 tekens lang";
     }
     if (value.length > 50) {
-      return "Name must be less than 50 characters long";
+      return "Niet langer dan 50 tekens";
     }
     return null;
   }
@@ -89,7 +89,7 @@ class NameValidator {
 class EmailValidator {
   static String validate(String value) {
     if (value.isEmpty) {
-      return "Email can't be empty";
+      return "Email kan niet leeg zijn";
     }
     return null;
   }
@@ -98,7 +98,7 @@ class EmailValidator {
 class PasswordValidator {
   static String validate(String value) {
     if (value.isEmpty) {
-      return "Password can't be empty";
+      return "Wachtwoord kan niet leeg zijn";
     }
     return null;
   }
