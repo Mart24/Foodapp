@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           // Text('Climate Impact: 1,2kg Co2'),
           Text('Climate Impact: ...kg Co2'),
           Divider(),
-          Text("What have you eaten?", style: TextStyle(fontSize: 20)),
+          Text("Wat heb je gegeten?", style: TextStyle(fontSize: 20)),
           Expanded(
             child: StreamBuilder(
               stream: getUsersTripsStreamSnapshots(context),

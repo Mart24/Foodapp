@@ -5,9 +5,7 @@ import 'package:food_app/Views/home_view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/old_food_intake/search_food_view.dart';
-import 'Views/foodlistSQL.dart';
 import 'Views/new_food_registration.dart/0000food_search.dart';
-import 'Views/progress_view.dart';
 
 const colordarkgreen = const Color(0xFF7AA573);
 
@@ -21,9 +19,9 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     HomePage(),
     Foodpage(),
-    Progress(),
-    Profiel(),
     Lijstje(),
+    Profiel(),
+    //Lijstje(),
   ];
 
   @override
@@ -33,22 +31,11 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Foodapp"),
+        title: Text("Eetmissie"),
         backgroundColor: colordarkgreen,
         actions: [
           IconButton(
               icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewTripLocationView(
-                        trip: newTrip,
-                      ),
-                    ));
-              }),
-          IconButton(
-              icon: Icon(Icons.thumb_up),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -92,12 +79,12 @@ class _HomeState extends State<Home> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NewTripLocationView(
+                builder: (context) => NewFoodIntake(
                   trip: newTrip,
                 ),
               ));
         },
-        label: const Text('Food'),
+        label: const Text('Eten'),
         icon: const Icon(Icons.fastfood_outlined),
         backgroundColor: Colors.green,
       ),
