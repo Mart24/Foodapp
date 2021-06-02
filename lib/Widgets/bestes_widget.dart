@@ -37,13 +37,6 @@ class FoodList extends StatelessWidget {
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
                         ),
-                        // Text(
-                        //   ' ${contacts[index].name}  ${contacts[index].surname}',
-                        //   style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 18,
-                        //       fontWeight: FontWeight.bold),
-                        // ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
