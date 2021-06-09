@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
+import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/home_view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/old_food_intake/search_food_view.dart';
 import 'Views/new_food_registration.dart/0000food_search.dart';
+import 'Views/profile_view.dart';
 
 const colordarkgreen = const Color(0xFF7AA573);
 
@@ -32,7 +34,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Eetmissie"),
-        backgroundColor: colordarkgreen,
+        backgroundColor: kPrimaryColor,
         actions: [
           IconButton(
               icon: Icon(Icons.add),

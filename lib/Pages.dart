@@ -9,14 +9,14 @@ class Foodpage extends StatelessWidget {
   }
 }
 
-class Profiel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey,
-    );
-  }
-}
+// class Profiel extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: Colors.grey,
+//     );
+//   }
+// }
 
 class Lijstje extends StatelessWidget {
   @override

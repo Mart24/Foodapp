@@ -5,6 +5,7 @@ import 'package:date_range_picker/date_range_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
+// import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class HomePage extends StatefulWidget {
   // final List<Trip> Voedingsmiddelen = [

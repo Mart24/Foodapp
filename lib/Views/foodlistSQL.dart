@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Services/fooddata_service_json_.dart';
-import 'package:food_app/Views/food_good_amount.dart';
 
 class Foodpage extends StatefulWidget {
   final FooddataSQLJSON food;
@@ -78,13 +77,13 @@ class Testwidget extends StatelessWidget {
                 title: Text(snapshot.data[index].foodname),
                 // trailing: Text(snapshot.data[index].productid.toString()),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          Foodamound(snapshot.data[index].foodname),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         Foodamound(snapshot.data[index].foodname),
+                  //   ),
+                  // );
                 },
               );
             });
