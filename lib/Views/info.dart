@@ -8,8 +8,9 @@ class Info extends StatelessWidget {
     this.name,
     this.email,
     this.image,
+    this.created,
   }) : super(key: key);
-  final String name, email, image;
+  final String name, email, image, created;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,13 @@ class Info extends StatelessWidget {
                 SizedBox(height: defaultSize / 2), //5
                 Text(
                   email,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF8492A2),
+                  ),
+                ),
+                Text(
+                  created,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF8492A2),

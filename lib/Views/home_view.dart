@@ -2,10 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart';
+import 'package:food_app/Views/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
-// import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class HomePage extends StatefulWidget {
   // final List<Trip> Voedingsmiddelen = [
@@ -27,16 +28,90 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text('Kcal Eaten: ...'),
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('.... Gegeten'),
+                CircularPercentIndicator(
+                  radius: 125.0,
+                  lineWidth: 5.0,
+                  animation: true,
+                  backgroundColor: Colors.white,
+                  percent: 0.7,
+                  center: Text(
+                    "2000 Kcal",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  progressColor: kPrimaryColor,
+                  circularStrokeCap: CircularStrokeCap.round,
+                ),
+                Text('... Verbrand')
+              ],
+            ),
           ),
-          Text('Carbs Eaten: ...'),
-          Text('Fat Eaten: ...'),
-          Text('Proteins Eaten: ...'),
-          // Text('Climate Impact: 1,2kg Co2'),
-          Text('Climate Impact: ...kg Co2'),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    new LinearPercentIndicator(
+                      width: 100.0,
+                      lineHeight: 8.0,
+                      percent: 0.2,
+                      progressColor: Colors.red,
+                    ),
+                    Text('....Koolhydraten'),
+                  ],
+                ),
+                Column(
+                  children: [
+                    new LinearPercentIndicator(
+                      width: 100.0,
+                      lineHeight: 8.0,
+                      percent: 0.7,
+                      progressColor: Colors.yellow,
+                    ),
+                    Text('....Eiwitten'),
+                  ],
+                ),
+                Column(
+                  children: [
+                    new LinearPercentIndicator(
+                      width: 100.0,
+                      lineHeight: 8.0,
+                      percent: 0.3,
+                      progressColor: Colors.blue,
+                    ),
+                    Text('... Vetten'),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('Co2 ... kg ', style: TextStyle(fontSize: 20)),
+                new LinearPercentIndicator(
+                  width: 150.0,
+                  lineHeight: 15.0,
+                  percent: 0.7,
+                  progressColor: kPrimaryColor,
+                ),
+                Text('max 3.7 kg')
+              ],
+            ),
+          ),
           Divider(),
-          Text("Wat heb je gegeten?", style: TextStyle(fontSize: 20)),
+          Text(
+            "Wat heb je gegeten?",
+            style: TextStyle(fontSize: 20),
+          ),
           Expanded(
             child: StreamBuilder(
               stream: getUsersTripsStreamSnapshots(context),
