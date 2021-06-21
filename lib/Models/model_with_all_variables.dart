@@ -1,5 +1,6 @@
 // model if necessary I already made it with all the values.
-// This model is not used at this moment, but will probably be used later.
+// This model is not used at this moment, but will be used later.
+// Or the items can be added to the ingredients.dart model
 
 class FoodDataFirebase {
   final num productid;
