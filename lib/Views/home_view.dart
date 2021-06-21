@@ -3,25 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart';
 import 'package:food_app/Views/constants.dart';
+import 'package:food_app/Views/display_foodintake.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class HomePage extends StatefulWidget {
-  // final List<Trip> Voedingsmiddelen = [
-  //   Trip("New York", DateTime.now(), DateTime.now(), 200.00, "car"),
-  //   Trip("Boston", DateTime.now(), DateTime.now(), 450.00, "plane"),
-  //   Trip("Washington D.C.", DateTime.now(), DateTime.now(), 900.00, "bus"),
-  //   Trip("Austin", DateTime.now(), DateTime.now(), 170.00, "car"),
-  //   Trip("Scranton", DateTime.now(), DateTime.now(), 180.00, "car"),
-  //];
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  List<DocumentSnapshot> foods = [];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +26,7 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('.... Gegeten'),
+                Text('.... Eaten'),
                 CircularPercentIndicator(
                   radius: 125.0,
                   lineWidth: 5.0,
@@ -46,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                   progressColor: kPrimaryColor,
                   circularStrokeCap: CircularStrokeCap.round,
                 ),
-                Text('... Verbrand')
+                Text('... Burned')
               ],
             ),
           ),
@@ -63,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                       percent: 0.2,
                       progressColor: Colors.red,
                     ),
-                    Text('....Koolhydraten'),
+                    Text('....Carbs'),
                   ],
                 ),
                 Column(
@@ -74,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                       percent: 0.7,
                       progressColor: Colors.yellow,
                     ),
-                    Text('....Eiwitten'),
+                    Text('....Protein'),
                   ],
                 ),
                 Column(
@@ -85,49 +79,78 @@ class _HomePageState extends State<HomePage> {
                       percent: 0.3,
                       progressColor: Colors.blue,
                     ),
-                    Text('... Vetten'),
+                    Text('... Fat'),
                   ],
                 )
               ],
             ),
           ),
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 15.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+          //       Text('Co2 ... kg ', style: TextStyle(fontSize: 20)),
+          //       new LinearPercentIndicator(
+          //         width: 150.0,
+          //         lineHeight: 15.0,
+          //         percent: 0.7,
+          //         progressColor: kPrimaryColor,
+          //       ),
+          //       Text('max 3.7 kg')
+          //     ],
+          //   ),
+          // ),
+          Divider(),
           Padding(
-            padding: const EdgeInsets.only(top: 15.0),
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Co2 ... kg ', style: TextStyle(fontSize: 20)),
-                new LinearPercentIndicator(
-                  width: 150.0,
-                  lineHeight: 15.0,
-                  percent: 0.7,
-                  progressColor: kPrimaryColor,
+                Text(
+                  "Get extended overview",
+                  style: TextStyle(fontSize: 20),
                 ),
-                Text('max 3.7 kg')
+                Icon(Icons.arrow_drop_down)
               ],
             ),
           ),
-          Divider(),
           Text(
-            "Wat heb je gegeten?",
+            "<     19-06-2021     > ",
             style: TextStyle(fontSize: 20),
           ),
+
           Expanded(
             child: StreamBuilder(
               stream: getUsersTripsStreamSnapshots(context),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) return const Text("Loading...");
-                return new ListView.builder(
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (BuildContext context, int index) =>
-                      buildTripCard(context, snapshot.data.docs[index]),
-                );
+                if (snapshot.hasData) {
+                  foods = [];
+                  foods = snapshot.data.docs;
+                  print(foods);
+                  final allData =
+                      snapshot.data.docs.map((doc) => doc.data()).toList();
+                  print(allData);
+
+                  return ListView.builder(
+                    itemCount: snapshot.data.docs.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        buildTripCard(context, snapshot.data.docs[index]),
+                  );
+                }
+                return const Text("Loading...");
               },
             ),
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    getUsersTripsStreamSnapshots(context);
+    super.initState();
   }
 
   Stream<QuerySnapshot> getUsersTripsStreamSnapshots(
@@ -141,11 +164,16 @@ class _HomePageState extends State<HomePage> {
         .snapshots();
   }
 
-  Widget buildTripCard(BuildContext context, DocumentSnapshot trip) {
+  Widget buildTripCard(BuildContext context, DocumentSnapshot document) {
+    final trip = Trip.fromSnapshot(document);
     return Container(
       child: InkWell(
-        onDoubleTap: () {
-          print('hee');
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailFoodIntakeView(trip: trip)),
+          );
         },
         child: Card(
           child: Padding(
@@ -154,31 +182,33 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
-                  child: Row(children: <Widget>[
-                    AutoSizeText(
-                      trip['name'],
-                      // style: new TextStyle(fontSize: 20.0),
-                    ),
-                    Spacer(),
-                    Text("${trip['kcal'].toStringAsFixed(0)} Kcal"),
-                  ]),
+                  child: Row(
+                    children: <Widget>[
+                      AutoSizeText(
+                        trip.name,
+                        // style: new TextStyle(fontSize: 20.0),
+                      ),
+                      Spacer(),
+                      Text("${trip.kcal.toStringAsFixed(0)} Kcal"),
+                    ],
+                  ),
                 ),
-                Row(children: <Widget>[
-                  // Text(
-                  //     "${DateFormat('dd/MM/yyyy').format(trip['eatDate'].toDate()).toString()}" ??
-                  //         null),
-                ]),
+                // Row(children: <Widget>[
+                //   // Text(
+                //   //     "${DateFormat('dd/MM/yyyy').format(trip['eatDate'].toDate()).toString()}" ??
+                //   //         null),
+                // ]),
                 Row(
                   children: <Widget>[
                     Text(
-                      "${(trip['amount'] == null) ? "n/a" : trip['amount'].toStringAsFixed(0)} gram",
+                      "${(trip.amount == null) ? "n/a" : trip.amount.toStringAsFixed(0)} gram",
                       style: new TextStyle(fontSize: 15.0),
                     ),
                     Spacer(),
-                    //    Icon(Icons.emoji_nature),
-                    Text("${trip['co2'].toStringAsFixed(3)} co2"),
+                    //Icon(Icons.emoji_nature),
+                    // Text("${trip.co2.toStringAsFixed(3)} co2"),
                   ],
-                )
+                ),
               ],
             ),
           ),
