@@ -4,6 +4,12 @@ import 'package:food_app/Models/fooddata_json.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+// This is the class for the SQL database
+// I have the fooddata.db file in assets
+// This database lists the productid and the productname
+// Users can search for the productnames
+// When the food is selected, the firebase database queries the productid and show the correpsonding fooddata
+
 class DatabaseService {
   Database _db;
 
