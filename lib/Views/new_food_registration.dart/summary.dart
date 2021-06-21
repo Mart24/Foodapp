@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:path/path.dart';
 
+// Step 3: the users gets an overview of the food eaten
+
 class NewFoodSummaryView extends StatelessWidget {
   final db = FirebaseFirestore.instance;
 
@@ -43,6 +45,7 @@ class NewFoodSummaryView extends StatelessWidget {
                     .doc(uid)
                     .collection("food_intake")
                     .add(trip.toJson());
+                //sends user back to the dashboard page
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
             ),

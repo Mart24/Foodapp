@@ -3,11 +3,12 @@ import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Services/fooddata_service_json_.dart';
 import 'package:food_app/Views/new_food_registration.dart/food_amount.dart';
-import 'package:food_app/Widgets/divider_with_text_widget.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
-// This is the class for a new Food intake by the user
+// Step 1: his is the class for a new Food intake by the user
 // The data is clicked on then sended to food_amount.dart and then send to summary.dart
+// The item is caled Trip, because I used a trip database in this app. Renames breakes everything, so I let it be trips.
+// Trip can be seen as Food.
 
 class NewFoodIntake extends StatefulWidget {
   final Trip trip;

@@ -9,6 +9,10 @@ import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 
+// Step 2: The user chooses the amount he or she have eaten
+// The fooddata changes due to the budgetcontroller
+// When the users clicks on save, the data goes to the summary view.
+
 class FoodDate extends StatefulWidget {
   final Trip trip;
 

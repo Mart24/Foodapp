@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 
+// When user clicks on an item in the listview, the food can be seen and deleted.
+
 class DetailFoodIntakeView extends StatefulWidget {
   final Trip trip;
 

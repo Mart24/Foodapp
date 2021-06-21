@@ -4,7 +4,7 @@ import 'package:food_app/Models/fooddata_json.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-// This is the class for the SQL database
+// This is the class for the SQL database to let users search for food
 // I have the fooddata.db file in assets
 // This database lists the productid and the productname
 // Users can search for the productnames
