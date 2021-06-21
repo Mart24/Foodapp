@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'Navigation_widget.dart';
+import 'Widgets/Navigation_widget.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Views/sign_up_view.dart';
