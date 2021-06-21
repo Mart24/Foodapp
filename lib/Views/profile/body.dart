@@ -3,7 +3,7 @@ import 'package:food_app/Views/size_config.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:intl/intl.dart';
 
-import '../info.dart';
+import 'info.dart';
 import 'profile_menu_item.dart';
 
 class Body extends StatelessWidget {

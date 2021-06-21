@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Pages.dart';
 import 'package:food_app/Views/constants.dart';
-import 'package:food_app/Views/home_view.dart';
+import 'package:food_app/Views/dashboard_diary_view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'Views/new_food_registration.dart/food_search.dart';
@@ -65,13 +65,13 @@ class _HomeState extends State<Home> {
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Dagboek"),
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Diary"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.restaurant), label: "Recepten"),
+                icon: Icon(Icons.restaurant), label: "Recipes"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.leaderboard), label: "Doelen"),
+                icon: Icon(Icons.leaderboard), label: "Goals"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person_pin), label: "Profiel"),
+                icon: Icon(Icons.person_pin), label: "Profile"),
             // BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
           ]),
       floatingActionButton: FloatingActionButton.extended(
