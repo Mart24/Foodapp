@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
-import 'package:food_app/Views/new_food_registration.dart/0000summary.dart';
+import 'package:food_app/Views/new_food_registration.dart/summary.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -114,11 +114,11 @@ class _FoodDateState extends State<FoodDate> {
               return Container(
                 child: Column(children: <Widget>[
                   Text(
-                    "Naam ${foodDocument['name']}",
+                    "Name ${foodDocument['name']}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Calorieën ${kcal.toStringAsFixed(1)}",
+                    "Calories ${kcal.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
@@ -126,15 +126,15 @@ class _FoodDateState extends State<FoodDate> {
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Koolhydraten ${koolhy.toStringAsFixed(1)}",
+                    "Carbs ${koolhy.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Eiwitten ${protein.toStringAsFixed(1)}",
+                    "Protein ${protein.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Text(
-                    "Vetten ${fat.toStringAsFixed(1)}",
+                    "Fat ${fat.toStringAsFixed(1)}",
                     style: new TextStyle(fontSize: 20.0),
                   ),
                   Padding(
@@ -145,7 +145,7 @@ class _FoodDateState extends State<FoodDate> {
                       maxLength: 4,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.linear_scale),
-                        helperText: "Hoeveel gram?",
+                        helperText: "How many grams?",
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -158,7 +158,7 @@ class _FoodDateState extends State<FoodDate> {
                     child: Row(
                       children: [
                         RaisedButton(
-                          child: Text("Datum inname"),
+                          child: Text("Date intake"),
                           onPressed: () => _selectDate(context),
                           // await displayDateRangePicker(context);
                           //   },
@@ -172,7 +172,7 @@ class _FoodDateState extends State<FoodDate> {
                     ),
                   ),
                   RaisedButton(
-                    child: Text("Sla op"),
+                    child: Text("Save"),
                     onPressed: () {
                       //  widget.trip.startDate = _startDate;
                       // widget.trip.endDate = _endDate;
