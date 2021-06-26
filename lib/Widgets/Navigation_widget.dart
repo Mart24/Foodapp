@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Views/pages.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/dashboard_diary_view.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Services/auth_service.dart';
+import 'package:food_app/shared/dairy_cubit.dart';
 import '../Views/new_food_registration.dart/food_search.dart';
 import '../Views/profile/profile_view.dart';
 
@@ -27,11 +29,56 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final newTrip = Trip(null, null, null, null, null, null, null, null, null);
+    final newTrip = Trip(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        //null,
+        //  null,
+        // null,
+        // null,
+        // null,
+        // null,
+        // null,
+        // null,
+        // null,
+        // null,
+        // null,
+        // null,
+        null);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Foodapp"),
+        title: Text("Food App"),
         backgroundColor: kPrimaryColor,
         actions: [
           IconButton(
@@ -46,7 +93,7 @@ class _HomeState extends State<Home> {
                     ));
               }),
           IconButton(
-            icon: Icon(Icons.undo),
+            icon: Icon(Icons.logout),
             onPressed: () async {
               try {
                 AuthService auth = Provider.of(context).auth;

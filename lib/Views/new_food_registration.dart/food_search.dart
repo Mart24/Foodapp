@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Services/fooddata_service_json_.dart';
+import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/new_food_registration.dart/food_amount.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
@@ -30,7 +31,7 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search your product'),
-        backgroundColor: Color(0xFF7AA573),
+        backgroundColor: kPrimaryColor,
         actions: [
           IconButton(icon: Icon(Icons.camera_alt_outlined), onPressed: () {})
         ],

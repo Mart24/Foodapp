@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:path/path.dart';
 
+import '../constants.dart';
+
 // Step 3: the users gets an overview of the food eaten
 
 class NewFoodSummaryView extends StatelessWidget {
@@ -16,7 +18,7 @@ class NewFoodSummaryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF7AA573),
+          backgroundColor: kPrimaryColor,
           title: Text('Food Summary'),
         ),
         body: Center(
@@ -30,8 +32,11 @@ class NewFoodSummaryView extends StatelessWidget {
                 style: TextStyle(fontSize: 20.0),
               ),
             ),
-            Text("food ${trip.name}"),
-            Text(trip.carbs.toString()),
+            Text("food ${trip.name} "),
+            Text(" ${trip.kcal.toStringAsFixed(2)} calories"),
+            Text(" ${trip.carbs.toStringAsFixed(2)} carbs"),
+            Text(" ${trip.fat.toStringAsFixed(2)} fat"),
+            Text(" ${trip.protein.toStringAsFixed(2)} protein"),
             Text("amount ${trip.amount.toString()} gram"),
             Text(
                 "Food intake data ${trip.eatDate.day}-${trip.eatDate.month}-${trip.eatDate.year}"),

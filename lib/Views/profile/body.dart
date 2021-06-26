@@ -43,17 +43,17 @@ class Body extends StatelessWidget {
         SizedBox(height: SizeConfig.defaultSize * 2), //20
         ProfileMenuItem(
           iconSrc: "assets/icons/info.svg",
-          title: "Gegevens aanpassen",
+          title: "Change data",
           press: () {},
         ),
         ProfileMenuItem(
           iconSrc: "assets/icons/info.svg",
-          title: "Spaardoel Instellen",
+          title: "Set up goals",
           press: () {},
         ),
         ProfileMenuItem(
           iconSrc: "assets/icons/info.svg",
-          title: "Verwijder account",
+          title: "Delete account",
           press: () {},
         ),
         ProfileMenuItem(

@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/shared/dairy_cubit.dart';
 import 'Widgets/Navigation_widget.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
@@ -18,20 +20,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       auth: AuthService(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Test123',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
+      child: BlocProvider<DairyCubit>(
+        create: (BuildContext context) => DairyCubit(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Test123',
+          theme: ThemeData(
+            primarySwatch: Colors.green,
+          ),
+          home: HomeController(),
+          routes: <String, WidgetBuilder>{
+            '/signUp': (BuildContext context) =>
+                SignUpView(authFormType: AuthFormType.signUp),
+            '/signIn': (BuildContext context) =>
+                SignUpView(authFormType: AuthFormType.signIn),
+            '/home': (BuildContext context) => HomeController(),
+          },
         ),
-        home: HomeController(),
-        routes: <String, WidgetBuilder>{
-          '/signUp': (BuildContext context) =>
-              SignUpView(authFormType: AuthFormType.signUp),
-          '/signIn': (BuildContext context) =>
-              SignUpView(authFormType: AuthFormType.signIn),
-          '/home': (BuildContext context) => HomeController(),
-        },
       ),
     );
   }

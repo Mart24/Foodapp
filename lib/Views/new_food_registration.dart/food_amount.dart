@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/new_food_registration.dart/summary.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:intl/intl.dart';
@@ -82,8 +83,8 @@ class _FoodDateState extends State<FoodDate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF7AA573),
-        title: Text('Food - Date'),
+        backgroundColor: kPrimaryColor,
+        title: Text('Food - amount'),
       ),
       body: Center(
         child: StreamBuilder(
@@ -114,33 +115,212 @@ class _FoodDateState extends State<FoodDate> {
               double fat = ((foodDocument['fat'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
                   0.01.toDouble());
+              double saturatedfat = ((foodDocument['saturatedfat'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+              double sugars = ((foodDocument['sugars'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+              double dietaryfiber = ((foodDocument['dietaryfiber'].toDouble()) *
+                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  0.01.toDouble());
+              // double salt = ((foodDocument['salt'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double alcohol = ((foodDocument['alcohol'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double natrium = ((foodDocument['natrium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double kalium = ((foodDocument['kalium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double calcium = ((foodDocument['calcium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double magnesium = ((foodDocument['magnesium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double iron = ((foodDocument['iron'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double selenium = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double zink = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitA = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitB = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitC = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitE = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitB1 = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitB2 = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitB6 = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double vitB12 = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double foliumzuur = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double niacine = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double jodium = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
+              // double fosfor = ((foodDocument['selenium'].toDouble()) *
+              //     ((double.tryParse(_budgetController.text) ?? 100)) *
+              //     0.01.toDouble());
 
               return Container(
                 child: Column(children: <Widget>[
                   Text(
                     "Name ${foodDocument['name']}",
-                    style: new TextStyle(fontSize: 20.0),
+                    style: new TextStyle(fontSize: 16.0),
                   ),
-                  Text(
-                    "Calories ${kcal.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Calories ${kcal.toStringAsFixed(1)}",
+                        style: new TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        "Co2 ${co2.toStringAsFixed(2)}",
+                        style: new TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        "Carbs ${koolhy.toStringAsFixed(1)}",
+                        style: new TextStyle(fontSize: 16.0),
+                      ),
+                      Text(
+                        "Protein ${protein.toStringAsFixed(1)}",
+                        style: new TextStyle(fontSize: 16.0),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Co2 ${co2.toStringAsFixed(2)}",
-                    style: new TextStyle(fontSize: 20.0),
-                  ),
-                  Text(
-                    "Carbs ${koolhy.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 20.0),
-                  ),
-                  Text(
-                    "Protein ${protein.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 20.0),
-                  ),
+
                   Text(
                     "Fat ${fat.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 20.0),
+                    style: new TextStyle(fontSize: 16.0),
                   ),
+                  Text(
+                    "Saturatedfat ${saturatedfat.toStringAsFixed(1)}",
+                    style: new TextStyle(fontSize: 16.0),
+                  ),
+                  Text(
+                    "Sugars ${sugars.toStringAsFixed(1)}",
+                    style: new TextStyle(fontSize: 16.0),
+                  ),
+                  Text(
+                    "Dietary Fiver ${dietaryfiber.toStringAsFixed(1)}",
+                    style: new TextStyle(fontSize: 16.0),
+                  ),
+                  // Text(
+                  //   "salt ${salt.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "alcohol ${alcohol.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "natrium ${natrium.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "kalium ${kalium.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "calcium ${calcium.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "magnesium ${magnesium.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "iron ${iron.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "selenium ${selenium.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "zink ${zink.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitA ${vitA.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitB ${vitB.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitC ${vitC.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitE ${vitE.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitB1 ${vitB1.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitB2 ${vitB2.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitB6 ${vitB6.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitB12 ${vitB12.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "vitB6 ${vitB6.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "foliumzuur ${foliumzuur.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "niacine ${niacine.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "jodium ${jodium.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "fosfor ${fosfor.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: TextField(
@@ -185,6 +365,10 @@ class _FoodDateState extends State<FoodDate> {
                       widget.trip.carbs = koolhy;
                       widget.trip.protein = protein;
                       widget.trip.fat = fat;
+                      widget.trip.sugars = sugars;
+                      widget.trip.dietaryfiber = dietaryfiber;
+
+                      widget.trip.saturatedfat = saturatedfat;
                       widget.trip.eatDate = _eattime;
                       widget.trip.amount = (_budgetController.text == "")
                           ? 0

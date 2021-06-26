@@ -1,9 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/display_foodintake.dart';
+import 'package:food_app/Views/nutrition_details_page.dart';
+import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
@@ -16,75 +19,125 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<DocumentSnapshot> foods = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 15),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text('.... Eaten'),
-                CircularPercentIndicator(
-                  radius: 125.0,
-                  lineWidth: 5.0,
-                  animation: true,
-                  backgroundColor: Colors.white,
-                  percent: 0.7,
-                  center: Text(
-                    "2000 Kcal",
-                    style: TextStyle(fontSize: 20),
+          Text(
+            "<     19-06-2021     > ",
+            style: TextStyle(fontSize: 20),
+          ),
+          BlocConsumer<DairyCubit, DairyStates>(
+              listener: (BuildContext context, DairyStates states) {},
+              builder: (BuildContext context, DairyStates states) {
+                DairyCubit cubit = DairyCubit.instance(context);
+                double diff = 2000 - cubit.kCalSum;
+                return Column(children: [
+                  Container(
+                    margin: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${cubit.kCalSum.toStringAsFixed(0)} Eaten',
+                            style: TextStyle(
+                                color: Colors.red, fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: CircularPercentIndicator(
+                            radius: 125.0,
+                            lineWidth: 5.0,
+                            animation: true,
+                            backgroundColor: Colors.grey[350],
+                            percent: diff / 2000.0,
+                            center: Text(
+                              "${diff.toStringAsFixed(0)} Kcal",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            progressColor: kPrimaryColor,
+                            circularStrokeCap: CircularStrokeCap.round,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '.......... Burned',
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  progressColor: kPrimaryColor,
-                  circularStrokeCap: CircularStrokeCap.round,
-                ),
-                Text('... Burned')
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    new LinearPercentIndicator(
-                      width: 100.0,
-                      lineHeight: 8.0,
-                      percent: 0.2,
-                      progressColor: Colors.red,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            // new LinearPercentIndicator(
+                            //   width: 100.0,
+                            //   lineHeight: 8.0,
+                            //   percent: 0.2,
+                            //   progressColor: Colors.red,
+                            // ),
+                            Text('${cubit.carbs} Carbs'),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            // new LinearPercentIndicator(
+                            //   width: 100.0,
+                            //   lineHeight: 8.0,
+                            //   percent: 0.7,
+                            //   progressColor: Colors.yellow,
+                            // ),
+                            Text('${cubit.protein} Protein'),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            // new LinearPercentIndicator(
+                            //   width: 100.0,
+                            //   lineHeight: 8.0,
+                            //   percent: 0.3,
+                            //   progressColor: Colors.blue,
+                            // ),
+                            Text('${cubit.fats} Fat'),
+                          ],
+                        )
+                      ],
                     ),
-                    Text('....Carbs'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    new LinearPercentIndicator(
-                      width: 100.0,
-                      lineHeight: 8.0,
-                      percent: 0.7,
-                      progressColor: Colors.yellow,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      DairyCubit.instance(context).calcPercents();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => NutritionalDetailsPage()));
+                    },
+                    child: Text(
+                      "Get extended overview",
+                      style: TextStyle(fontSize: 20),
                     ),
-                    Text('....Protein'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    new LinearPercentIndicator(
-                      width: 100.0,
-                      lineHeight: 8.0,
-                      percent: 0.3,
-                      progressColor: Colors.blue,
-                    ),
-                    Text('... Fat'),
-                  ],
-                )
-              ],
-            ),
-          ),
+                  ),
+                ]);
+              }),
+
           // Padding(
           //   padding: const EdgeInsets.only(top: 15.0),
           //   child: Row(
@@ -101,36 +154,34 @@ class _HomePageState extends State<HomePage> {
           //     ],
           //   ),
           // ),
-          Divider(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Get extended overview",
-                  style: TextStyle(fontSize: 20),
-                ),
-                Icon(Icons.arrow_drop_down)
-              ],
-            ),
-          ),
-          Text(
-            "<     19-06-2021     > ",
-            style: TextStyle(fontSize: 20),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom: 8.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Text(
+          //         "Get extended overview",
+          //         style: TextStyle(fontSize: 20),
+          //       ),
+          //       Icon(Icons.arrow_drop_down)
+          //     ],
+          //   ),
+          // ),
 
           Expanded(
             child: StreamBuilder(
               stream: getUsersTripsStreamSnapshots(context),
-              builder: (context, snapshot) {
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
                   foods = [];
                   foods = snapshot.data.docs;
                   print(foods);
-                  final allData =
-                      snapshot.data.docs.map((doc) => doc.data()).toList();
+                  DairyCubit.instance(context).sumAll(foods);
+                  final allData = snapshot.data.docs.map((doc) {
+                    return doc.data();
+                  }).toList();
                   print(allData);
+                  //print('EatDate: ${foods[0].data()['eatDate'].toDate()}');
 
                   return ListView.builder(
                     itemCount: snapshot.data.docs.length,
@@ -156,12 +207,30 @@ class _HomePageState extends State<HomePage> {
   Stream<QuerySnapshot> getUsersTripsStreamSnapshots(
       BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* FirebaseFirestore.instance
+    var now = DateTime.now();
+    var start = Timestamp.fromDate(DateTime(now.year, now.month, now.day));
+    var end =
+        Timestamp.fromDate(DateTime(now.year, now.month, now.day, 23, 59, 59));
+    print('Now: $now');
+    print('Start: ${start.toDate()}');
+    print('End: ${end.toDate()}');
+    Stream<QuerySnapshot> myStream = FirebaseFirestore.instance
         .collection('userData')
         .doc(uid)
         .collection('food_intake')
+        .where('eatDate', isGreaterThanOrEqualTo: start)
+        .where('eatDate', isLessThanOrEqualTo: end)
         .orderBy("eatDate", descending: true)
         .snapshots();
+
+    // double sum=0;
+    // myStream.first.then((value) {
+    //   value.docs.forEach((element) {
+    //    sum += element.data()['kcal'];
+    //
+    //   });
+    // }).then((value) => print(sum));
+    yield* myStream;
   }
 
   Widget buildTripCard(BuildContext context, DocumentSnapshot document) {
