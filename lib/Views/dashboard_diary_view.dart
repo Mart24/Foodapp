@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart';
 import 'package:food_app/Views/constants.dart';
@@ -26,175 +28,226 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.only(top: 15),
       child: Column(
         children: <Widget>[
-          Text(
-            "<     19-06-2021     > ",
-            style: TextStyle(fontSize: 20),
-          ),
-          BlocConsumer<DairyCubit, DairyStates>(
-              listener: (BuildContext context, DairyStates states) {},
-              builder: (BuildContext context, DairyStates states) {
-                DairyCubit cubit = DairyCubit.instance(context);
-                double diff = 2000 - cubit.kCalSum;
-                double diffco2 = 6 - cubit.co2Sum;
-                return Column(children: [
-                  Container(
-                    margin: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '${cubit.kCalSum.toStringAsFixed(0)} Eaten',
-                            style: TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: CircularPercentIndicator(
-                            radius: 125.0,
-                            lineWidth: 5.0,
-                            animation: true,
-                            backgroundColor: Colors.grey[350],
-                            // percent: diff / 2000.0,
-                            percent: 0.5,
-                            center: Text(
-                              "${diff.toStringAsFixed(0)} Kcal",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            progressColor: kPrimaryColor,
-                            circularStrokeCap: CircularStrokeCap.round,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '.......... Burned',
-                            style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold),
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            // new LinearPercentIndicator(
-                            //   width: 100.0,
-                            //   lineHeight: 8.0,
-                            //   percent: 0.2,
-                            //   progressColor: Colors.red,
-                            // ),
-                            Text('${cubit.carbs} Carbs'),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            // new LinearPercentIndicator(
-                            //   width: 100.0,
-                            //   lineHeight: 8.0,
-                            //   percent: 0.7,
-                            //   progressColor: Colors.yellow,
-                            // ),
-                            Text('${cubit.protein} Protein'),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            // new LinearPercentIndicator(
-                            //   width: 100.0,
-                            //   lineHeight: 8.0,
-                            //   percent: 0.3,
-                            //   progressColor: Colors.blue,
-                            // ),
-                            Text('${cubit.fats} Fat'),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      DairyCubit.instance(context).calcPercents();
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => NutritionalDetailsPage()));
-                    },
-                    child: Text(
-                      "Overview nutrients",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('Co2 ${cubit.co2Sum.toStringAsFixed(0)} kg ',
-                            style: TextStyle(fontSize: 20)),
-                        new LinearPercentIndicator(
-                          width: 150.0,
-                          lineHeight: 15.0,
-                          percent: 0.7,
-                          progressColor: kPrimaryColor,
-                        ),
-                        Text('max 3.7 kg')
-                      ],
-                    ),
-                  ),
-                ]);
-              }),
-
-          // Padding(
-          //   padding: const EdgeInsets.only(bottom: 8.0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       Text(
-          //         "Get extended overview",
-          //         style: TextStyle(fontSize: 20),
-          //       ),
-          //       Icon(Icons.arrow_drop_down)
-          //     ],
-          //   ),
-          // ),
-
           Expanded(
-            child: StreamBuilder(
-              stream: getUsersTripsStreamSnapshots(context),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  foods = [];
-                  foods = snapshot.data.docs;
-                  print(foods);
-                  DairyCubit.instance(context).sumAll(foods);
-                  final allData = snapshot.data.docs.map((doc) {
-                    return doc.data();
-                  }).toList();
-                  print(allData);
-                  //print('EatDate: ${foods[0].data()['eatDate'].toDate()}');
-
-                  return ListView.builder(
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        buildTripCard(context, snapshot.data.docs[index]),
-                  );
-                }
-                return const Text("Loading...");
-              },
-            ),
+            child: BlocConsumer<DairyCubit, DairyStates>(
+                listener: (BuildContext context, DairyStates states) {
+              if (states is CurrentDateUpdated) {
+                print('current date updated');
+              } else if (states is GetUserTripsListState) {
+                DairyCubit.instance(context).sumAll();
+              }
+            }, builder: (BuildContext context, DairyStates states) {
+              DairyCubit cubit = DairyCubit.instance(context);
+              double diff = cubit.kCalSum;
+              double circularPercent = diff / 2000.0;
+              if (circularPercent < 0) {
+                circularPercent = 0;
+              }
+              double diff2 = cubit.co2Sum;
+              double barPercent = diff2 / 3.7;
+              if (barPercent < 0) {
+                barPercent = 0;
+              }
+              return Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        cubit.updateCurrentDate(
+                            cubit.currentDate.subtract(Duration(days: 1)));
+                      },
+                      icon: Icon(Icons.arrow_back_ios_sharp),
+                      splashRadius: 28,
+                      iconSize: 20,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          DatePicker.showDatePicker(
+                            context,
+                            showTitleActions: true,
+                            theme: DatePickerTheme(),
+                            currentTime: cubit.currentDate ?? DateTime.now(),
+                            minTime: DateTime(DateTime.now().year - 20),
+                            maxTime: DateTime(DateTime.now().year + 20),
+                            onChanged: (date) {
+                              print('change $date');
+                            },
+                            onConfirm: (date) {
+                              print('confirm $date');
+                              cubit.updateCurrentDate(date);
+                            },
+                            locale: LocaleType.en,
+                          );
+                        },
+                        child: Text(
+                          '${DateFormat.yMMMMd().format(cubit.currentDate)}',
+                          style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        )),
+                    IconButton(
+                      onPressed: () {
+                        cubit.updateCurrentDate(
+                            cubit.currentDate.add(Duration(days: 1)));
+                      },
+                      icon: Icon(Icons.arrow_forward_ios_sharp),
+                      splashRadius: 28,
+                      iconSize: 20,
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '${cubit.kCalSum.toStringAsFixed(0)} Eaten',
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.bold),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: CircularPercentIndicator(
+                          radius: 125.0,
+                          lineWidth: 5.0,
+                          animation: true,
+                          backgroundColor: Colors.grey[350],
+                          percent: circularPercent,
+                          center: Text(
+                            "${diff.toStringAsFixed(0)} Kcal",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          progressColor: kPrimaryColor,
+                          circularStrokeCap: CircularStrokeCap.round,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          '.......... Burned',
+                          style: TextStyle(
+                              color: Colors.green, fontWeight: FontWeight.bold),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 7.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          // new LinearPercentIndicator(
+                          //   width: 100.0,
+                          //   lineHeight: 8.0,
+                          //   percent: 0.2,
+                          //   progressColor: Colors.red,
+                          // ),
+                          Text('${cubit.carbs}g Carbs'),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          // new LinearPercentIndicator(
+                          //   width: 100.0,
+                          //   lineHeight: 8.0,
+                          //   percent: 0.7,
+                          //   progressColor: Colors.yellow,
+                          // ),
+                          Text('${cubit.protein}g Protein'),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          // new LinearPercentIndicator(
+                          //   width: 100.0,
+                          //   lineHeight: 8.0,
+                          //   percent: 0.3,
+                          //   progressColor: Colors.blue,
+                          // ),
+                          Text('${cubit.fats}g Fat'),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 7.0, bottom: 7.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // Text('Co2 ${cubit.co2Sum.toStringAsFixed(1)} kg ',
+                      //     style: TextStyle(fontSize: 20)),
+                      RichText(
+                          text: TextSpan(
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                              children: <TextSpan>[
+                            TextSpan(text: 'Co2 '),
+                            TextSpan(
+                              text: '${cubit.co2Sum.toStringAsFixed(1)}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kPrimaryColor),
+                            ),
+                            TextSpan(
+                                text: 'kg', style: TextStyle(fontSize: 12)),
+                          ])),
+                      new LinearPercentIndicator(
+                        animation: true,
+                        width: 150.0,
+                        lineHeight: 15.0,
+                        percent: barPercent,
+                        progressColor: kPrimaryColor,
+                      ),
+                      Text('max 3.7 kg')
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    DairyCubit.instance(context).calcPercents();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => NutritionalDetailsPage()));
+                  },
+                  child: Text(
+                    "Get extended overview",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                Expanded(
+                  child: Builder(
+                    builder: (context) {
+                      if (cubit.tripsList.isNotEmpty) {
+                        // cubit.sumAll();
+                        return ListView.builder(
+                          itemCount: cubit.tripsList.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              buildTripCard(context, cubit.tripsList[index]),
+                        );
+                      }
+                      return const Text("No items entered...");
+                    },
+                  ),
+                ),
+              ]);
+            }),
           ),
         ],
       ),
@@ -203,14 +256,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    getUsersTripsStreamSnapshots(context);
+    // getUsersTripsStreamSnapshots(context);
     super.initState();
   }
 
   Stream<QuerySnapshot> getUsersTripsStreamSnapshots(
       BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    var now = DateTime.now();
+    // var now =cubit.currentDate;
+    var now = (DairyCubit.instance(context) == null)
+        ? DateTime.now()
+        : DairyCubit.instance(context).currentDate;
     var start = Timestamp.fromDate(DateTime(now.year, now.month, now.day));
     var end =
         Timestamp.fromDate(DateTime(now.year, now.month, now.day, 23, 59, 59));
@@ -278,7 +334,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Spacer(),
                     //Icon(Icons.emoji_nature),
-                    Text("${trip.co2.toStringAsFixed(3)} co2"),
+                    Text("${trip.co2.toStringAsFixed(1)} co2"),
                   ],
                 ),
               ],
@@ -289,3 +345,31 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
+// Expanded(
+//   child: StreamBuilder(
+//     stream: getUsersTripsStreamSnapshots(context ),
+//     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//       if (snapshot.hasData) {
+//         foods = [];
+//         foods = snapshot.data.docs;
+//         print(foods);
+//         DairyCubit.instance(context).sumAll();
+//         final allData = snapshot.data.docs.map((doc) {
+//           return doc.data();
+//         }).toList();
+//         print(allData);
+//         //print('EatDate: ${foods[0].data()['eatDate'].toDate()}');
+//
+//         return ListView.builder(
+//           itemCount: snapshot.data.docs.length,
+//           itemBuilder: (BuildContext context, int index) =>
+//               buildTripCard(context, snapshot.data.docs[index]),
+//         );
+//       }
+//       return const Text("Loading...");
+//     },
+//   ),
+// ),

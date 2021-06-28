@@ -42,28 +42,36 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       key: introKey,
       pages: [
         PageViewModel(
-          title: "Het eten op ons bord komt van over de hele wereld",
+          // title: "Het eten op ons bord komt van over de hele wereld",
+          // body:
+          //     "Het komt binnen middels vliegtuig, boot, trein, vrachtwagen en noem maar op",
+          title: "The food on our plate comes from all over the world",
           body:
-              "Het komt binnen middels vliegtuig, boot, trein, vrachtwagen en noem maar op",
+              "It is imported by plane, boat, train, truck, from a lot of different countries",
           image: _buildImage('img1'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Veel producten leggen een zware last op het milieu",
-          body: "Zo komt bij de productie van vlees en zuivel veel CO² vrij",
+          // title: "Veel producten leggen een zware last op het milieu",
+          // body: "Zo komt bij de productie van vlees en zuivel veel CO² vrij",
+          title: "Some of these products have a higher negative impact",
+          body:
+              "A lot of CO² emissions come for example from the production of meat and dairy products",
           image: _buildImage('img2'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Ontwikkel daarom een duurzaam eetpatroon",
-          body: "Met Eetmissie was een duurzaam eten nog nooit zo makkelijk",
+          // title: "Ontwikkel daarom een duurzaam eetpatroon",
+          // body: "Met Eetmissie was een duurzaam eten nog nooit zo makkelijk",
+          title: "Develop a healthy and sustainable diet",
+          body: "With Eatmission, sustainable choices have never been easier.",
           image: _buildImage('img3'),
           footer: RaisedButton(
             onPressed: () {
               _onIntroEnd(context);
             },
             child: const Text(
-              'Laten we beginnen!',
+              'Lets start!',
               style: TextStyle(color: Colors.white),
             ),
             color: colordarkgreen,
@@ -98,7 +106,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       showSkipButton: true,
       skipFlex: 0,
       nextFlex: 0,
-      skip: const Text('Sla over'),
+      skip: const Text('Skip'),
       next: const Icon(Icons.arrow_forward),
       done: const Text('Start!', style: TextStyle(fontWeight: FontWeight.w600)),
       dotsDecorator: const DotsDecorator(

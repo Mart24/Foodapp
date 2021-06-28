@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return Provider(
       auth: AuthService(),
       child: BlocProvider<DairyCubit>(
-        create: (BuildContext context) => DairyCubit(),
+        create: (BuildContext context) => DairyCubit()..getUsersTripsList(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Test123',
