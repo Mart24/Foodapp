@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context, DairyStates states) {
                 DairyCubit cubit = DairyCubit.instance(context);
                 double diff = 2000 - cubit.kCalSum;
+                double diffco2 = 6 - cubit.co2Sum;
                 return Column(children: [
                   Container(
                     margin: const EdgeInsets.all(10.0),
@@ -58,7 +59,8 @@ class _HomePageState extends State<HomePage> {
                             lineWidth: 5.0,
                             animation: true,
                             backgroundColor: Colors.grey[350],
-                            percent: diff / 2000.0,
+                            // percent: diff / 2000.0,
+                            percent: 0.5,
                             center: Text(
                               "${diff.toStringAsFixed(0)} Kcal",
                               style: TextStyle(fontSize: 20),
@@ -131,29 +133,30 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => NutritionalDetailsPage()));
                     },
                     child: Text(
-                      "Get extended overview",
+                      "Overview nutrients",
                       style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Co2 ${cubit.co2Sum.toStringAsFixed(0)} kg ',
+                            style: TextStyle(fontSize: 20)),
+                        new LinearPercentIndicator(
+                          width: 150.0,
+                          lineHeight: 15.0,
+                          percent: 0.7,
+                          progressColor: kPrimaryColor,
+                        ),
+                        Text('max 3.7 kg')
+                      ],
                     ),
                   ),
                 ]);
               }),
 
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 15.0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //     children: [
-          //       Text('Co2 ... kg ', style: TextStyle(fontSize: 20)),
-          //       new LinearPercentIndicator(
-          //         width: 150.0,
-          //         lineHeight: 15.0,
-          //         percent: 0.7,
-          //         progressColor: kPrimaryColor,
-          //       ),
-          //       Text('max 3.7 kg')
-          //     ],
-          //   ),
-          // ),
           // Padding(
           //   padding: const EdgeInsets.only(bottom: 8.0),
           //   child: Row(
@@ -275,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Spacer(),
                     //Icon(Icons.emoji_nature),
-                    // Text("${trip.co2.toStringAsFixed(3)} co2"),
+                    Text("${trip.co2.toStringAsFixed(3)} co2"),
                   ],
                 ),
               ],

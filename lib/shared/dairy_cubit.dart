@@ -21,6 +21,7 @@ class DairyCubit extends Cubit<DairyStates> {
   double sugars = 0;
   double saturatedFat = 0;
   double dietaryFiber = 0;
+  double co2Sum = 0;
 
   double fatPercent = 0;
   double carbsPercent = 0;
@@ -34,51 +35,62 @@ class DairyCubit extends Cubit<DairyStates> {
   //   sum += amount;
   //   emit(SumUpdated());
   // }
-
   void sumAll(List<QueryDocumentSnapshot> list) {
     print('sum called');
-    kCalSum = carbs = fats = protein = sugars = saturatedFat = dietaryFiber = 0;
+    kCalSum = co2Sum =
+        carbs = fats = protein = sugars = saturatedFat = dietaryFiber = 0;
     List<num> ids = [];
     list.forEach((element) {
       Map<String, dynamic> data = element.data();
       kCalSum += data['kcal'];
+      co2Sum += data['co2'];
       carbs += data['carbs'];
       fats += data['fat'];
       protein += data['protein'];
+      sugars += data['sugars'];
+      saturatedFat += data['saturatedfat'];
+      dietaryFiber += data['dietaryfiber'];
       ids.add(data['productid']);
     });
 
-    _sumSugars(ids);
+    //_sumSugars(ids);
     kCalSum = double.parse(kCalSum.toStringAsFixed(2));
+    co2Sum = double.parse(co2Sum.toStringAsFixed(2));
     carbs = double.parse(carbs.toStringAsFixed(2));
     fats = double.parse(fats.toStringAsFixed(2));
     protein = double.parse(protein.toStringAsFixed(2));
+    sugars = double.parse(sugars.toStringAsFixed(2));
+    saturatedFat = double.parse(saturatedFat.toStringAsFixed(2));
+    dietaryFiber = double.parse(dietaryFiber.toStringAsFixed(2));
     emit(SumBasicUpdated());
     print('energy' + kCalSum.toString());
     print('carbs: $carbs');
     print('carbs: $fats');
     print('protein: $protein');
+    print('sugars: $sugars');
+    print('saturatedFat: $saturatedFat');
+    print('dietaryFiber: $dietaryFiber');
   }
 
-  Future<void> _sumSugars(List<num> ids) async {
-    print('SumSugars called');
-    sugars = saturatedFat = dietaryFiber = 0;
-    FirebaseFirestore.instance
-        .collection('fdd')
-        .where('productid', whereIn: ids)
-        .get()
-        .then((value) {
-      List<QueryDocumentSnapshot> docs = value.docs;
-      docs.forEach((element) {
-        print('element ${element.id}');
-        sugars += element.data()['sugars'];
-        saturatedFat += element.data()['saturatedfat'];
-        dietaryFiber += element.data()['dietaryfiber'];
-      });
+  // Future<void> _sumSugars(List<num> ids) async {
+  //   print('SumSugars called');
+  //   sugars = saturatedFat = dietaryFiber = 0;
+  //   FirebaseFirestore.instance
+  //       .collection('fdd')
+  //       .where('productid', whereIn: ids)
+  //       .get()
+  //       .then((value) {
+  //     List<QueryDocumentSnapshot> docs = value.docs;
+  //     docs.forEach((element) {
+  //       print('element ${element.id}');
+  //       sugars += element.data()['sugars'];
+  //       saturatedFat += element.data()['saturatedfat'];
+  //       dietaryFiber += element.data()['dietaryfiber'];
+  //     });
 
-      emit(SumOtherUpdated());
-    });
-  }
+  //     emit(SumOtherUpdated());
+  //   });
+  // }
 
   void calcPercents() {
     fatPercent = carbsPercent = proteinPercent =
@@ -92,15 +104,15 @@ class DairyCubit extends Cubit<DairyStates> {
     dietaryFiberPercent = dietaryFiber / carbs;
     saturatedFatPercent = saturatedFat / fats;
 
-    fatPercent = double.parse((fatPercent * 100).toStringAsFixed(2));
-    carbsPercent = double.parse((carbsPercent * 100).toStringAsFixed(2));
-    proteinPercent = double.parse((proteinPercent * 100).toStringAsFixed(2));
+    fatPercent = double.parse((fatPercent * 100).toStringAsFixed(1));
+    carbsPercent = double.parse((carbsPercent * 100).toStringAsFixed(1));
+    proteinPercent = double.parse((proteinPercent * 100).toStringAsFixed(1));
 
-    sugarsPercent = double.parse((sugarsPercent * 100).toStringAsFixed(2));
+    sugarsPercent = double.parse((sugarsPercent * 100).toStringAsFixed(1));
     dietaryFiberPercent =
-        double.parse((dietaryFiberPercent * 100).toStringAsFixed(2));
+        double.parse((dietaryFiberPercent * 100).toStringAsFixed(1));
     saturatedFatPercent =
-        double.parse((saturatedFatPercent * 100).toStringAsFixed(2));
+        double.parse((saturatedFatPercent * 100).toStringAsFixed(1));
 
     emit(PercentsUpdated());
     print('Fat Percent: $fatPercent');

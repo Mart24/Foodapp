@@ -13,7 +13,7 @@ class NutritionalDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nutritional Details'),
+        title: Text('Voedings Details'),
       ),
       body: BlocConsumer<DairyCubit, DairyStates>(
           listener: (BuildContext context, DairyStates states) {},
@@ -43,18 +43,19 @@ class NutritionalDetailsPage extends StatelessWidget {
                             chartValueBackgroundColor: Colors.transparent,
                           ),
                           colorList: [
-                            Colors.blue[700],
+                            Colors.green[200],
                             Colors.teal[200],
-                            Colors.deepPurple
+                            Colors.red[200]
                           ],
                           animationDuration: Duration(seconds: 1),
                           dataMap: {
-                            '${cubit.fatPercent}% Fat': cubit.fatPercent,
-                            '${cubit.carbsPercent}% Carbs': cubit.carbsPercent,
-                            '${cubit.proteinPercent}% Protein':
+                            '${cubit.fatPercent}% Vet': cubit.fatPercent,
+                            '${cubit.carbsPercent}% Koolhydraten':
+                                cubit.carbsPercent,
+                            '${cubit.proteinPercent}% Eiwitten':
                                 cubit.proteinPercent,
                           },
-                          centerText: '${cubit.kCalSum} kCal',
+                          centerText: '${cubit.kCalSum} Calorieën',
                           chartType: ChartType.ring,
                         ),
                       ],
@@ -62,7 +63,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                   ),
                   TextButton(
                     child: Text(
-                      'Macroutrients',
+                      'Macronutriënten',
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontSize: 20,
@@ -92,7 +93,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                'Energy',
+                                'Energie',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -102,16 +103,20 @@ class NutritionalDetailsPage extends StatelessWidget {
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              '${(((2000 - cubit.kCalSum) / 2000) * 100).toStringAsFixed(2)} %',
+                              '${(100 - ((2000 - cubit.kCalSum) / 2000) * 100).toStringAsFixed(1)} %',
                               style: TextStyle(fontSize: 16),
                             ),
+                            // Text(
+                            //   '100 %',
+                            //   style: TextStyle(fontSize: 16),
+                            // ),
                           ]),
                           TableRow(children: [
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                'Protein',
+                                'Totaal eiwitten',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -130,7 +135,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                'Total fat',
+                                'Totaal vet',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -149,13 +154,13 @@ class NutritionalDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                '        Saturated fat',
+                                '        Verzadigd vet',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Text(
-                              '${cubit.saturatedFat}g',
+                              '${cubit.saturatedFat} g',
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
@@ -168,7 +173,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                'Total Carbohydrate',
+                                'Totaal koolhydraten',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -187,7 +192,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                '        Dietary Fiber',
+                                '        Vezels',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -206,7 +211,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 10.0),
                               child: Text(
-                                '        Sugars',
+                                '        Suiker',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -242,7 +247,18 @@ class NutritionalDetailsPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  TextButton(
+                    child: Text(
+                      'Micronutriënten',
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: null,
+                  ),
                 ],
               ),
             );
