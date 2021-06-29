@@ -97,6 +97,8 @@ class _HomeState extends State<Home> {
             onPressed: () async {
               try {
                 AuthService auth = Provider.of(context).auth;
+                DairyCubit.instance(context).init();
+                // DairyCubit.instance(context).getUsersTripsList();
                 await auth.signOut();
                 print("Signed Out!");
               } catch (e) {

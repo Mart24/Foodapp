@@ -35,17 +35,33 @@ class DairyCubit extends Cubit<DairyStates> {
 
   DateTime currentDate = DateTime.now();
 
-  //
-  // void sumKcal(double amount) {
-  //   sum += amount;
-  //   emit(SumUpdated());
-  // }
+  void init() {
+    tripsList = [];
+    kCalSum = 0;
+    carbs = 0;
+    protein = 0;
+    fats = 0;
+    sugars = 0;
+    saturatedFat = 0;
+    dietaryFiber = 0;
+    co2Sum = 0;
 
-  void sumAll() {
+    fatPercent = 0;
+    carbsPercent = 0;
+    proteinPercent = 0;
+    sugarsPercent = 0;
+    saturatedFatPercent = 0;
+    dietaryFiberPercent = 0;
+
+    currentDate = DateTime.now();
+  }
+
+  void sumAll([List<DocumentSnapshot> givenTripsList]) {
     print('sum called');
     kCalSum = co2Sum =
         carbs = fats = protein = sugars = saturatedFat = dietaryFiber = 0;
-    List<num> ids = [];
+    // List<num> ids = [];
+
     tripsList.forEach((element) {
       Map<String, dynamic> data = element.data();
       kCalSum += data['kcal'];
@@ -77,28 +93,6 @@ class DairyCubit extends Cubit<DairyStates> {
     print('saturatedFat: $saturatedFat');
     print('dietaryFiber: $dietaryFiber');
   }
-
-  // Future<void> _sumSugars(List<num> ids) async {
-  //   print('SumSugars called');
-  //   sugars = saturatedFat = dietaryFiber = 0;
-  //   if (ids.isNotEmpty) {
-  //     FirebaseFirestore.instance
-  //         .collection('fdd')
-  //         .where('productid', whereIn: ids)
-  //         .get()
-  //         .then((value) {
-  //       List<QueryDocumentSnapshot> docs = value.docs;
-  //       docs.forEach((element) {
-  //         print('element ${element.id}');
-  //         sugars += element.data()['sugars'];
-  //         saturatedFat += element.data()['saturatedfat'];
-  //         dietaryFiber += element.data()['dietaryfiber'];
-  //       });
-
-  //    emit(SumOtherUpdated());
-  //   });
-  // }
-  // }
 
   void calcPercents() {
     fatPercent = carbsPercent = proteinPercent =
@@ -133,12 +127,11 @@ class DairyCubit extends Cubit<DairyStates> {
     print('dietaryFiber Percent: $dietaryFiberPercent');
   }
 
-  void updateCurrentDate(
-    DateTime date,
-  ) {
+  void updateCurrentDate(DateTime date) {
     currentDate = date;
     emit(CurrentDateUpdated());
-    getUsersTripsList();
+    // getUsersTripsList();
+    getUsersTripsStreamSnapshots();
   }
 
   Future<void> getUsersTripsList() async {
@@ -164,5 +157,41 @@ class DairyCubit extends Cubit<DairyStates> {
       tripsList = myList;
       emit(GetUserTripsListState());
     });
+  }
+
+  Stream<QuerySnapshot> myStream;
+
+  Future<void> getUsersTripsStreamSnapshots() async {
+    // final uid = await Provider.of(context).auth.getCurrentUID();
+    final uid = FirebaseAuth.instance.currentUser.uid;
+
+    // var now =cubit.currentDate;
+    var now = currentDate;
+    var start = Timestamp.fromDate(DateTime(now.year, now.month, now.day));
+    var end =
+        Timestamp.fromDate(DateTime(now.year, now.month, now.day, 23, 59, 59));
+    print('Now: $now');
+    print('Start: ${start.toDate()}');
+    print('End: ${end.toDate()}');
+    myStream = FirebaseFirestore.instance
+        .collection('userData')
+        .doc(uid)
+        .collection('food_intake')
+        .where('eatDate', isGreaterThanOrEqualTo: start)
+        .where('eatDate', isLessThanOrEqualTo: end)
+        .orderBy("eatDate", descending: true)
+        .snapshots();
+
+
+    myStream.listen((event) {
+      print('stream listener');
+      getUsersTripsList();
+    });
+    print('updated stream');
+    emit(StreamUpdatedState());
+    // yield* myStream;
+
+
+    getUsersTripsList();
   }
 }
