@@ -29,6 +29,8 @@ class _FoodDateState extends State<FoodDate> {
   DateTime _endDate = DateTime.now().add(Duration(days: 7));
   int _budgetTotal = 100;
   final db = FirebaseFirestore.instance;
+  String categoryChoice;
+  List categoryItem = ["Breakfast", "Lunch", "Diner", "Snacks", "Other"];
 
   Future displayDateRangePicker(BuildContext context) async {
     final List<DateTime> picked = await DateRagePicker.showDatePicker(
@@ -321,6 +323,23 @@ class _FoodDateState extends State<FoodDate> {
                   //   style: new TextStyle(fontSize: 16.0),
                   // ),
 
+                  DropdownButton(
+                    hint: Text('Breakfast'),
+                    value: categoryItem[0],
+                    onChanged: (newValue) {
+                      setState(() {
+                        categoryChoice = newValue;
+                      });
+                      print(categoryChoice);
+                    },
+                    items: categoryItem.map((valueItem) {
+                      return DropdownMenuItem(
+                        value: valueItem,
+                        child: Text(valueItem),
+                      );
+                    }).toList(),
+                  ),
+
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: TextField(
@@ -373,6 +392,7 @@ class _FoodDateState extends State<FoodDate> {
                       widget.trip.amount = (_budgetController.text == "")
                           ? 0
                           : double.parse(_budgetController.text);
+                      widget.trip.categorie = categoryChoice;
                       Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -40,6 +40,7 @@ class NewFoodSummaryView extends StatelessWidget {
             Text("amount ${trip.amount.toString()} gram"),
             Text(
                 "Food intake data ${trip.eatDate.day}-${trip.eatDate.month}-${trip.eatDate.year}"),
+            Text("Categorie: ${trip.categorie}"),
             RaisedButton(
               child: Text("Continue"),
               onPressed: () async {
