@@ -39,13 +39,13 @@ class _HomePageState extends State<HomePage> {
             DairyCubit cubit = DairyCubit.instance(context);
             double diff = cubit.kCalSum;
             double circularPercent = diff / 2000.0;
-            if (circularPercent < 0) {
-              circularPercent = 0;
+            if (circularPercent > 1) {
+              circularPercent = 1;
             }
             double diff2 = cubit.co2Sum;
             double barPercent = diff2 / 3.7;
-            if (barPercent < 0) {
-              barPercent = 0;
+            if (barPercent > 1) {
+              barPercent = 1;
             }
             return Column(children: [
               Row(
