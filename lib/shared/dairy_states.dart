@@ -15,3 +15,5 @@ class PercentsUpdated extends DairyStates {}
 class CurrentDateUpdated extends DairyStates {}
 
 class GetUserTripsListState extends DairyStates {}
+
+class StreamUpdatedState extends DairyStates {}
