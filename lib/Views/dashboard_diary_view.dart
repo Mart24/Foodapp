@@ -506,19 +506,33 @@ class CategoryTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     String energy = '${kcalSum.toStringAsFixed(0)} kCal';
+=======
+    String energy = '${kcalSum.toStringAsFixed(2)} kCal';
+>>>>>>> 39d3280c1b7527f87712487284cb3c97b5de179d
     return Container(
       height: 50,
       margin: EdgeInsets.all(5),
       child: Card(
+<<<<<<< HEAD
         color: kPrimaryColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+=======
+        color: Theme.of(context).backgroundColor.withOpacity(0.55),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+>>>>>>> 39d3280c1b7527f87712487284cb3c97b5de179d
           children: [
             Text(
               title,
               style: TextStyle(
+<<<<<<< HEAD
                 color: Colors.white,
+=======
+                color: Theme.of(context).accentColor,
+>>>>>>> 39d3280c1b7527f87712487284cb3c97b5de179d
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -526,10 +540,14 @@ class CategoryTitle extends StatelessWidget {
             SizedBox(
               width: 5,
             ),
+<<<<<<< HEAD
             Text(
               energy,
               style: TextStyle(color: Colors.white),
             )
+=======
+            Text(energy)
+>>>>>>> 39d3280c1b7527f87712487284cb3c97b5de179d
           ],
         ),
       ),
