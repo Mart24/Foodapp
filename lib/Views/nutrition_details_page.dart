@@ -14,6 +14,7 @@ class NutritionalDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Voedings Details'),
+        backgroundColor: kPrimaryColor,
       ),
       body: BlocConsumer<DairyCubit, DairyStates>(
           listener: (BuildContext context, DairyStates states) {},
@@ -65,7 +66,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                     child: Text(
                       'Macronutriënten',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: kPrimaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -252,7 +253,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                     child: Text(
                       'Micronutriënten',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: kPrimaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
