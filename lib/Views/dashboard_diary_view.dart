@@ -247,11 +247,86 @@ class _HomePageState extends State<HomePage> {
           BlocConsumer<DairyCubit, DairyStates>(
             listener: (context, states) {},
             builder: (context, states) {
+              DairyCubit cubit = DairyCubit.instance(context);
               return Expanded(
                 child: StreamBuilder(
-                  stream: DairyCubit.instance(context).myStream,
+                  stream: cubit.myStream,
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
+                      List<Widget> breakfastList = [
+                        CategoryTitle(
+                          title: 'Breakfast',
+                          kcalSum: cubit.breakfastKcalSum,
+                        ),
+                      ];
+                      breakfastList.addAll(DairyCubit.instance(context)
+                          .breakfastList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> lunchList = [
+                        CategoryTitle(
+                          title: 'Lunch',
+                          kcalSum: cubit.lunchKcalSum,
+                        ),
+                      ];
+                      lunchList.addAll(DairyCubit.instance(context)
+                          .lunchList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> dinerList = [
+                        CategoryTitle(
+                          title: 'Diner',
+                          kcalSum: cubit.dinerKcalSum,
+                        ),
+                      ];
+                      dinerList.addAll(DairyCubit.instance(context)
+                          .dinerList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> snacksList = [
+                        CategoryTitle(
+                          title: 'Snacks',
+                          kcalSum: cubit.snacksKcalSum,
+                        ),
+                      ];
+                      snacksList.addAll(DairyCubit.instance(context)
+                          .snacksList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> othersList = [
+                        CategoryTitle(
+                          title: 'Others',
+                          kcalSum: cubit.othersKcalSum,
+                        ),
+                      ];
+                      othersList.addAll(DairyCubit.instance(context)
+                          .otherList
+                          .map((e) => buildTripCard(context, e)));
+
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Column(
+                              children: breakfastList,
+                            ),
+                            Column(
+                              children: lunchList,
+                            ),
+                            Column(
+                              children: dinerList,
+                            ),
+                            Column(
+                              children: snacksList,
+                            ),
+                            Column(
+                              children: othersList,
+                            ),
+                            SizedBox(
+                              height: 58,
+                            ),
+                          ],
+                        ),
+                      );
                       return ListView.builder(
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (BuildContext context, int index) =>
@@ -359,6 +434,48 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryTitle extends StatelessWidget {
+  const CategoryTitle({
+    Key key,
+    // @required this.cubit,
+    @required this.title,
+    @required this.kcalSum,
+  }) : super(key: key);
+
+  // final DairyCubit cubit;
+  final String title;
+  final double kcalSum;
+
+  @override
+  Widget build(BuildContext context) {
+    String energy = '${kcalSum.toStringAsFixed(2)} kCal';
+    return Container(
+      height: 50,
+      margin: EdgeInsets.all(5),
+      child: Card(
+        color: Theme.of(context).backgroundColor.withOpacity(0.55),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(energy)
+          ],
         ),
       ),
     );
