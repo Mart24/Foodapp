@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Models/ingredients.dart';
+import 'package:food_app/Views/introduction_screen.dart';
 import 'package:food_app/Views/pages.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/dashboard_diary_view.dart';
@@ -77,37 +78,37 @@ class _HomeState extends State<Home> {
         null);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Food App"),
-        backgroundColor: kPrimaryColor,
-        actions: [
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewFoodIntake(
-                        trip: newTrip,
-                      ),
-                    ));
-              }),
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              try {
-                AuthService auth = Provider.of(context).auth;
-                DairyCubit.instance(context).init();
-                // DairyCubit.instance(context).getUsersTripsList();
-                await auth.signOut();
-                print("Signed Out!");
-              } catch (e) {
-                print(e);
-              }
-            },
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text("Food App"),
+      //   backgroundColor: kPrimaryColor,
+      //   actions: [
+      //     IconButton(
+      //         icon: Icon(Icons.add),
+      //         onPressed: () {
+      //           Navigator.push(
+      //               context,
+      //               MaterialPageRoute(
+      //                 builder: (context) => NewFoodIntake(
+      //                   trip: newTrip,
+      //                 ),
+      //               ));
+      //         }),
+      //     IconButton(
+      //       icon: Icon(Icons.logout),
+      //       onPressed: () async {
+      //         try {
+      //           AuthService auth = Provider.of(context).auth;
+      //           DairyCubit.instance(context).init();
+      //           // DairyCubit.instance(context).getUsersTripsList();
+      //           await auth.signOut();
+      //           print("Signed Out!");
+      //         } catch (e) {
+      //           print(e);
+      //         }
+      //       },
+      //     )
+      //   ],
+      // ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -134,8 +135,10 @@ class _HomeState extends State<Home> {
               ));
         },
         label: const Text('Food'),
-        icon: const Icon(Icons.fastfood_outlined),
-        backgroundColor: Colors.green,
+        icon: const Icon(Icons.add),
+        backgroundColor: Colors.orange,
+        focusElevation: 2,
+        foregroundColor: Colors.white,
       ),
     );
   }

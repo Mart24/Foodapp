@@ -16,50 +16,51 @@ class DairyCubit extends Cubit<DairyStates> {
   static DairyCubit instance(BuildContext context) =>
       BlocProvider.of(context, listen: false);
 
-  List<QueryDocumentSnapshot> tripsList = [];
-  double kCalSum = 0;
-  double carbs = 0;
-  double protein = 0;
-  double fats = 0;
-  double sugars = 0;
-  double saturatedFat = 0;
-  double dietaryFiber = 0;
-  double co2Sum = 0;
-
-  double fatPercent = 0;
-  double carbsPercent = 0;
-  double proteinPercent = 0;
-  double sugarsPercent = 0;
-  double saturatedFatPercent = 0;
-  double dietaryFiberPercent = 0;
+  List<QueryDocumentSnapshot> tripsList = [],
+      breakfastList = [],
+      lunchList = [],
+      dinerList = [],
+      snacksList = [],
+      otherList = [];
+  double kCalSum = 0,
+      breakfastKcalSum = 0,
+      lunchKcalSum = 0,
+      dinerKcalSum = 0,
+      snacksKcalSum = 0,
+      othersKcalSum = 0;
+  double carbs = 0,
+      protein = 0,
+      fats = 0,
+      sugars = 0,
+      saturatedFat = 0,
+      dietaryFiber = 0,
+      co2Sum = 0;
+  double fatPercent = 0,
+      carbsPercent = 0,
+      proteinPercent = 0,
+      sugarsPercent = 0,
+      saturatedFatPercent = 0,
+      dietaryFiberPercent = 0;
 
   DateTime currentDate = DateTime.now();
 
   void init() {
-    tripsList = [];
-    kCalSum = 0;
-    carbs = 0;
-    protein = 0;
-    fats = 0;
-    sugars = 0;
-    saturatedFat = 0;
-    dietaryFiber = 0;
-    co2Sum = 0;
-
-    fatPercent = 0;
-    carbsPercent = 0;
-    proteinPercent = 0;
-    sugarsPercent = 0;
-    saturatedFatPercent = 0;
-    dietaryFiberPercent = 0;
+    tripsList =
+        breakfastList = lunchList = dinerList = snacksList = otherList = [];
+    kCalSum = breakfastKcalSum =
+        lunchKcalSum = dinerKcalSum = snacksKcalSum = othersKcalSum = 0;
+    carbs = protein = fats = sugars = saturatedFat = dietaryFiber = co2Sum = 0;
+    fatPercent = carbsPercent = proteinPercent =
+        sugarsPercent = saturatedFatPercent = dietaryFiberPercent = 0;
 
     currentDate = DateTime.now();
   }
 
   void sumAll([List<DocumentSnapshot> givenTripsList]) {
     print('sum called');
-    kCalSum = co2Sum =
-        carbs = fats = protein = sugars = saturatedFat = dietaryFiber = 0;
+    kCalSum = breakfastKcalSum = lunchKcalSum = dinerKcalSum = snacksKcalSum =
+        othersKcalSum = co2Sum =
+            carbs = fats = protein = sugars = saturatedFat = dietaryFiber = 0;
     // List<num> ids = [];
 
     tripsList.forEach((element) {
@@ -74,7 +75,26 @@ class DairyCubit extends Cubit<DairyStates> {
       dietaryFiber += data['dietaryfiber'];
       //ids.add(data['productid']);
     });
-
+    breakfastList.forEach((element) {
+      Map<String, dynamic> data = element.data();
+      breakfastKcalSum += data['kcal'];
+    });
+    lunchList.forEach((element) {
+      Map<String, dynamic> data = element.data();
+      lunchKcalSum += data['kcal'];
+    });
+    dinerList.forEach((element) {
+      Map<String, dynamic> data = element.data();
+      dinerKcalSum += data['kcal'];
+    });
+    snacksList.forEach((element) {
+      Map<String, dynamic> data = element.data();
+      snacksKcalSum += data['kcal'];
+    });
+    otherList.forEach((element) {
+      Map<String, dynamic> data = element.data();
+      othersKcalSum += data['kcal'];
+    });
     //_sumSugars(ids);
     kCalSum = double.parse(kCalSum.toStringAsFixed(0));
     carbs = double.parse(carbs.toStringAsFixed(2));
@@ -135,7 +155,6 @@ class DairyCubit extends Cubit<DairyStates> {
   }
 
   Future<void> getUsersTripsList() async {
-    // final uid = await Provider.of(context).auth.getCurrentUID();
     final uid = FirebaseAuth.instance.currentUser.uid;
     var now = currentDate;
     var start = Timestamp.fromDate(DateTime(now.year, now.month, now.day));
@@ -153,8 +172,24 @@ class DairyCubit extends Cubit<DairyStates> {
         .orderBy("eatDate", descending: true)
         .get()
         .then((myQuerySnapShot) {
-      List<QueryDocumentSnapshot> myList = myQuerySnapShot.docs;
-      tripsList = myList;
+      tripsList = myQuerySnapShot.docs;
+
+      breakfastList = myQuerySnapShot.docs
+          .where((element) => element.data()['categorie'] == "Breakfast")
+          .toList();
+      lunchList = myQuerySnapShot.docs
+          .where((element) => element.data()['categorie'] == "Lunch")
+          .toList();
+      dinerList = myQuerySnapShot.docs
+          .where((element) => element.data()['categorie'] == "Diner")
+          .toList();
+      snacksList = myQuerySnapShot.docs
+          .where((element) => element.data()['categorie'] == "Snacks")
+          .toList();
+      otherList = myQuerySnapShot.docs
+          .where((element) => element.data()['categorie'] == "Other")
+          .toList();
+
       emit(GetUserTripsListState());
     });
   }

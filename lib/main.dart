@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
           title: 'Test123',
           theme: ThemeData(
             primarySwatch: Colors.green,
+            backgroundColor: Colors.yellow,
           ),
           home: HomeController(),
           routes: <String, WidgetBuilder>{

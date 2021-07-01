@@ -48,56 +48,65 @@ class _HomePageState extends State<HomePage> {
               barPercent = 1;
             }
             return Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      cubit.updateCurrentDate(
-                          cubit.currentDate.subtract(Duration(days: 1)));
-                    },
-                    icon: Icon(Icons.arrow_back_ios_sharp),
-                    splashRadius: 28,
-                    iconSize: 20,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  TextButton(
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
                       onPressed: () {
-                        DatePicker.showDatePicker(
-                          context,
-                          showTitleActions: true,
-                          theme: DatePickerTheme(),
-                          currentTime: cubit.currentDate ?? DateTime.now(),
-                          minTime: DateTime(DateTime.now().year - 20),
-                          maxTime: DateTime(DateTime.now().year + 20),
-                          onChanged: (date) {
-                            print('change $date');
-                          },
-                          onConfirm: (date) {
-                            print('confirm $date');
-                            cubit.updateCurrentDate(date);
-                          },
-                          locale: LocaleType.en,
-                        );
+                        cubit.updateCurrentDate(
+                            cubit.currentDate.subtract(Duration(days: 1)));
                       },
-                      child: Text(
-                        '${DateFormat.yMMMMd().format(cubit.currentDate)}',
-                        style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )),
-                  IconButton(
-                    onPressed: () {
-                      cubit.updateCurrentDate(
-                          cubit.currentDate.add(Duration(days: 1)));
-                    },
-                    icon: Icon(Icons.arrow_forward_ios_sharp),
-                    splashRadius: 28,
-                    iconSize: 20,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ],
+                      icon: Icon(Icons.arrow_back_ios_sharp),
+                      splashRadius: 28,
+                      iconSize: 20,
+                      //      color: Theme.of(context).accentColor,
+                      color: Colors.black,
+                    ),
+                    TextButton.icon(
+                        icon: Icon(
+                          Icons.calendar_today,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          DatePicker.showDatePicker(
+                            context,
+                            showTitleActions: true,
+                            theme: DatePickerTheme(),
+                            currentTime: cubit.currentDate ?? DateTime.now(),
+                            minTime: DateTime(DateTime.now().year - 20),
+                            maxTime: DateTime(DateTime.now().year + 20),
+                            onChanged: (date) {
+                              print('change $date');
+                            },
+                            onConfirm: (date) {
+                              print('confirm $date');
+                              cubit.updateCurrentDate(date);
+                            },
+                            locale: LocaleType.en,
+                          );
+                        },
+                        label: Text(
+                          '${DateFormat.yMMMMd().format(cubit.currentDate)}',
+                          style: TextStyle(
+                              // color: Theme.of(context).accentColor,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20),
+                        )),
+                    IconButton(
+                      onPressed: () {
+                        cubit.updateCurrentDate(
+                            cubit.currentDate.add(Duration(days: 1)));
+                      },
+                      icon: Icon(Icons.arrow_forward_ios_sharp),
+                      splashRadius: 28,
+                      iconSize: 20,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
               ),
               Container(
                 margin: const EdgeInsets.all(10.0),
@@ -106,12 +115,31 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Text(
-                        '${cubit.kCalSum.toStringAsFixed(0)} Eaten',
-                        style: TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.bold),
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
+                      // child: Text(
+                      //   'Eaten ${cubit.kCalSum.toStringAsFixed(0)} ',
+                      //   style: TextStyle(
+                      //       color: Colors.black, fontWeight: FontWeight.normal),
+                      //   maxLines: 2,
+                      //   textAlign: TextAlign.center,
+                      // ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black),
+                                children: <TextSpan>[
+                              TextSpan(text: 'Eaten '),
+                              TextSpan(
+                                text: '${cubit.kCalSum.toStringAsFixed(0)}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: kPrimaryColor),
+                              ),
+                              TextSpan(
+                                  text: ' kcal',
+                                  style: TextStyle(fontSize: 12)),
+                            ])),
                       ),
                     ),
                     Expanded(
@@ -131,14 +159,33 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Expanded(
-                      child: Text(
-                        '.......... Burned',
-                        style: TextStyle(
-                            color: Colors.green, fontWeight: FontWeight.bold),
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
+                      // child: Text(
+                      //   'Eaten ${cubit.kCalSum.toStringAsFixed(0)} ',
+                      //   style: TextStyle(
+                      //       color: Colors.black, fontWeight: FontWeight.normal),
+                      //   maxLines: 2,
+                      //   textAlign: TextAlign.center,
+                      // ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                                children: <TextSpan>[
+                              TextSpan(text: 'Burned'),
+                              TextSpan(
+                                text: '...',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: kPrimaryColor),
+                              ),
+                              TextSpan(
+                                  text: ' kcal',
+                                  style: TextStyle(fontSize: 12)),
+                            ])),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -155,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                         //   percent: 0.2,
                         //   progressColor: Colors.red,
                         // ),
-                        Text('${cubit.carbs}g Carbs'),
+                        Text('Carbs ${cubit.carbs.toStringAsFixed(0)}g'),
                       ],
                     ),
                     Column(
@@ -166,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                         //   percent: 0.7,
                         //   progressColor: Colors.yellow,
                         // ),
-                        Text('${cubit.protein}g Protein'),
+                        Text('Protein ${cubit.protein.toStringAsFixed(0)}g'),
                       ],
                     ),
                     Column(
@@ -177,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                         //   percent: 0.3,
                         //   progressColor: Colors.blue,
                         // ),
-                        Text('${cubit.fats}g Fat'),
+                        Text(' Fat ${cubit.fats.toStringAsFixed(0)}g'),
                       ],
                     )
                   ],
@@ -223,9 +270,14 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => NutritionalDetailsPage()));
                 },
-                child: Text(
-                  "Get extended overview",
-                  style: TextStyle(fontSize: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Details",
+                      style: TextStyle(fontSize: 20, color: kPrimaryColor),
+                    ),
+                  ],
                 ),
               ),
               // Expanded(
@@ -247,11 +299,86 @@ class _HomePageState extends State<HomePage> {
           BlocConsumer<DairyCubit, DairyStates>(
             listener: (context, states) {},
             builder: (context, states) {
+              DairyCubit cubit = DairyCubit.instance(context);
               return Expanded(
                 child: StreamBuilder(
-                  stream: DairyCubit.instance(context).myStream,
+                  stream: cubit.myStream,
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
+                      List<Widget> breakfastList = [
+                        CategoryTitle(
+                          title: 'Breakfast',
+                          kcalSum: cubit.breakfastKcalSum,
+                        ),
+                      ];
+                      breakfastList.addAll(DairyCubit.instance(context)
+                          .breakfastList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> lunchList = [
+                        CategoryTitle(
+                          title: 'Lunch',
+                          kcalSum: cubit.lunchKcalSum,
+                        ),
+                      ];
+                      lunchList.addAll(DairyCubit.instance(context)
+                          .lunchList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> dinerList = [
+                        CategoryTitle(
+                          title: 'Diner',
+                          kcalSum: cubit.dinerKcalSum,
+                        ),
+                      ];
+                      dinerList.addAll(DairyCubit.instance(context)
+                          .dinerList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> snacksList = [
+                        CategoryTitle(
+                          title: 'Snacks',
+                          kcalSum: cubit.snacksKcalSum,
+                        ),
+                      ];
+                      snacksList.addAll(DairyCubit.instance(context)
+                          .snacksList
+                          .map((e) => buildTripCard(context, e)));
+
+                      List<Widget> othersList = [
+                        CategoryTitle(
+                          title: 'Others',
+                          kcalSum: cubit.othersKcalSum,
+                        ),
+                      ];
+                      othersList.addAll(DairyCubit.instance(context)
+                          .otherList
+                          .map((e) => buildTripCard(context, e)));
+
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Column(
+                              children: breakfastList,
+                            ),
+                            Column(
+                              children: lunchList,
+                            ),
+                            Column(
+                              children: dinerList,
+                            ),
+                            Column(
+                              children: snacksList,
+                            ),
+                            Column(
+                              children: othersList,
+                            ),
+                            SizedBox(
+                              height: 58,
+                            ),
+                          ],
+                        ),
+                      );
                       return ListView.builder(
                         itemCount: snapshot.data.docs.length,
                         itemBuilder: (BuildContext context, int index) =>
@@ -359,6 +486,51 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryTitle extends StatelessWidget {
+  const CategoryTitle({
+    Key key,
+    // @required this.cubit,
+    @required this.title,
+    @required this.kcalSum,
+  }) : super(key: key);
+
+  // final DairyCubit cubit;
+  final String title;
+  final double kcalSum;
+
+  @override
+  Widget build(BuildContext context) {
+    String energy = '${kcalSum.toStringAsFixed(0)} kCal';
+    return Container(
+      height: 50,
+      margin: EdgeInsets.all(5),
+      child: Card(
+        color: kPrimaryColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              energy,
+              style: TextStyle(color: Colors.white),
+            )
+          ],
         ),
       ),
     );
