@@ -29,11 +29,7 @@ class _FoodDateState extends State<FoodDate> {
   DateTime _endDate = DateTime.now().add(Duration(days: 7));
   int _budgetTotal = 100;
   final db = FirebaseFirestore.instance;
-<<<<<<< HEAD
   String categoryChoice = "Breakfast";
-=======
-  String categoryChoice= "Breakfast";
->>>>>>> 39d3280c1b7527f87712487284cb3c97b5de179d
   List categoryItem = ["Breakfast", "Lunch", "Diner", "Snacks", "Other"];
 
   Future displayDateRangePicker(BuildContext context) async {
