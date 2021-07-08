@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Widgets/Navigation_widget.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
@@ -20,8 +24,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       auth: AuthService(),
-      child: BlocProvider<DairyCubit>(
-        create: (BuildContext context) => DairyCubit()..getUsersTripsList(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (BuildContext context) => AppCubit(),
+          ),
+          BlocProvider(
+            create: (BuildContext context) =>
+                DairyCubit()..getUsersTripsList(Source.cache),
+          )
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Test123',
@@ -53,8 +65,9 @@ class HomeController extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           final bool signedIn = snapshot.hasData;
           if (signedIn) {
-            print('auth signed in');
 
+            print('auth signed in ${snapshot.data}');
+            AppCubit.instance(context).createDB(snapshot.data);
             return Home();
           } else {
             return OnBoardingPage();

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
+import 'package:food_app/shared/app_cubit.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -105,14 +106,15 @@ class DairyCubit extends Cubit<DairyStates> {
     saturatedFat = double.parse(saturatedFat.toStringAsFixed(2));
     dietaryFiber = double.parse(dietaryFiber.toStringAsFixed(2));
     emit(SumBasicUpdated());
-    print('energy' + kCalSum.toString());
-    print('carbs: $carbs');
-    print('carbs: $fats');
-    print('protein: $protein');
-    print('sugars: $sugars');
-    print('saturatedFat: $saturatedFat');
-    print('dietaryFiber: $dietaryFiber');
-  }
+    print('sum calculated');
+    // print('energy' + kCalSum.toString());
+    // print('carbs: $carbs');
+    // print('carbs: $fats');
+    // print('protein: $protein');
+    // print('sugars: $sugars');
+    // print('saturatedFat: $saturatedFat');
+    // print('dietaryFiber: $dietaryFiber');
+    }
 
   void calcPercents() {
     fatPercent = carbsPercent = proteinPercent =
@@ -138,13 +140,14 @@ class DairyCubit extends Cubit<DairyStates> {
         double.parse((saturatedFatPercent * 100).toStringAsFixed(1));
 
     emit(PercentsUpdated());
-    print('Fat Percent: $fatPercent');
-    print('Carbs Percent: $carbsPercent');
-    print('Protein Percent: $proteinPercent');
-
-    print('Saturated Fat Percent: $saturatedFatPercent');
-    print('Sugars Percent: $sugarsPercent');
-    print('dietaryFiber Percent: $dietaryFiberPercent');
+    print('percents calculated');
+    // print('Fat Percent: $fatPercent');
+    // print('Carbs Percent: $carbsPercent');
+    // print('Protein Percent: $proteinPercent');
+    //
+    // print('Saturated Fat Percent: $saturatedFatPercent');
+    // print('Sugars Percent: $sugarsPercent');
+    // print('dietaryFiber Percent: $dietaryFiberPercent');
   }
 
   void updateCurrentDate(DateTime date) {
@@ -154,7 +157,7 @@ class DairyCubit extends Cubit<DairyStates> {
     getUsersTripsStreamSnapshots();
   }
 
-  Future<void> getUsersTripsList() async {
+  Future<void> getUsersTripsList(Source source) async {
     final uid = FirebaseAuth.instance.currentUser.uid;
     var now = currentDate;
     var start = Timestamp.fromDate(DateTime(now.year, now.month, now.day));
@@ -170,7 +173,7 @@ class DairyCubit extends Cubit<DairyStates> {
         .where('eatDate', isGreaterThanOrEqualTo: start)
         .where('eatDate', isLessThanOrEqualTo: end)
         .orderBy("eatDate", descending: true)
-        .get()
+        .get(GetOptions(source: source))
         .then((myQuerySnapShot) {
       tripsList = myQuerySnapShot.docs;
 
@@ -219,12 +222,12 @@ class DairyCubit extends Cubit<DairyStates> {
 
     myStream.listen((event) {
       print('stream listener');
-      getUsersTripsList();
+      getUsersTripsList(Source.serverAndCache);
     });
     print('updated stream');
     emit(StreamUpdatedState());
     // yield* myStream;
 
-    getUsersTripsList();
+    getUsersTripsList(Source.serverAndCache);
   }
 }

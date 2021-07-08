@@ -9,11 +9,3 @@ class Foodpage extends StatelessWidget {
   }
 }
 
-class Lijstje extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-    );
-  }
-}
