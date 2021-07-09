@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/size_config.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
+import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:intl/intl.dart';
 
 import 'info.dart';
@@ -61,7 +63,21 @@ class Body extends StatelessWidget {
           title: "Help",
           press: () {},
         ),
-
+        ProfileMenuItem(
+          iconSrc: "assets/icons/info.svg",
+          title: "Log out",
+          press: () async {
+            try {
+              AuthService auth = Provider.of(context).auth;
+              DairyCubit.instance(context).init();
+              // DairyCubit.instance(context).getUsersTripsList();
+              await auth.signOut();
+              print("Signed Out!");
+            } catch (e) {
+              print(e);
+            }
+          },
+        ),
         // Padding(
         //   padding: const EdgeInsets.all(8.0),
         //   child: Text(
