@@ -14,18 +14,35 @@ class AppCubit extends Cubit<AppStates> {
 
   Database database;
   List<Map> queryResult = [];
-  List<Map> oneWeekQueryResult = [];
-  List<Map> oneMonthQueryResult = [];
-  List<Map> threeMonthsQueryResult = [];
+  List<Map> oneWeekQueryResult = List.generate(7, (index) {
+    return {
+      'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+      'calories': 0.0,
+      'co2': 0.0
+    };
+  });
+  List<Map> oneMonthQueryResult = List.generate(30, (index) {
+    return {
+      'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+      'calories': 0.0,
+      'co2': 0.0
+    };
+  });
+  List<Map> threeMonthsQueryResult = List.generate(90, (index) {
+    return {
+      'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+      'calories': 0.0,
+      'co2': 0.0
+    };
+  });
+  List<double> oneWeekCals = List.generate(7, (index) => 0.0);
+  List<double> oneWeekCo2 = List.generate(7, (index) => 0.0);
 
-  List<double> oneWeekCals = [];
-  List<double> oneWeekCo2 = [];
+  List<double> oneMonthCals = List.generate(30, (index) => 0.0);
+  List<double> oneMonthCo2 = List.generate(30, (index) => 0.0);
 
-  List<double> oneMonthCals = [];
-  List<double> oneMonthCo2 = [];
-
-  List<double> threeMonthsCals = [];
-  List<double> threeMonthsCo2 = [];
+  List<double> threeMonthsCals = List.generate(90, (index) => 0.0);
+  List<double> threeMonthsCo2 = List.generate(90, (index) => 0.0);
 
   static AppCubit instance(BuildContext context) => BlocProvider.of(context);
 
@@ -172,19 +189,24 @@ class AppCubit extends Cubit<AppStates> {
     database.query(tableName,
         limit: 7,
         where: "date > ? and date <= ?",
+        orderBy: 'date DESC',
         whereArgs: [
           now.subtract(Duration(days: 7)).toIso8601String(),
           now.toIso8601String()
         ]).then((value) {
-      oneWeekQueryResult = value;
+      oneWeekQueryResult.setAll(0, value);
       print('retrived ${value.length}');
-      oneWeekCals=[];
-      oneWeekCo2=[];
+      // oneWeekCals = [];
+      // oneWeekCo2 = [];
+      int i = 0;
       value.forEach((element) {
         print(
             '${element['date']}: calories: ${element['calories']}, co2: ${element['co2']}');
-        oneWeekCals.add(element['calories']);
-        oneWeekCo2.add(element['co2']);
+        oneWeekCals[i] = element['calories'];
+        oneWeekCo2[i] = element['co2'];
+        // oneWeekCals.add(element['calories']);
+        // oneWeekCo2.add(element['co2']);
+        i++;
       });
       emit(DatabaseGetState());
     });
@@ -201,17 +223,18 @@ class AppCubit extends Cubit<AppStates> {
           now.subtract(Duration(days: 30)).toIso8601String(),
           now.toIso8601String()
         ]).then((value) {
-      oneMonthQueryResult = value;
+      oneMonthQueryResult.setAll(0, value);
       print('retrived ${value.length}');
-      oneMonthCals=[];
-      oneMonthCo2=[];
+      // oneMonthCals = [];
+      // oneMonthCo2 = [];
+      int i = 0;
       value.forEach((element) {
         print(
             '${element['date']}: calories: ${element['calories']}, co2: ${element['co2']}');
-        oneMonthCals.add(element['calories']);
-        oneMonthCo2.add(element['co2']);
+        oneMonthCals[i] = element['calories'];
+        oneMonthCo2[i] = element['co2'];
+        i++;
       });
-
       emit(DatabaseGetState());
     });
   }
@@ -227,15 +250,20 @@ class AppCubit extends Cubit<AppStates> {
           now.subtract(Duration(days: 90)).toIso8601String(),
           now.toIso8601String()
         ]).then((value) {
-      threeMonthsQueryResult = value;
+      threeMonthsQueryResult.setAll(0, value);
+
       print('retrived ${value.length}');
-      threeMonthsCals=[];
-      threeMonthsCo2=[];
+      // threeMonthsCals = [];
+      // threeMonthsCo2 = [];
+      int i = 0;
       value.forEach((element) {
         print(
             '${element['date']}: calories: ${element['calories']}, co2: ${element['co2']}');
-        threeMonthsCals.add(element['calories']);
-        threeMonthsCo2.add(element['co2']);
+        threeMonthsCals[i] = element['calories'];
+        threeMonthsCo2[i] = element['co2'];
+        // threeMonthsCals.add(element['calories']);
+        // threeMonthsCo2.add(element['co2']);
+        i++;
       });
       emit(DatabaseGetState());
     });

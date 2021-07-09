@@ -134,7 +134,7 @@ class OneWeekGraph extends StatelessWidget {
           } else {
             return Container(
               child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
+                  primaryXAxis: DateTimeAxis(),
                   legend: Legend(
                     isVisible: true,
                     // title: LegendTitle(text: type),
@@ -144,25 +144,41 @@ class OneWeekGraph extends StatelessWidget {
                     orientation: LegendItemOrientation.horizontal,
                   ),
                   tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <LineSeries<double, String>>[
-                    LineSeries<double, String>(
+                  primaryYAxis: NumericAxis(
+                      title: AxisTitle(text: 'Calories'),
+                      labelAlignment: LabelAlignment.start),
+                  enableAxisAnimation: true,
+                  // adding multiple axis
+                  axes: <ChartAxis>[
+                    NumericAxis(
+                        name: 'yAxis',
+                        opposedPosition: true,
+                        title: AxisTitle(text: 'Co2'))
+                  ],
+                  series: <LineSeries<double, DateTime>>[
+                    LineSeries<double, DateTime>(
                         name: 'Calories',
                         dataSource: appCubit.oneWeekCals,
                         xValueMapper: (double calories, int index) {
-                          String day = DateFormat.MEd().format(DateTime.parse(
-                              appCubit.oneWeekQueryResult[index]['date']));
-                          return day;
+                          return DateTime.parse(appCubit.oneWeekQueryResult[index]['date']);
+
+                          // String day = DateFormat.MEd().format(DateTime.parse(
+                          //     appCubit.oneWeekQueryResult[index]['date']));
+                          // return day;
                         },
                         yValueMapper: (double calories, int index) => calories),
-                    LineSeries<double, String>(
+                    LineSeries<double, DateTime>(
                         name: 'Co2',
                         dataSource: appCubit.oneWeekCo2,
                         xValueMapper: (double co2, int index) {
-                          String day = DateFormat.MEd().format(DateTime.parse(
-                              appCubit.oneWeekQueryResult[index]['date']));
-                          return day;
+                          return DateTime.parse( appCubit.oneWeekQueryResult[index]['date']);
+
+                          // String day = DateFormat.MEd().format(DateTime.parse(
+                          //     appCubit.oneWeekQueryResult[index]['date']));
+                          // return day;
                         },
-                        yValueMapper: (double co2, int index) => co2),
+                        yValueMapper: (double co2, int index) => co2,
+                        yAxisName: 'yAxis'),
                   ]),
             );
           }
@@ -191,35 +207,52 @@ class OneMonthGraph extends StatelessWidget {
           } else {
             return Container(
               child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
                   legend: Legend(
                     isVisible: true,
-                    // title: LegendTitle(text: type),
                     isResponsive: true,
                     position: LegendPosition.top,
                     alignment: ChartAlignment.near,
                     orientation: LegendItemOrientation.horizontal,
                   ),
                   tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <LineSeries<double, String>>[
-                    LineSeries<double, String>(
+                  primaryXAxis: DateTimeAxis(),
+                  primaryYAxis: NumericAxis(
+                      title: AxisTitle(text: 'Calories'),
+                      labelAlignment: LabelAlignment.start),
+                  enableAxisAnimation: true,
+                  // adding multiple axis
+                  axes: <ChartAxis>[
+                    NumericAxis(
+                        name: 'yAxis',
+                        opposedPosition: true,
+                        title: AxisTitle(text: 'Co2'))
+                  ],
+                  series: <LineSeries<double, DateTime>>[
+                    LineSeries<double, DateTime>(
                         name: 'Calories',
                         dataSource: appCubit.oneMonthCals,
                         xValueMapper: (double calories, int index) {
-                          String day = DateFormat.Md().format(DateTime.parse(
-                              appCubit.oneMonthQueryResult[index]['date']));
-                          return day;
+                          return DateTime.parse(appCubit.oneMonthQueryResult[index]['date']);
+
+                          // String day = DateFormat.Md().format(DateTime.parse(
+                          //     appCubit.oneMonthQueryResult[index]['date']));
+                          // return day;
                         },
                         yValueMapper: (double calories, int index) => calories),
-                    LineSeries<double, String>(
-                        name: 'Co2',
-                        dataSource: appCubit.oneMonthCo2,
-                        xValueMapper: (double co2, int index) {
-                          String day = DateFormat.Md().format(DateTime.parse(
-                              appCubit.oneMonthQueryResult[index]['date']));
-                          return day;
-                        },
-                        yValueMapper: (double co2, int index) => co2),
+                    LineSeries<double, DateTime>(
+                      name: 'Co2',
+                      dataSource: appCubit.oneMonthCo2,
+                      xValueMapper: (double co2, int index) {
+                        return DateTime.parse(appCubit.oneMonthQueryResult[index]['date']);
+
+                        // String day = DateFormat.Md().format(DateTime.parse(
+                        //     appCubit.oneMonthQueryResult[index]['date']));
+                        // return day;
+                      },
+                      yValueMapper: (double co2, int index) => co2,
+                      // xAxisName: 'xAxis',
+                      yAxisName: 'yAxis',
+                    ),
                   ]),
             );
           }
@@ -248,7 +281,7 @@ class ThreeMonthsGraph extends StatelessWidget {
           } else {
             return Container(
               child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
+                  primaryXAxis: DateTimeAxis(),
                   legend: Legend(
                     isVisible: true,
                     // title: LegendTitle(text: type),
@@ -258,25 +291,41 @@ class ThreeMonthsGraph extends StatelessWidget {
                     orientation: LegendItemOrientation.horizontal,
                   ),
                   tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <LineSeries<double, String>>[
-                    LineSeries<double, String>(
+                  primaryYAxis: NumericAxis(
+                      title: AxisTitle(text: 'Calories'),
+                      labelAlignment: LabelAlignment.start),
+                  enableAxisAnimation: true,
+                  // adding multiple axis
+                  axes: <ChartAxis>[
+                    NumericAxis(
+                        name: 'yAxis',
+                        opposedPosition: true,
+                        title: AxisTitle(text: 'Co2'))
+                  ],
+                  series: <LineSeries<double, DateTime>>[
+                    LineSeries<double, DateTime>(
                         name: 'Calories',
                         dataSource: appCubit.threeMonthsCals,
                         xValueMapper: (double calories, int index) {
-                          String day = DateFormat.m().format(DateTime.parse(
-                              appCubit.threeMonthsQueryResult[index]['date']));
-                          return day;
+                          return DateTime.parse( appCubit.threeMonthsQueryResult[index]['date']);
+
+                          // String day = DateFormat.m().format(DateTime.parse(
+                          //     appCubit.threeMonthsQueryResult[index]['date']));
+                          // return day;
                         },
                         yValueMapper: (double calories, int index) => calories),
-                    LineSeries<double, String>(
+                    LineSeries<double, DateTime>(
                         name: 'Co2',
                         dataSource: appCubit.threeMonthsCo2,
                         xValueMapper: (double co2, int index) {
-                          String day = DateFormat.MEd().format(DateTime.parse(
-                              appCubit.threeMonthsQueryResult[index]['date']));
-                          return day;
+                          return DateTime.parse( appCubit.threeMonthsQueryResult[index]['date']);
+
+                          // String day = DateFormat.MEd().format(DateTime.parse(
+                          //     appCubit.threeMonthsQueryResult[index]['date']));
+                          // return day;
                         },
-                        yValueMapper: (double co2, int index) => co2),
+                        yValueMapper: (double co2, int index) => co2,
+                        yAxisName: 'yAxis'),
                   ]),
             );
           }
