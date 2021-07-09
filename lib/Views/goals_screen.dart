@@ -17,6 +17,8 @@ class _GoalsScreenState extends State<GoalsScreen>
   TabController tabController;
 
   String type;
+  AppCubit appCubit ;
+  String uid ;
 
   @override
   void initState() {
@@ -27,12 +29,27 @@ class _GoalsScreenState extends State<GoalsScreen>
       length: 3,
       initialIndex: 0,
     );
+    appCubit = AppCubit.instance(context);
+    uid = FirebaseAuth.instance.currentUser.uid;
+    tabController.addListener(() {
+      if (tabController.index == 0) {
+        appCubit.getOneWeekData(appCubit.database, uid);
+
+      } else if (tabController.index == 1){
+        appCubit.getOneMonthData(appCubit.database, uid);
+
+      }
+      else if(tabController.index ==2){
+        appCubit.getThreeMonthData(appCubit.database, uid);
+
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final String uid = FirebaseAuth.instance.currentUser.uid;
-    final AppCubit appCubit = AppCubit.instance(context);
+    // final String uid = FirebaseAuth.instance.currentUser.uid;
+    // final AppCubit appCubit = AppCubit.instance(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -145,7 +162,10 @@ class OneWeekGraph extends StatelessWidget {
                   ),
                   tooltipBehavior: TooltipBehavior(enable: true),
                   primaryYAxis: NumericAxis(
-                      title: AxisTitle(text: 'Calories'),
+                      title: AxisTitle(
+                          text: 'Calories',
+                          textStyle: TextStyle(
+                              color: Color.fromRGBO(75, 135, 185, 1))),
                       labelAlignment: LabelAlignment.start),
                   enableAxisAnimation: true,
                   // adding multiple axis
@@ -153,14 +173,18 @@ class OneWeekGraph extends StatelessWidget {
                     NumericAxis(
                         name: 'yAxis',
                         opposedPosition: true,
-                        title: AxisTitle(text: 'Co2'))
+                        title: AxisTitle(
+                            text: 'kg-Co2',
+                            textStyle: TextStyle(
+                                color: Color.fromRGBO(192, 108, 132, 1))))
                   ],
                   series: <LineSeries<double, DateTime>>[
                     LineSeries<double, DateTime>(
                         name: 'Calories',
                         dataSource: appCubit.oneWeekCals,
                         xValueMapper: (double calories, int index) {
-                          return DateTime.parse(appCubit.oneWeekQueryResult[index]['date']);
+                          return DateTime.parse(
+                              appCubit.oneWeekQueryResult[index]['date']);
 
                           // String day = DateFormat.MEd().format(DateTime.parse(
                           //     appCubit.oneWeekQueryResult[index]['date']));
@@ -171,7 +195,8 @@ class OneWeekGraph extends StatelessWidget {
                         name: 'Co2',
                         dataSource: appCubit.oneWeekCo2,
                         xValueMapper: (double co2, int index) {
-                          return DateTime.parse( appCubit.oneWeekQueryResult[index]['date']);
+                          return DateTime.parse(
+                              appCubit.oneWeekQueryResult[index]['date']);
 
                           // String day = DateFormat.MEd().format(DateTime.parse(
                           //     appCubit.oneWeekQueryResult[index]['date']));
@@ -217,7 +242,10 @@ class OneMonthGraph extends StatelessWidget {
                   tooltipBehavior: TooltipBehavior(enable: true),
                   primaryXAxis: DateTimeAxis(),
                   primaryYAxis: NumericAxis(
-                      title: AxisTitle(text: 'Calories'),
+                      title: AxisTitle(
+                          text: 'Calories',
+                          textStyle: TextStyle(
+                              color: Color.fromRGBO(75, 135, 185, 1))),
                       labelAlignment: LabelAlignment.start),
                   enableAxisAnimation: true,
                   // adding multiple axis
@@ -225,14 +253,18 @@ class OneMonthGraph extends StatelessWidget {
                     NumericAxis(
                         name: 'yAxis',
                         opposedPosition: true,
-                        title: AxisTitle(text: 'Co2'))
+                        title: AxisTitle(
+                            text: 'kg-Co2',
+                            textStyle: TextStyle(
+                                color: Color.fromRGBO(192, 108, 132, 1))))
                   ],
                   series: <LineSeries<double, DateTime>>[
                     LineSeries<double, DateTime>(
                         name: 'Calories',
                         dataSource: appCubit.oneMonthCals,
                         xValueMapper: (double calories, int index) {
-                          return DateTime.parse(appCubit.oneMonthQueryResult[index]['date']);
+                          return DateTime.parse(
+                              appCubit.oneMonthQueryResult[index]['date']);
 
                           // String day = DateFormat.Md().format(DateTime.parse(
                           //     appCubit.oneMonthQueryResult[index]['date']));
@@ -243,7 +275,8 @@ class OneMonthGraph extends StatelessWidget {
                       name: 'Co2',
                       dataSource: appCubit.oneMonthCo2,
                       xValueMapper: (double co2, int index) {
-                        return DateTime.parse(appCubit.oneMonthQueryResult[index]['date']);
+                        return DateTime.parse(
+                            appCubit.oneMonthQueryResult[index]['date']);
 
                         // String day = DateFormat.Md().format(DateTime.parse(
                         //     appCubit.oneMonthQueryResult[index]['date']));
@@ -292,7 +325,10 @@ class ThreeMonthsGraph extends StatelessWidget {
                   ),
                   tooltipBehavior: TooltipBehavior(enable: true),
                   primaryYAxis: NumericAxis(
-                      title: AxisTitle(text: 'Calories'),
+                      title: AxisTitle(
+                          text: 'Calories',
+                          textStyle: TextStyle(
+                              color: Color.fromRGBO(75, 135, 185, 1))),
                       labelAlignment: LabelAlignment.start),
                   enableAxisAnimation: true,
                   // adding multiple axis
@@ -300,14 +336,18 @@ class ThreeMonthsGraph extends StatelessWidget {
                     NumericAxis(
                         name: 'yAxis',
                         opposedPosition: true,
-                        title: AxisTitle(text: 'Co2'))
+                        title: AxisTitle(
+                            text: 'kg-Co2',
+                            textStyle: TextStyle(
+                                color: Color.fromRGBO(192, 108, 132, 1))))
                   ],
                   series: <LineSeries<double, DateTime>>[
                     LineSeries<double, DateTime>(
                         name: 'Calories',
                         dataSource: appCubit.threeMonthsCals,
                         xValueMapper: (double calories, int index) {
-                          return DateTime.parse( appCubit.threeMonthsQueryResult[index]['date']);
+                          return DateTime.parse(
+                              appCubit.threeMonthsQueryResult[index]['date']);
 
                           // String day = DateFormat.m().format(DateTime.parse(
                           //     appCubit.threeMonthsQueryResult[index]['date']));
@@ -318,7 +358,8 @@ class ThreeMonthsGraph extends StatelessWidget {
                         name: 'Co2',
                         dataSource: appCubit.threeMonthsCo2,
                         xValueMapper: (double co2, int index) {
-                          return DateTime.parse( appCubit.threeMonthsQueryResult[index]['date']);
+                          return DateTime.parse(
+                              appCubit.threeMonthsQueryResult[index]['date']);
 
                           // String day = DateFormat.MEd().format(DateTime.parse(
                           //     appCubit.threeMonthsQueryResult[index]['date']));

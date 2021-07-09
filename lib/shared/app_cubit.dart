@@ -44,6 +44,40 @@ class AppCubit extends Cubit<AppStates> {
   List<double> threeMonthsCals = List.generate(90, (index) => 0.0);
   List<double> threeMonthsCo2 = List.generate(90, (index) => 0.0);
 
+
+  void init (){
+    queryResult = [];
+    oneWeekQueryResult = List.generate(7, (index) {
+      return {
+        'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+        'calories': 0.0,
+        'co2': 0.0
+      };
+    });
+     oneMonthQueryResult = List.generate(30, (index) {
+      return {
+        'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+        'calories': 0.0,
+        'co2': 0.0
+      };
+    });
+     threeMonthsQueryResult = List.generate(90, (index) {
+      return {
+        'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+        'calories': 0.0,
+        'co2': 0.0
+      };
+    });
+    oneWeekCals = List.generate(7, (index) => 0.0);
+    oneWeekCo2 = List.generate(7, (index) => 0.0);
+
+    oneMonthCals = List.generate(30, (index) => 0.0);
+    oneMonthCo2 = List.generate(30, (index) => 0.0);
+
+    threeMonthsCals = List.generate(90, (index) => 0.0);
+    threeMonthsCo2 = List.generate(90, (index) => 0.0);
+
+  }
   static AppCubit instance(BuildContext context) => BlocProvider.of(context);
 
   Future<void> createDB(String tableName) async {
@@ -53,6 +87,7 @@ class AppCubit extends Cubit<AppStates> {
       //first time in app
       _prefs.setStringList('uidList', [tableName]);
       _prefs.setInt('version', 1);
+      print('first time:DB version is 1');
     } else {
       List<String> uidList = _prefs.getStringList('uidList');
       int lastVersion = _prefs.getInt('version');
@@ -62,7 +97,9 @@ class AppCubit extends Cubit<AppStates> {
         int version = lastVersion + 1;
         _prefs.setStringList('uidList', uidList);
         _prefs.setInt('version', version);
+      print('this is new user so we will upgrade DB version to $version');
       } else {
+        print('user logged before: no upgrading to db as the table will be found');
         // logged before
         //use the same db version so it will find the table
       }
@@ -183,7 +220,7 @@ class AppCubit extends Cubit<AppStates> {
   // }
 
   Future<void> getOneWeekData(Database database, String tableName) async {
-    emit(DatabaseGetLoadingState());
+    // emit(DatabaseGetLoadingState());
     DateTime now = DateTime.now();
     now = DateTime(now.year, now.month, now.day);
     database.query(tableName,
@@ -213,7 +250,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   Future<void> getOneMonthData(Database database, String tableName) async {
-    emit(DatabaseGetLoadingState());
+    // emit(DatabaseGetLoadingState());
     DateTime now = DateTime.now();
     now = DateTime(now.year, now.month, now.day);
     database.query(tableName,
@@ -240,7 +277,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   Future<void> getThreeMonthData(Database database, String tableName) async {
-    emit(DatabaseGetLoadingState());
+    // emit(DatabaseGetLoadingState());
     DateTime now = DateTime.now();
     now = DateTime(now.year, now.month, now.day);
     database.query(tableName,

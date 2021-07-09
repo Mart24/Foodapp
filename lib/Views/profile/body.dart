@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Views/size_config.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
+import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:intl/intl.dart';
 
@@ -73,6 +74,7 @@ class Body extends StatelessWidget {
               // DairyCubit.instance(context).getUsersTripsList();
               await auth.signOut();
               print("Signed Out!");
+              AppCubit.instance(context).init();
             } catch (e) {
               print(e);
             }
