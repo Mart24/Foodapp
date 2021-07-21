@@ -29,6 +29,12 @@ class DairyCubit extends Cubit<DairyStates> {
       dinerKcalSum = 0,
       snacksKcalSum = 0,
       othersKcalSum = 0;
+  double sumco2Sum = 0,
+      breakfastsumco2Sum = 0,
+      lunchsumco2Sum = 0,
+      dinersumco2Sum = 0,
+      snackssumco2Sum = 0,
+      otherssumco2Sum = 0;
   double carbs = 0,
       protein = 0,
       fats = 0,
@@ -48,8 +54,9 @@ class DairyCubit extends Cubit<DairyStates> {
   void init() {
     tripsList =
         breakfastList = lunchList = dinerList = snacksList = otherList = [];
-    kCalSum = breakfastKcalSum =
-        lunchKcalSum = dinerKcalSum = snacksKcalSum = othersKcalSum = 0;
+    kCalSum = breakfastKcalSum = lunchKcalSum = dinerKcalSum = snacksKcalSum =
+        othersKcalSum = sumco2Sum = breakfastsumco2Sum = lunchsumco2Sum =
+            dinersumco2Sum = snackssumco2Sum = otherssumco2Sum = 0;
     carbs = protein = fats = sugars = saturatedFat = dietaryFiber = co2Sum = 0;
     fatPercent = carbsPercent = proteinPercent =
         sugarsPercent = saturatedFatPercent = dietaryFiberPercent = 0;
@@ -60,8 +67,10 @@ class DairyCubit extends Cubit<DairyStates> {
   void sumAll([List<DocumentSnapshot> givenTripsList]) {
     print('sum called');
     kCalSum = breakfastKcalSum = lunchKcalSum = dinerKcalSum = snacksKcalSum =
-        othersKcalSum = co2Sum =
-            carbs = fats = protein = sugars = saturatedFat = dietaryFiber = 0;
+        othersKcalSum = co2Sum = sumco2Sum = breakfastsumco2Sum =
+            lunchsumco2Sum = dinersumco2Sum = snackssumco2Sum =
+                otherssumco2Sum = carbs =
+                    fats = protein = sugars = saturatedFat = dietaryFiber = 0;
     // List<num> ids = [];
 
     tripsList.forEach((element) {
@@ -70,6 +79,7 @@ class DairyCubit extends Cubit<DairyStates> {
       carbs += data['carbs'];
       fats += data['fat'];
       protein += data['protein'];
+      sumco2Sum += data['co2'];
       co2Sum += data['co2'];
       sugars += data['sugars'];
       saturatedFat += data['saturatedfat'];
@@ -79,22 +89,27 @@ class DairyCubit extends Cubit<DairyStates> {
     breakfastList.forEach((element) {
       Map<String, dynamic> data = element.data();
       breakfastKcalSum += data['kcal'];
+      breakfastsumco2Sum += data['co2'];
     });
     lunchList.forEach((element) {
       Map<String, dynamic> data = element.data();
       lunchKcalSum += data['kcal'];
+      lunchsumco2Sum += data['co2'];
     });
     dinerList.forEach((element) {
       Map<String, dynamic> data = element.data();
       dinerKcalSum += data['kcal'];
+      dinersumco2Sum += data['co2'];
     });
     snacksList.forEach((element) {
       Map<String, dynamic> data = element.data();
       snacksKcalSum += data['kcal'];
+      snackssumco2Sum += data['co2'];
     });
     otherList.forEach((element) {
       Map<String, dynamic> data = element.data();
       othersKcalSum += data['kcal'];
+      otherssumco2Sum += data['co2'];
     });
     //_sumSugars(ids);
     kCalSum = double.parse(kCalSum.toStringAsFixed(0));
@@ -114,7 +129,7 @@ class DairyCubit extends Cubit<DairyStates> {
     // print('sugars: $sugars');
     // print('saturatedFat: $saturatedFat');
     // print('dietaryFiber: $dietaryFiber');
-    }
+  }
 
   void calcPercents() {
     fatPercent = carbsPercent = proteinPercent =

@@ -391,6 +391,7 @@ class _HomePageState extends State<HomePage> {
                           CategoryTitle(
                             title: 'Breakfast',
                             kcalSum: cubit.breakfastKcalSum,
+                            co2Sum: cubit.breakfastsumco2Sum,
                           ),
                         ];
                         breakfastList.addAll(DairyCubit.instance(context)
@@ -401,6 +402,7 @@ class _HomePageState extends State<HomePage> {
                           CategoryTitle(
                             title: 'Lunch',
                             kcalSum: cubit.lunchKcalSum,
+                            co2Sum: cubit.lunchsumco2Sum,
                           ),
                         ];
                         lunchList.addAll(DairyCubit.instance(context)
@@ -411,6 +413,7 @@ class _HomePageState extends State<HomePage> {
                           CategoryTitle(
                             title: 'Diner',
                             kcalSum: cubit.dinerKcalSum,
+                            co2Sum: cubit.dinersumco2Sum,
                           ),
                         ];
                         dinerList.addAll(DairyCubit.instance(context)
@@ -421,6 +424,7 @@ class _HomePageState extends State<HomePage> {
                           CategoryTitle(
                             title: 'Snacks',
                             kcalSum: cubit.snacksKcalSum,
+                            co2Sum: cubit.snackssumco2Sum,
                           ),
                         ];
                         snacksList.addAll(DairyCubit.instance(context)
@@ -431,6 +435,7 @@ class _HomePageState extends State<HomePage> {
                           CategoryTitle(
                             title: 'Others',
                             kcalSum: cubit.othersKcalSum,
+                            co2Sum: cubit.otherssumco2Sum,
                           ),
                         ];
                         othersList.addAll(DairyCubit.instance(context)
@@ -581,15 +586,18 @@ class CategoryTitle extends StatelessWidget {
     // @required this.cubit,
     @required this.title,
     @required this.kcalSum,
+    @required this.co2Sum,
   }) : super(key: key);
 
   // final DairyCubit cubit;
   final String title;
   final double kcalSum;
+  final double co2Sum;
 
   @override
   Widget build(BuildContext context) {
     String energy = '${kcalSum.toStringAsFixed(0)} kCal';
+    String climate = '${co2Sum.toStringAsFixed(1)} kg/Co²';
     return Container(
       height: 50,
       margin: EdgeInsets.all(5),
@@ -611,6 +619,10 @@ class CategoryTitle extends StatelessWidget {
             ),
             Text(
               energy,
+              style: TextStyle(color: Colors.white),
+            ),
+            Text(
+              climate,
               style: TextStyle(color: Colors.white),
             )
           ],
