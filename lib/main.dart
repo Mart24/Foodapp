@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
+import 'package:food_app/shared/goal_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Widgets/Navigation_widget.dart';
 import 'package:food_app/Services/auth_service.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (BuildContext context) =>
                 DairyCubit()..getUsersTripsList(Source.cache),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => GoalCubit(),
           )
         ],
         child: MaterialApp(
@@ -65,9 +69,8 @@ class HomeController extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           final bool signedIn = snapshot.hasData;
           if (signedIn) {
-
             print('auth signed in ${snapshot.data}');
-            AppCubit.instance(context).createDB(snapshot.data);
+            AppCubit.instance(context).createDB(snapshot.data, 'goals');
             return Home();
           } else {
             return OnBoardingPage();

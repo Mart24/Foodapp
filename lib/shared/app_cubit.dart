@@ -44,26 +44,28 @@ class AppCubit extends Cubit<AppStates> {
   List<double> threeMonthsCals = List.generate(90, (index) => 0.0);
   List<double> threeMonthsCo2 = List.generate(90, (index) => 0.0);
 
-
-  void init (){
+  void init() {
     queryResult = [];
     oneWeekQueryResult = List.generate(7, (index) {
       return {
-        'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+        'date':
+            DateTime.now().subtract(Duration(days: index)).toIso8601String(),
         'calories': 0.0,
         'co2': 0.0
       };
     });
-     oneMonthQueryResult = List.generate(30, (index) {
+    oneMonthQueryResult = List.generate(30, (index) {
       return {
-        'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+        'date':
+            DateTime.now().subtract(Duration(days: index)).toIso8601String(),
         'calories': 0.0,
         'co2': 0.0
       };
     });
-     threeMonthsQueryResult = List.generate(90, (index) {
+    threeMonthsQueryResult = List.generate(90, (index) {
       return {
-        'date': DateTime.now().subtract(Duration(days: index)).toIso8601String(),
+        'date':
+            DateTime.now().subtract(Duration(days: index)).toIso8601String(),
         'calories': 0.0,
         'co2': 0.0
       };
@@ -76,30 +78,31 @@ class AppCubit extends Cubit<AppStates> {
 
     threeMonthsCals = List.generate(90, (index) => 0.0);
     threeMonthsCo2 = List.generate(90, (index) => 0.0);
-
   }
+
   static AppCubit instance(BuildContext context) => BlocProvider.of(context);
 
-  Future<void> createDB(String tableName) async {
+  Future<void> createDB(String usersTableName, String goalTableName) async {
     //logic to save last user and the corresponding db version
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     if (!_prefs.containsKey('uidList')) {
       //first time in app
-      _prefs.setStringList('uidList', [tableName]);
+      _prefs.setStringList('uidList', [usersTableName]);
       _prefs.setInt('version', 1);
       print('first time:DB version is 1');
     } else {
       List<String> uidList = _prefs.getStringList('uidList');
       int lastVersion = _prefs.getInt('version');
-      if (!uidList.contains(tableName)) {
+      if (!uidList.contains(usersTableName)) {
         //brand new user
-        uidList.add(tableName);
+        uidList.add(usersTableName);
         int version = lastVersion + 1;
         _prefs.setStringList('uidList', uidList);
         _prefs.setInt('version', version);
-      print('this is new user so we will upgrade DB version to $version');
+        print('this is new user so we will upgrade DB version to $version');
       } else {
-        print('user logged before: no upgrading to db as the table will be found');
+        print(
+            'user logged before: no upgrading to db as the table will be found');
         // logged before
         //use the same db version so it will find the table
       }
@@ -109,13 +112,25 @@ class AppCubit extends Cubit<AppStates> {
         onCreate: (Database db, int version) async {
       db
           .execute(
-              'CREATE TABLE $tableName (date TEXT PRIMARY KEY, calories REAL, co2 REAL)')
+              'CREATE TABLE $usersTableName (date TEXT PRIMARY KEY, calories REAL, co2 REAL)')
           .catchError((error) {
         print('Error When Creating Table ${error.toString()}');
       }).then((value) {
-        print('Table created');
+        db
+            .execute(
+                'CREATE TABLE $goalTableName (userId TEXT PRIMARY KEY, co2Goal INTEGER, goalName TEXT, startDate TEXT, image BLOB )')
+            .catchError((error) {
+          print('Error When Creating Table ${error.toString()}');
+        }).then((value) {
+          print('Table $goalTableName is created');
+          emit(DatabaseTableCreatedState());
+          countDBRecords(db, usersTableName);
+          // getDataFromDatabase(db, tableName);
+          emit(DatabaseOpenedState());
+        });
+        print('Table $usersTableName is created');
         emit(DatabaseTableCreatedState());
-        countDBRecords(db, tableName);
+        countDBRecords(db, usersTableName);
         // getDataFromDatabase(db, tableName);
         emit(DatabaseOpenedState());
       });
@@ -124,13 +139,13 @@ class AppCubit extends Cubit<AppStates> {
           'database upgraded as new user logged with version: $version, with: $i');
       db
           .execute(
-              'CREATE TABLE $tableName (date TEXT PRIMARY KEY, calories REAL, co2 REAL)')
+              'CREATE TABLE $usersTableName (date TEXT PRIMARY KEY, calories REAL, co2 REAL)')
           .catchError((error) {
         print('Error When Creating Table ${error.toString()}');
       }).then((value) {
-        print('Table created');
+        print('Table $usersTableName is created');
         emit(DatabaseTableCreatedState());
-        countDBRecords(db, tableName);
+        countDBRecords(db, usersTableName);
         // getDataFromDatabase(db, tableName);
         emit(DatabaseOpenedState());
       });
@@ -138,20 +153,13 @@ class AppCubit extends Cubit<AppStates> {
       print('Database opened');
     }).then((value) {
       database = value;
-      print('Database created');
+      print('Database is created successfully');
       emit(DatabaseCreatedState());
     });
   }
 
-  void insertIntoDB(
-    String tableName,
-    String date,
-    num calories,
-    num co2,
-  ) {
-    // print('$tableName: $date, cal:$calories, co2:$co2');
-
-    database.insert(tableName, {'date': date, 'calories': calories, 'co2': co2},
+  void insertIntoDB(String tableName, Map<String, dynamic> recordValues) {
+    database.insert(tableName, recordValues,
         conflictAlgorithm: ConflictAlgorithm.replace);
 
     // await database.transaction((txn) async {

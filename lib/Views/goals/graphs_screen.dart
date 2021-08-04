@@ -7,18 +7,19 @@ import 'package:food_app/shared/app_cubit.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class GoalsScreen extends StatefulWidget {
+class GraphsScreen extends StatefulWidget {
   @override
-  _GoalsScreenState createState() => _GoalsScreenState();
+  _GraphsScreenState createState() => _GraphsScreenState();
 }
 
-class _GoalsScreenState extends State<GoalsScreen>
+class _GraphsScreenState extends State<GraphsScreen>
     with SingleTickerProviderStateMixin {
   TabController tabController;
 
   String type;
-  AppCubit appCubit ;
-  String uid ;
+  AppCubit appCubit;
+
+  String uid;
 
   @override
   void initState() {
@@ -34,14 +35,10 @@ class _GoalsScreenState extends State<GoalsScreen>
     tabController.addListener(() {
       if (tabController.index == 0) {
         appCubit.getOneWeekData(appCubit.database, uid);
-
-      } else if (tabController.index == 1){
+      } else if (tabController.index == 1) {
         appCubit.getOneMonthData(appCubit.database, uid);
-
-      }
-      else if(tabController.index ==2){
+      } else if (tabController.index == 2) {
         appCubit.getThreeMonthData(appCubit.database, uid);
-
       }
     });
   }
@@ -51,73 +48,34 @@ class _GoalsScreenState extends State<GoalsScreen>
     // final String uid = FirebaseAuth.instance.currentUser.uid;
     // final AppCubit appCubit = AppCubit.instance(context);
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        leadingWidth: 0,
-        // title: Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        //   child: DropdownButton(
-        //     isExpanded: true,
-        //     value: type,
-        //     underline: Container(),
-        //     dropdownColor: Colors.grey[700],
-        //     iconSize: 25,
-        //     iconDisabledColor: Colors.grey,
-        //     iconEnabledColor: Colors.white,
-        //     style: TextStyle(
-        //         color: Colors.white,
-        //         fontSize: 20,
-        //         fontWeight: FontWeight.bold),
-        //     items: [
-        //       DropdownMenuItem(
-        //         child: Text('Calories'),
-        //         value: 'Calories',
-        //       ),
-        //       DropdownMenuItem(
-        //         child: Text('Co2'),
-        //         value: 'Co2',
-        //       ),
-        //     ],
-        //     onChanged: (newITem) {
-        //       print(newITem);
-        //       setState(() {
-        //         type = newITem;
-        //       });
-        //     },
-        //   ),
-        // ),
-        title: Text('Goals'),
-        toolbarHeight: 100,
-        bottom: PreferredSize(
-          preferredSize: Size(double.infinity, 50),
-          child: Container(
-            height: 50,
-            color: Colors.green.withOpacity(0.35),
-            child: TabBar(
-              onTap: (index) {
-                if (index == 0) {
-                  appCubit.getOneWeekData(appCubit.database, uid);
-                } else if (index == 1) {
-                  appCubit.getOneMonthData(appCubit.database, uid);
-                } else if (index == 2) {
-                  appCubit.getThreeMonthData(appCubit.database, uid);
-                } else {
-                  print('error in tab index');
-                }
-              },
-              indicator: BoxDecoration(
-                color: Colors.black.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              controller: tabController,
-              labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              tabs: [
-                Text('1 Week'),
-                Text('1 Month'),
-                Text('3 Months'),
-              ],
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, 50),
+        child: Container(
+          height: 50,
+          color: Theme.of(context).accentColor,
+          child: TabBar(
+            onTap: (index) {
+              if (index == 0) {
+                appCubit.getOneWeekData(appCubit.database, uid);
+              } else if (index == 1) {
+                appCubit.getOneMonthData(appCubit.database, uid);
+              } else if (index == 2) {
+                appCubit.getThreeMonthData(appCubit.database, uid);
+              } else {
+                print('error in tab index');
+              }
+            },
+            indicator: BoxDecoration(
+              color: Colors.black.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(5),
             ),
+            controller: tabController,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            tabs: [
+              Text('1 Week'),
+              Text('1 Month'),
+              Text('3 Months'),
+            ],
           ),
         ),
       ),

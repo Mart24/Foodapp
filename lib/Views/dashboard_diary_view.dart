@@ -106,11 +106,12 @@ class _HomePageState extends State<HomePage> {
                 final DairyCubit dairyCubit = DairyCubit.instance(context);
                 final DateTime now = dairyCubit.currentDate;
                 try {
-                  AppCubit.instance(context).insertIntoDB(
-                      uid,
-                      DateTime(now.year, now.month, now.day).toIso8601String(),
-                      dairyCubit.kCalSum,
-                      dairyCubit.co2Sum);
+                  AppCubit.instance(context).insertIntoDB(uid, {
+                    'date': DateTime(now.year, now.month, now.day)
+                        .toIso8601String(),
+                    'calories': dairyCubit.kCalSum,
+                    'co2': dairyCubit.co2Sum
+                  });
                 } catch (e) {
                   print(e);
                 }
