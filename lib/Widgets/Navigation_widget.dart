@@ -81,6 +81,7 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.person_pin), label: "Profile"),
             // BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
+
           ]),
     );
   }

@@ -5,6 +5,8 @@ import 'package:food_app/Views/goals/graphs_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
+import 'goals_screen.dart';
+
 class GoalsHome extends StatefulWidget {
   const GoalsHome({Key key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class _GoalsHomeState extends State<GoalsHome>
     with SingleTickerProviderStateMixin {
   int currentIndex = 0;
   List<Widget> screens = [
-    GoalsIntroScreen(),
+    GoalsScreen(),
     GraphsScreen(),
   ];
   TabController tabController;

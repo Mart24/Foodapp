@@ -111,6 +111,7 @@ class GoalsAddScreen extends StatelessWidget {
                       ),
                     ),
                     TextFormField(
+                      initialValue: goalCubit.goalName,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                       ),
@@ -143,6 +144,7 @@ class GoalsAddScreen extends StatelessWidget {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.38,
                           child: TextFormField(
+                            initialValue: goalCubit.co2Goal.toString(),
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                             ),
@@ -231,6 +233,7 @@ class GoalsAddScreen extends StatelessWidget {
                 'startDate': DateTime(d.year, d.month, d.day).toIso8601String(),
                 'image': goalCubit.imageAsBytes
               });
+              Navigator.of(context).pop();
             },
             text: Text('Save Goal'),
           )
@@ -239,3 +242,5 @@ class GoalsAddScreen extends StatelessWidget {
     );
   }
 }
+
+

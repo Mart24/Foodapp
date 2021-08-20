@@ -153,31 +153,34 @@ class _RightChild extends StatelessWidget {
             opacity: disabled ? 0.5 : 1,
           ),
           const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                title,
-                style: GoogleFonts.yantramanav(
-                  color: disabled
-                      ? const Color(0xFFBABABA)
-                      : const Color(0xFF636564),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: GoogleFonts.yantramanav(
+                    color: disabled
+                        ? const Color(0xFFBABABA)
+                        : const Color(0xFF636564),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                message,
-                style: GoogleFonts.yantramanav(
-                  color: disabled
-                      ? const Color(0xFFD5D5D5)
-                      : const Color(0xFF636564),
-                  fontSize: 16,
+                const SizedBox(height: 6),
+                Text(
+                  message,
+                  overflow: TextOverflow.fade,
+                  style: GoogleFonts.yantramanav(
+                    color: disabled
+                        ? const Color(0xFFD5D5D5)
+                        : const Color(0xFF636564),
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

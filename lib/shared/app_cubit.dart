@@ -35,6 +35,7 @@ class AppCubit extends Cubit<AppStates> {
       'co2': 0.0
     };
   });
+
   List<double> oneWeekCals = List.generate(7, (index) => 0.0);
   List<double> oneWeekCo2 = List.generate(7, (index) => 0.0);
 
@@ -158,10 +159,11 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void insertIntoDB(String tableName, Map<String, dynamic> recordValues) {
+  Future<void> insertIntoDB(
+      String tableName, Map<String, dynamic> recordValues) async {
     database.insert(tableName, recordValues,
         conflictAlgorithm: ConflictAlgorithm.replace);
-
+    print('inserted: $recordValues in table: $tableName');
     // await database.transaction((txn) async {
     //   txn
     //       .rawInsert(
@@ -192,44 +194,82 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  // Future<void> getDataFromDatabase(Database database, String tableName,
-  //     {bool distinct,
-  //     List<String> columns,
-  //     String where,
-  //     List<dynamic> whereArgs,
-  //     String groupBy,
-  //     String having,
-  //     String orderBy,
-  //     int limit,
-  //     int offset}) async {
-  //   emit(DatabaseGetLoadingState());
-  //   database
-  //       .query(tableName,
-  //           distinct: distinct,
-  //           columns: columns,
-  //           where: where,
-  //           whereArgs: whereArgs,
-  //           groupBy: groupBy,
-  //           having: having,
-  //           orderBy: orderBy,
-  //           limit: limit,
-  //           offset: offset)
-  //       .then((value) {
-  //     queryResult = value;
-  //     print('retrived ${value.length}');
-  //     value.forEach((element) {
-  //       print(
-  //           '${element['date']}: calories: ${element['calories']}, co2: ${element['co2']}');
-  //     });
-  //     int count = queryResult.length;
-  //     print('Database counted: $count');
-  //     emit(DatabaseGetState());
-  //   });
-  // }
+  Future<void> getDataFromDatabase(String tableName,
+      {bool distinct,
+      List<String> columns,
+      String where,
+      List<dynamic> whereArgs,
+      String groupBy,
+      String having,
+      String orderBy,
+      int limit,
+      int offset}) async {
+    emit(DatabaseGetLoadingState());
+    database
+        .query(tableName,
+            distinct: distinct,
+            columns: columns,
+            where: where,
+            whereArgs: whereArgs,
+            groupBy: groupBy,
+            having: having,
+            orderBy: orderBy,
+            limit: limit,
+            offset: offset)
+        .then((value) {
+      queryResult = value;
+      print('retrived ${value.length}');
+      value.forEach((element) {});
+      int count = queryResult.length;
+      print('Database counted: $count');
+      emit(DatabaseGetState());
+    });
+  }
 
-  Future<void> getOneWeekData(Database database, String tableName) async {
+  Future<List<Map<String, dynamic>>> getDataFromDatabase2(String tableName,
+      {bool distinct,
+      List<String> columns,
+      String where,
+      List<dynamic> whereArgs,
+      String groupBy,
+      String having,
+      String orderBy,
+      int limit,
+      int offset}) async {
+    return database.query(tableName,
+        distinct: distinct,
+        columns: columns,
+        where: where,
+        whereArgs: whereArgs,
+        groupBy: groupBy,
+        having: having,
+        orderBy: orderBy,
+        limit: limit,
+        offset: offset);
+  }
+
+  Future<void> deleteDataFromDatabase({
+    @required String tableName,
+    @required String where,
+    @required List<dynamic> whereArgs,
+  }) async {
+    database
+        .delete(tableName, where: where, whereArgs: whereArgs)
+        .then((value) {
+      print('number of row deleted is: $value');
+      emit(DatabaseRecordDeletedState());
+    });
+  }
+
+  Future<void> getOneWeekData(Database database, String tableName,
+      {DateTime date, bool forwardDirection = false}) async {
     // emit(DatabaseGetLoadingState());
-    DateTime now = DateTime.now();
+    DateTime now;
+    if (forwardDirection) {
+      now = date.add(Duration(days: 7)) ?? DateTime.now();
+    } else {
+      now = date ?? DateTime.now();
+    }
     now = DateTime(now.year, now.month, now.day);
     database.query(tableName,
         limit: 7,
@@ -313,6 +353,7 @@ class AppCubit extends Cubit<AppStates> {
       emit(DatabaseGetState());
     });
   }
+
 
   void countDBRecords(Database db, String tableName) async {
     List<Map> result = await db.query(

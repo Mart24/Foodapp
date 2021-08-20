@@ -45,3 +45,6 @@ class DatabaseCountedState extends AppStates {
 class DatabaseGetState extends AppStates {}
 
 class DatabaseGetLoadingState extends AppStates {}
+
+
+class DatabaseRecordDeletedState extends AppStates {}

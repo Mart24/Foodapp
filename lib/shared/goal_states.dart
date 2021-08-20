@@ -15,3 +15,7 @@ class DoneSettingGoal extends GoalStates {}
 class ErrorUploadingImageState extends GoalStates {}
 
 class CancelChoosingImageState extends GoalStates {}
+class GoalsSetDone extends GoalStates {}
+class GoalDataGetDone extends GoalStates {}
+
+
