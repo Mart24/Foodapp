@@ -31,7 +31,10 @@ class _GoalViewerState extends State<GoalViewer> {
     GoalCubit goalCubit = GoalCubit.instance(context);
     final uid = FirebaseAuth.instance.currentUser.uid;
     goalCubit.getGoalData(
-        appCubit.database, uid, DateTime.parse(widget.co2data[0]['startDate']));
+        appCubit.database,
+        uid,
+        DateTime.parse(widget.co2data[0]['startDate']),
+        widget.co2data[0]['co2Goal']);
   }
 
   @override
@@ -50,9 +53,12 @@ class _GoalViewerState extends State<GoalViewer> {
           final saved = goalCubit.overallSavedSum;
           final weekSum = goalCubit.weekCo2Sum;
           final weekSaved = goalCubit.weekSavedSum;
-          final toGo = goal - saved;
-          final time = toGo / weekSum;
+          final toGo = goalCubit.toGo;
+          final time = goalCubit.time;
 
+          print('saved: $saved, goal:$goal');
+          print('percent');
+          print(saved / goal);
           return Container(
             color: const Color(0xFF379A69),
             child: Theme(
@@ -78,59 +84,127 @@ class _GoalViewerState extends State<GoalViewer> {
                       SizedBox(
                         height: 5,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Table(
+                        columnWidths: {
+                          0: FractionColumnWidth(0.5),
+                          1: FractionColumnWidth(0.5)
+                        },
                         children: [
-                          Text(
-                            'Saved $saved Kg/Co2',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text('Goal $goal Kg/Co2',
+                          TableRow(children: [
+                            Text(
+                              'Saved ${saved.toStringAsFixed(2)} Kg/Co2',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.start,
+                            ),
+                            Text(
+                              'Goal ${goal.toStringAsFixed(2)} Kg/Co2',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.end,
+                            ),
+                          ])
                         ],
                       ),
                       SizedBox(
                         height: 5,
                       ),
-                      LinearPercentIndicator(
-                        animation: true,
-                        // width: double.infinity,
-                        lineHeight: 25.0,
-                        percent: saved / goal,
-                        progressColor: kPrimaryColor,
-                      ),
+                      Stack(children: [
+                        LinearPercentIndicator(
+                          animation: true,
+                          // width: double.infinity,
+                          lineHeight: 25.0,
+                          percent: goalCubit.percent,
+                          progressColor: kPrimaryColor,
+                        ),
+                        Center(
+                            child: Text(
+                          '${(goalCubit.percent * 100).toStringAsFixed(2)} %',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                      ]),
                       SizedBox(
                         height: 5,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Table(
+                        columnWidths: {
+                          0: FractionColumnWidth(0.58),
+                          1: FractionColumnWidth(0.42)
+                        },
                         children: [
-                          Text('Week sum=  $weekSum Kg/Co2',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                          Text('To Go: $toGo Kg/Co2',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Week Saved= $weekSaved Kg/Co2',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                          Text('Time: $time Week',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                          TableRow(children: [
+                            RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
+                                    children: <TextSpan>[
+                                  TextSpan(text: 'Week Sum= '),
+                                  TextSpan(
+                                    text: '${weekSum.toStringAsFixed(1)}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: kPrimaryColor),
+                                  ),
+                                  TextSpan(
+                                      text: ' kg/co2',
+                                      style: TextStyle(fontSize: 14)),
+                                ])),
+                            RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
+                                    children: <TextSpan>[
+                                  TextSpan(text: 'To Go: '),
+                                  TextSpan(
+                                    text: '${toGo.toStringAsFixed(1)}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: kPrimaryColor),
+                                  ),
+                                  TextSpan(
+                                      text: ' kg/co2',
+                                      style: TextStyle(fontSize: 14)),
+                                ])),
+                          ]),
+                          TableRow(children: [Container(), Container()]),
+                          TableRow(children: [
+                            RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
+                                    children: <TextSpan>[
+                                  TextSpan(text: 'Week Saved= '),
+                                  TextSpan(
+                                    text: '${weekSaved.toStringAsFixed(1)}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: kPrimaryColor),
+                                  ),
+                                  TextSpan(
+                                      text: ' kg/co2',
+                                      style: TextStyle(fontSize: 14)),
+                                ])),
+                            RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
+                                    children: <TextSpan>[
+                                  TextSpan(text: 'Time: '),
+                                  TextSpan(
+                                    text: '${time.toStringAsFixed(1)}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: kPrimaryColor),
+                                  ),
+                                  TextSpan(
+                                      text: ' week',
+                                      style: TextStyle(fontSize: 14)),
+                                ])),
+                          ])
                         ],
                       ),
                       Expanded(
@@ -158,8 +232,16 @@ class _GoalViewerState extends State<GoalViewer> {
                                     return DataRow(cells: [
                                       DataCell(Text(
                                           '${DateFormat.yMMMd().format(DateTime.parse(e['date']))}')),
-                                      DataCell(Text('${e['co2']} Kg/Co2')),
-                                      DataCell(Text('${5 - e['co2']} Kg/Co2')),
+                                      DataCell(
+                                        Text(
+                                          '${e['co2'].toStringAsFixed(2)} kg/co2',
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          '${(5 - e['co2']).toStringAsFixed(2)} kg/co2',
+                                        ),
+                                      ),
                                     ]);
                                   }).toList()),
                             ),
