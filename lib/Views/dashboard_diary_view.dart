@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
       null,
       null,
       null,
-      //  null,
+      null,
       // null,
       // null,
       // null,
@@ -528,6 +528,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildTripCard(BuildContext context, DocumentSnapshot document) {
     final trip = Trip.fromSnapshot(document);
+    final plantType = trip.planticon();
     return Container(
       child: InkWell(
         onTap: () {
@@ -551,6 +552,19 @@ class _HomePageState extends State<HomePage> {
                         // style: new TextStyle(fontSize: 20.0),
                       ),
                       Spacer(),
+                      Tooltip(
+                        message: 'plantaardig',
+                        child: (plantType.containsKey(trip.plantbased))
+                            ? plantType[trip.plantbased]
+                            : plantType["n"],
+                      ),
+                      // Tooltip(
+                      //   message: 'plantaardig',
+                      //   child: ImageIcon(
+                      //     AssetImage("assets/icons/leaf_icon.png"),
+                      //     color: kPrimaryColor,
+                      //   ),
+                      // ),
                       Text("${trip.kcal.toStringAsFixed(0)} Kcal"),
                     ],
                   ),

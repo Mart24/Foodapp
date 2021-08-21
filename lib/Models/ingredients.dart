@@ -3,6 +3,8 @@
 // Trip = Foodintake. The new_food_intake folder contains the views how to select a food.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:food_app/Views/constants.dart';
 
 class Trip {
   int id;
@@ -13,7 +15,7 @@ class Trip {
   double amound;
   String categorie;
   double ean;
-  bool plantbased;
+  String plantbased;
   double co2;
   double amount;
   String unit;
@@ -62,7 +64,7 @@ class Trip {
       this.carbs,
       this.protein,
       this.fat,
-      // this.plantbased,
+      this.plantbased,
       this.categorie,
       // this.ean,
       // this.brand,
@@ -115,7 +117,7 @@ class Trip {
         // 'sizep2': sizep2,
         // 'productgroup': productgroup,
         // 'unit': unit,
-        // 'plantbased': plantbased,
+        'plantbased': plantbased,
         'categorie': categorie,
         // 'ean': ean,
         // 'brand': brand,
@@ -163,7 +165,7 @@ class Trip {
         //portionsize2 = snapshot['portionsize2'],
         // sizep2 = snapshot['sizep2'],
         // productgroup = snapshot['productgroup'],
-        // plantbased = snapshot['plantbased'],
+        plantbased = snapshot['plantbased'],
         categorie = snapshot['categorie'],
         // ean = snapshot['ean'],
         // brand = snapshot['brand'],
@@ -199,4 +201,11 @@ class Trip {
         // niacine = snapshot['niacine'],
 
         documentId = snapshot.id;
+
+  Map<String, ImageIcon> planticon() => {
+        "WAAR": ImageIcon(
+          AssetImage("assets/icons/leaf_icon.png"),
+          color: kPrimaryColor,
+        ),
+      };
 }

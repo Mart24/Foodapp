@@ -84,9 +84,22 @@ class _FoodDateState extends State<FoodDate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: Text('Food - amount'),
+        title: Text('Choose amount'),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Colors.white,
+              textStyle: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            onPressed: () {},
+            child: Text('Melden'),
+          ),
+        ],
       ),
       body: Center(
         child: StreamBuilder(
@@ -97,6 +110,9 @@ class _FoodDateState extends State<FoodDate> {
             builder: (context, snapshot) {
               if (!snapshot.hasData) return const Text("Loading...");
               var foodDocument = snapshot.data;
+
+              // Plantbase string
+              String plantbased = foodDocument['plantbased'];
               // Calorieën double
               double kcal = ((foodDocument['kcal'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
@@ -192,9 +208,11 @@ class _FoodDateState extends State<FoodDate> {
 
               return Container(
                 child: Column(children: <Widget>[
-                  Text(
-                    "Name ${foodDocument['name']}",
-                    style: new TextStyle(fontSize: 16.0),
+                  FittedBox(
+                    child: Text(
+                      "Product: ${foodDocument['name']}",
+                      style: new TextStyle(fontSize: 24.0),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -232,6 +250,10 @@ class _FoodDateState extends State<FoodDate> {
                   ),
                   Text(
                     "Dietary Fiver ${dietaryfiber.toStringAsFixed(1)}",
+                    style: new TextStyle(fontSize: 16.0),
+                  ),
+                  Text(
+                    "plantbased $plantbased",
                     style: new TextStyle(fontSize: 16.0),
                   ),
                   // Text(
@@ -393,6 +415,7 @@ class _FoodDateState extends State<FoodDate> {
                           ? 0
                           : double.parse(_budgetController.text);
                       widget.trip.categorie = categoryChoice;
+                      widget.trip.plantbased = plantbased;
                       Navigator.push(
                         context,
                         MaterialPageRoute(
