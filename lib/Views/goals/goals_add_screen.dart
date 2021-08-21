@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:food_app/Widgets/custom_button.dart';
@@ -250,11 +253,17 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
               ),
             ),
             CustomButton(
-              onPressed: () {
+              onPressed: () async {
                 bool valid = _formKey.currentState.validate();
                 if (valid) {
                   _formKey.currentState.save();
                   var d = goalCubit.startDate;
+
+                  if(goalCubit.imageAsBytes==null){
+                    ByteData bytes = await rootBundle.load('assets/img1.jpg');
+                      goalCubit.imageAsBytes= bytes.buffer.asUint8List();
+                  }
+
                   AppCubit.instance(context).insertIntoDB('goals', {
                     'userId': FirebaseAuth.instance.currentUser.uid,
                     'co2Goal': goalCubit.co2Goal,

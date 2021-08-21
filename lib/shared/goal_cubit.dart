@@ -12,6 +12,8 @@ import 'package:food_app/shared/app_cubit.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
 
 part 'goal_states.dart';
 
@@ -25,6 +27,7 @@ class GoalCubit extends Cubit<GoalStates> {
   String goalName = '';
   int co2Goal = 0;
   Uint8List imageAsBytes;
+
   File imageAsFile;
   List<Map> goalQueryResult = [];
 
@@ -45,6 +48,8 @@ class GoalCubit extends Cubit<GoalStates> {
     co2Goal = 0;
     DateTime now = DateTime.now();
     imageAsBytes = Uint8List.fromList([]);
+
+
     startDate = DateTime(now.year, now.month, now.day);
   }
 
@@ -111,9 +116,11 @@ class GoalCubit extends Cubit<GoalStates> {
       savedCo2 = [];
       value.forEach((element) {
         double sub = 5 - element['co2'];
-        double saved = (sub < 0) ? 0 : sub;
+        double cal = element['calories'];
+        double saved = (sub < 0 || (sub == 5 && cal == 0)) ? 0 : sub;
         print(
             '${element['date']}: eaten Co2: ${element['co2']}, saved Co2: $saved');
+
         goalDays.add(DateTime.parse(element['date']));
         eatenCals.add(element['calories']);
         eatenCo2.add(element['co2']);
@@ -122,15 +129,21 @@ class GoalCubit extends Cubit<GoalStates> {
       });
 
       overallSavedSum = _sum(savedCo2, savedCo2.length);
+      if(overallSavedSum<0) overallSavedSum=0;
+
       weekSavedSum = _sum(savedCo2, 7);
+
       weekCo2Sum = _sum(eatenCo2, 7);
+
       print('overallSavedSum: $overallSavedSum, co2Goal: $goalValue ');
+
       percent = overallSavedSum / goalValue;
       if (percent >= 1) {
         percent = 1.0;
       } else if (percent < 0) {
         percent = 0.0;
       }
+
       toGo = goalValue - overallSavedSum;
       time = toGo / weekSavedSum;
       if (toGo < 0) toGo = 0;

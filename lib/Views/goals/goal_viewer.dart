@@ -228,7 +228,13 @@ class _GoalViewerState extends State<GoalViewer> {
                                       label: Text('Saved Co2 '),
                                     ),
                                   ],
-                                  rows: result.map((e) {
+                                  rows: result.reversed.map((e) {
+                                    double sub = 5 - e['co2'];
+                                    double cal = e['calories'];
+                                    double saved =
+                                        (sub < 0 || (sub == 5 && cal == 0))
+                                            ? 0
+                                            : sub;
                                     return DataRow(cells: [
                                       DataCell(Text(
                                           '${DateFormat.yMMMd().format(DateTime.parse(e['date']))}')),
@@ -239,7 +245,7 @@ class _GoalViewerState extends State<GoalViewer> {
                                       ),
                                       DataCell(
                                         Text(
-                                          '${(5 - e['co2']).toStringAsFixed(2)} kg/co2',
+                                          '${(saved).toStringAsFixed(2)} kg/co2',
                                         ),
                                       ),
                                     ]);
