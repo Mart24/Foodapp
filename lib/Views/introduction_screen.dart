@@ -39,6 +39,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
 
     return IntroductionScreen(
+      globalBackgroundColor: colorlightgreen,
       key: introKey,
       pages: [
         PageViewModel(

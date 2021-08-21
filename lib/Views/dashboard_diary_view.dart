@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'new_food_registration.dart/food_search.dart';
 
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                       circularPercent = 1;
                     }
                     double diff2 = cubit.co2Sum;
-                    double barPercent = diff2 / 3.7;
+                    double barPercent = diff2 / 5.0;
                     if (barPercent > 1) {
                       barPercent = 1;
                     }
@@ -213,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.only(left: 15.0),
                                 child: RichText(
                                     text: TextSpan(
-                                        style: TextStyle(
+                                        style: GoogleFonts.roboto(
                                             fontSize: 20, color: Colors.black),
                                         children: <TextSpan>[
                                       TextSpan(text: 'Eaten '),
@@ -233,8 +234,8 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               flex: 3,
                               child: CircularPercentIndicator(
-                                radius: 125.0,
-                                lineWidth: 5.0,
+                                radius: 165.0,
+                                lineWidth: 7.5,
                                 animation: true,
                                 backgroundColor: Colors.grey[350],
                                 percent: circularPercent,
@@ -323,38 +324,50 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         height: 10,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          new LinearPercentIndicator(
+                            animation: true,
+                            backgroundColor: Colors.grey[350],
+                            width: 300.0,
+                            lineHeight: 25.0,
+                            percent: barPercent,
+                            progressColor: kPrimaryColor,
+                          ),
+                        ],
+                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 7.0, bottom: 7.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            // Text('Co2 ${cubit.co2Sum.toStringAsFixed(1)} kg ',
-                            //     style: TextStyle(fontSize: 20)),
-                            RichText(
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.black),
-                                    children: <TextSpan>[
-                                  TextSpan(text: 'Co2 '),
-                                  TextSpan(
-                                    text: '${cubit.co2Sum.toStringAsFixed(1)}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: kPrimaryColor),
-                                  ),
-                                  TextSpan(
-                                      text: 'kg',
-                                      style: TextStyle(fontSize: 12)),
-                                ])),
-                            new LinearPercentIndicator(
-                              animation: true,
-                              width: 150.0,
-                              lineHeight: 15.0,
-                              percent: barPercent,
-                              progressColor: kPrimaryColor,
-                            ),
-                            Text('max 3.7 kg')
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Text('Co2 ${cubit.co2Sum.toStringAsFixed(1)} kg ',
+                              //     style: TextStyle(fontSize: 20)),
+                              RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                      children: <TextSpan>[
+                                    TextSpan(text: 'Co2 '),
+                                    TextSpan(
+                                      text:
+                                          '${cubit.co2Sum.toStringAsFixed(1)}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: kPrimaryColor),
+                                    ),
+                                    TextSpan(
+                                        text: 'kg',
+                                        style: TextStyle(fontSize: 12)),
+                                  ])),
+
+                              Text('max 5.0 kg')
+                            ],
+                          ),
                         ),
                       ),
                       TextButton(
@@ -401,97 +414,97 @@ class _HomePageState extends State<HomePage> {
               listener: (context, states) {},
               builder: (context, states) {
                 DairyCubit cubit = DairyCubit.instance(context);
-                print('Cubit mystream is: ${cubit.myStream==null?'null':'no null'}');
+                print(
+                    'Cubit mystream is: ${cubit.myStream == null ? 'null' : 'no null'}');
                 return Expanded(
                   child: StreamBuilder(
-
                     stream: cubit.myStream,
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       // if (snapshot.hasData || snapshot.connectionState == ConnectionState.active) {
-                        List<Widget> breakfastList = [
-                          CategoryTitle(
-                            title: 'Breakfast',
-                            kcalSum: cubit.breakfastKcalSum,
-                            co2Sum: cubit.breakfastsumco2Sum,
-                          ),
-                        ];
-                        breakfastList.addAll(DairyCubit.instance(context)
-                            .breakfastList
-                            .map((e) => buildTripCard(context, e)));
+                      List<Widget> breakfastList = [
+                        CategoryTitle(
+                          title: 'Breakfast',
+                          kcalSum: cubit.breakfastKcalSum,
+                          co2Sum: cubit.breakfastsumco2Sum,
+                        ),
+                      ];
+                      breakfastList.addAll(DairyCubit.instance(context)
+                          .breakfastList
+                          .map((e) => buildTripCard(context, e)));
 
-                        List<Widget> lunchList = [
-                          CategoryTitle(
-                            title: 'Lunch',
-                            kcalSum: cubit.lunchKcalSum,
-                            co2Sum: cubit.lunchsumco2Sum,
-                          ),
-                        ];
-                        lunchList.addAll(DairyCubit.instance(context)
-                            .lunchList
-                            .map((e) => buildTripCard(context, e)));
+                      List<Widget> lunchList = [
+                        CategoryTitle(
+                          title: 'Lunch',
+                          kcalSum: cubit.lunchKcalSum,
+                          co2Sum: cubit.lunchsumco2Sum,
+                        ),
+                      ];
+                      lunchList.addAll(DairyCubit.instance(context)
+                          .lunchList
+                          .map((e) => buildTripCard(context, e)));
 
-                        List<Widget> dinerList = [
-                          CategoryTitle(
-                            title: 'Diner',
-                            kcalSum: cubit.dinerKcalSum,
-                            co2Sum: cubit.dinersumco2Sum,
-                          ),
-                        ];
-                        dinerList.addAll(DairyCubit.instance(context)
-                            .dinerList
-                            .map((e) => buildTripCard(context, e)));
+                      List<Widget> dinerList = [
+                        CategoryTitle(
+                          title: 'Diner',
+                          kcalSum: cubit.dinerKcalSum,
+                          co2Sum: cubit.dinersumco2Sum,
+                        ),
+                      ];
+                      dinerList.addAll(DairyCubit.instance(context)
+                          .dinerList
+                          .map((e) => buildTripCard(context, e)));
 
-                        List<Widget> snacksList = [
-                          CategoryTitle(
-                            title: 'Snacks',
-                            kcalSum: cubit.snacksKcalSum,
-                            co2Sum: cubit.snackssumco2Sum,
-                          ),
-                        ];
-                        snacksList.addAll(DairyCubit.instance(context)
-                            .snacksList
-                            .map((e) => buildTripCard(context, e)));
+                      List<Widget> snacksList = [
+                        CategoryTitle(
+                          title: 'Snacks',
+                          kcalSum: cubit.snacksKcalSum,
+                          co2Sum: cubit.snackssumco2Sum,
+                        ),
+                      ];
+                      snacksList.addAll(DairyCubit.instance(context)
+                          .snacksList
+                          .map((e) => buildTripCard(context, e)));
 
-                        List<Widget> othersList = [
-                          CategoryTitle(
-                            title: 'Others',
-                            kcalSum: cubit.othersKcalSum,
-                            co2Sum: cubit.otherssumco2Sum,
-                          ),
-                        ];
-                        othersList.addAll(DairyCubit.instance(context)
-                            .otherList
-                            .map((e) => buildTripCard(context, e)));
+                      List<Widget> othersList = [
+                        CategoryTitle(
+                          title: 'Others',
+                          kcalSum: cubit.othersKcalSum,
+                          co2Sum: cubit.otherssumco2Sum,
+                        ),
+                      ];
+                      othersList.addAll(DairyCubit.instance(context)
+                          .otherList
+                          .map((e) => buildTripCard(context, e)));
 
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Column(
-                                children: breakfastList,
-                              ),
-                              Column(
-                                children: lunchList,
-                              ),
-                              Column(
-                                children: dinerList,
-                              ),
-                              Column(
-                                children: snacksList,
-                              ),
-                              Column(
-                                children: othersList,
-                              ),
-                              SizedBox(
-                                height: 58,
-                              ),
-                            ],
-                          ),
-                        );
-                        return ListView.builder(
-                          itemCount: snapshot.data.docs.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              buildTripCard(context, snapshot.data.docs[index]),
-                        );
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Column(
+                              children: breakfastList,
+                            ),
+                            Column(
+                              children: lunchList,
+                            ),
+                            Column(
+                              children: dinerList,
+                            ),
+                            Column(
+                              children: snacksList,
+                            ),
+                            Column(
+                              children: othersList,
+                            ),
+                            SizedBox(
+                              height: 58,
+                            ),
+                          ],
+                        ),
+                      );
+                      return ListView.builder(
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            buildTripCard(context, snapshot.data.docs[index]),
+                      );
                       // } else {
                       //   return const Text("No items entered...");
                       // }
@@ -513,7 +526,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-    Widget buildTripCard(BuildContext context, DocumentSnapshot document) {
+  Widget buildTripCard(BuildContext context, DocumentSnapshot document) {
     final trip = Trip.fromSnapshot(document);
     return Container(
       child: InkWell(
