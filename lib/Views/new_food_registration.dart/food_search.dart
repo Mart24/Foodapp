@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Models/ingredients.dart';
@@ -5,6 +7,7 @@ import 'package:food_app/Services/fooddata_service_json_.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/new_food_registration.dart/food_amount.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:food_app/Services/groente_service_json_.dart';
 
 // Step 1: his is the class for a new Food intake by the user
 // The data is clicked on then sended to food_amount.dart and then send to summary.dart
@@ -20,7 +23,7 @@ class NewFoodIntake extends StatefulWidget {
 }
 
 class _NewFoodIntakeState extends State<NewFoodIntake> {
-  final dbService = DatabaseService();
+  final dbService = DatabaseGService();
   String keyword;
   Trip trip;
 
@@ -57,7 +60,7 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
               Container(
                 height: 800,
                 child: FutureBuilder<List<FooddataSQLJSON>>(
-                  future: dbService.searchFooddata(keyword),
+                  future: dbService.searchGFooddata(keyword),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData)
                       return Center(
@@ -68,6 +71,8 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
                         itemBuilder: (context, index) {
                           return ListTile(
                             title: Text(snapshot.data[index].foodname),
+                            subtitle: Text(snapshot.data[index].brand),
+                            // Text(snapshot.data[index].productid.toString()),
                             // trailing: Text(snapshot.data[index].productid.toString()),
                             onTap: () {
                               widget.trip.name = snapshot.data[index].foodname;

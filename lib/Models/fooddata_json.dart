@@ -6,11 +6,16 @@
 class FooddataSQLJSON {
   int productid;
   String foodname;
+  String category;
+  String brand;
 
-  FooddataSQLJSON({this.productid, this.foodname});
+  FooddataSQLJSON({this.productid, this.foodname, this.category, this.brand});
 
   factory FooddataSQLJSON.fromJson(Map<String, dynamic> json) {
     return FooddataSQLJSON(
-        productid: json['productid'], foodname: json['name']);
+        productid: json['productid'],
+        foodname: json['name'],
+        category: json['category'],
+        brand: json['brand']);
   }
 }

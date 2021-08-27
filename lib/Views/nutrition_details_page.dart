@@ -123,11 +123,11 @@ class NutritionalDetailsPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${cubit.protein} g',
+                              '${cubit.protein}g',
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              '${cubit.proteinPercent} %',
+                              '${cubit.proteinPercent}%',
                               style: TextStyle(fontSize: 16),
                             ),
                           ]),
@@ -142,11 +142,11 @@ class NutritionalDetailsPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${cubit.fats} g',
+                              '${cubit.fats}g',
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              '${cubit.fatPercent} %',
+                              '${cubit.fatPercent}%',
                               style: TextStyle(fontSize: 16),
                             ),
                           ]),
@@ -161,11 +161,11 @@ class NutritionalDetailsPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${cubit.saturatedFat} g',
+                              '${cubit.saturatedFat}g',
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              '${cubit.saturatedFatPercent} %',
+                              '${cubit.saturatedFatPercent}%',
                               style: TextStyle(fontSize: 16),
                             ),
                           ]),
@@ -180,11 +180,11 @@ class NutritionalDetailsPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${cubit.carbs} g',
+                              '${cubit.carbs}g',
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              '${cubit.carbsPercent} %',
+                              '${cubit.carbsPercent}%',
                               style: TextStyle(fontSize: 16),
                             ),
                           ]),
@@ -199,11 +199,11 @@ class NutritionalDetailsPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${cubit.dietaryFiber} g',
+                              '${cubit.dietaryFiber}g',
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              '${cubit.dietaryFiberPercent} %',
+                              '${cubit.dietaryFiberPercent}%',
                               style: TextStyle(fontSize: 16),
                             ),
                           ]),
@@ -218,11 +218,11 @@ class NutritionalDetailsPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '${cubit.sugars} g',
+                              '${cubit.sugars}g',
                               style: TextStyle(fontSize: 18),
                             ),
                             Text(
-                              '${cubit.sugarsPercent} %',
+                              '${cubit.sugarsPercent}%',
                               style: TextStyle(fontSize: 16),
                             ),
                           ]),
