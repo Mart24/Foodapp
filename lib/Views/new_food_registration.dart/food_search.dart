@@ -103,13 +103,13 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
     String scanResult;
     try {
       scanResult = await FlutterBarcodeScanner.scanBarcode(
-        "ff3333",
+        "#32CD32",
         "Cancel",
         true,
         ScanMode.BARCODE,
       );
     } on PlatformException {
-      scanResult = 'Failed to get platform version.';
+      scanResult = 'Can not scan the barcode';
     }
     if (!mounted) return;
     setState(() => this.scanResult = scanResult);
