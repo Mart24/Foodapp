@@ -3,7 +3,6 @@ import 'package:food_app/Services/auth_service.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:auth_buttons/auth_buttons.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 // TODO move this to tone location
 final primaryColor = const Color(0xFF7AA573);

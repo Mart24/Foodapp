@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Models/ingredients.dart';
-import 'package:food_app/Services/fooddata_service_json_.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/new_food_registration.dart/food_amount.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';

@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,11 +11,8 @@ import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'new_food_registration.dart/food_search.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -74,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     print('rebuild dashboard');
+
     return Scaffold(
       // floatingActionButton: FloatingActionButton.extended(
       //   onPressed: () {
@@ -499,11 +496,11 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       );
-                      return ListView.builder(
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            buildTripCard(context, snapshot.data.docs[index]),
-                      );
+                      // return ListView.builder(
+                      //   itemCount: snapshot.data.docs.length,
+                      //   itemBuilder: (BuildContext context, int index) =>
+                      //       buildTripCard(context, snapshot.data.docs[index]),
+                      // );
                       // } else {
                       //   return const Text("No items entered...");
                       // }

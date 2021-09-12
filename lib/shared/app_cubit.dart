@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -353,7 +351,6 @@ class AppCubit extends Cubit<AppStates> {
       emit(DatabaseGetState());
     });
   }
-
 
   void countDBRecords(Database db, String tableName) async {
     List<Map> result = await db.query(

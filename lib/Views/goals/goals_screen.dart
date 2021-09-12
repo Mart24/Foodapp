@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Views/goals/goals_intro_screen.dart';
 import 'package:food_app/shared/app_cubit.dart';
-import 'package:food_app/shared/goal_cubit.dart';
 
 import 'goal_viewer.dart';
 

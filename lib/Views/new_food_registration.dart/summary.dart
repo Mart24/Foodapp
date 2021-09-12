@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
-import 'package:path/path.dart';
-
 import '../constants.dart';
 
 // Step 3: the users gets an overview of the food eaten

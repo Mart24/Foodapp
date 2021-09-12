@@ -1,19 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/Widgets/Provider_Auth.dart';
-import 'package:food_app/shared/app_cubit.dart';
-import 'package:get/get_core/get_core.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/services.dart' show rootBundle;
-
 
 part 'goal_states.dart';
 
@@ -48,7 +41,6 @@ class GoalCubit extends Cubit<GoalStates> {
     co2Goal = 0;
     DateTime now = DateTime.now();
     imageAsBytes = Uint8List.fromList([]);
-
 
     startDate = DateTime(now.year, now.month, now.day);
   }
@@ -129,7 +121,7 @@ class GoalCubit extends Cubit<GoalStates> {
       });
 
       overallSavedSum = _sum(savedCo2, savedCo2.length);
-      if(overallSavedSum<0) overallSavedSum=0;
+      if (overallSavedSum < 0) overallSavedSum = 0;
 
       weekSavedSum = _sum(savedCo2, 7);
 

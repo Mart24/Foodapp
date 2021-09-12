@@ -1,4 +1,3 @@
-import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Views/goals/goals_add_screen.dart';
 import 'package:food_app/Widgets/custom_button.dart';
