@@ -111,6 +111,8 @@ class _FoodDateState extends State<FoodDate> {
               if (!snapshot.hasData) return const Text("Loading...");
               var foodDocument = snapshot.data;
 
+              //nutriscore
+              String nutriscore = foodDocument['nutriscore'];
               // Plantbase string
               String plantbased = foodDocument['plantbased'];
               // Calorieën double
@@ -214,48 +216,323 @@ class _FoodDateState extends State<FoodDate> {
                       style: new TextStyle(fontSize: 24.0),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Calories ${kcal.toStringAsFixed(1)}",
-                        style: new TextStyle(fontSize: 16.0),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: Inputbar(budgetController: _budgetController),
+                  ),
+                  // Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        RaisedButton(
+                          child: Text(
+                              "${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
+                          onPressed: () => _selectDate(context),
+                          // await displayDateRangePicker(context);
+                          //   },
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 8.0),
+                        //   child: Text(
+                        //       "Datum: ${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
+                        // ),
+
+                        DropdownButton(
+                          hint: Text('Breakfast'),
+                          value: categoryChoice,
+                          onChanged: (newValue) {
+                            setState(() {
+                              categoryChoice = newValue;
+                            });
+                            print(categoryChoice);
+                          },
+                          items: categoryItem.map((valueItem) {
+                            return DropdownMenuItem(
+                              value: valueItem,
+                              child: Text(valueItem),
+                            );
+                          }).toList(),
+                        ),
+                        RaisedButton(
+                          child: Text("Save"),
+                          onPressed: () {
+                            //  widget.trip.startDate = _startDate;
+                            // widget.trip.endDate = _endDate;
+                            widget.trip.kcal = kcal;
+                            widget.trip.co2 = co2;
+                            widget.trip.carbs = koolhy;
+                            widget.trip.protein = protein;
+                            widget.trip.fat = fat;
+                            widget.trip.sugars = sugars;
+                            widget.trip.dietaryfiber = dietaryfiber;
+
+                            widget.trip.saturatedfat = saturatedfat;
+                            widget.trip.eatDate = _eattime;
+                            widget.trip.amount = (_budgetController.text == "")
+                                ? 0
+                                : double.parse(_budgetController.text);
+                            widget.trip.categorie = categoryChoice;
+                            widget.trip.plantbased = plantbased;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewFoodSummaryView(trip: widget.trip)),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                    child: Text(
+                      'Macronutriënten',
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        "Co2 ${co2.toStringAsFixed(2)}",
-                        style: new TextStyle(fontSize: 16.0),
-                      ),
-                      Text(
-                        "Carbs ${koolhy.toStringAsFixed(1)}",
-                        style: new TextStyle(fontSize: 16.0),
-                      ),
-                      Text(
-                        "Protein ${protein.toStringAsFixed(1)}",
-                        style: new TextStyle(fontSize: 16.0),
-                      ),
-                    ],
+                    ),
+                    onPressed: null,
                   ),
 
-                  Text(
-                    "Fat ${fat.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 16.0),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: Table(
+                          columnWidths: {
+                            0: FractionColumnWidth(0.40),
+                            1: FractionColumnWidth(0.45),
+                          },
+                          textBaseline: TextBaseline.alphabetic,
+                          defaultVerticalAlignment:
+                              TableCellVerticalAlignment.middle,
+                          children: [
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Energie',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${kcal.toStringAsFixed(1)} kcal",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Co²',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${co2.toStringAsFixed(1)} kg/co²",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Koolhydraten',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${koolhy.toStringAsFixed(1)} g",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Eiwitten',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${protein.toStringAsFixed(1)} g",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Vetten',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${fat.toStringAsFixed(1)} g",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Verzadigd vet',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${saturatedfat.toStringAsFixed(1)} g",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Suikers',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${sugars.toStringAsFixed(1)} g",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Vezels',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "${dietaryfiber.toStringAsFixed(1)} g",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Plantbased',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "$plantbased",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Nutriscore',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "$nutriscore",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  Text(
-                    "Saturatedfat ${saturatedfat.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 16.0),
-                  ),
-                  Text(
-                    "Sugars ${sugars.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 16.0),
-                  ),
-                  Text(
-                    "Dietary Fiver ${dietaryfiber.toStringAsFixed(1)}",
-                    style: new TextStyle(fontSize: 16.0),
-                  ),
-                  Text(
-                    "plantbased $plantbased",
-                    style: new TextStyle(fontSize: 16.0),
-                  ),
+
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       "Calories ${kcal.toStringAsFixed(1)}",
+                  //       style: new TextStyle(fontSize: 16.0),
+                  //     ),
+                  //     Text(
+                  //       "Co2 ${co2.toStringAsFixed(2)}",
+                  //       style: new TextStyle(fontSize: 16.0),
+                  //     ),
+                  //     Text(
+                  //       "Carbs ${koolhy.toStringAsFixed(1)}",
+                  //       style: new TextStyle(fontSize: 16.0),
+                  //     ),
+                  //     Text(
+                  //       "Protein ${protein.toStringAsFixed(1)}",
+                  //       style: new TextStyle(fontSize: 16.0),
+                  //     ),
+                  //   ],
+                  // ),
+
+                  // Text(
+                  //   "Fat ${fat.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "Saturatedfat ${saturatedfat.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "Sugars ${sugars.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "Dietary Fiver ${dietaryfiber.toStringAsFixed(1)}",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "plantbased $plantbased",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+                  // Text(
+                  //   "nutriscore $nutriscore",
+                  //   style: new TextStyle(fontSize: 16.0),
+                  // ),
+
+                  // VANAFFFF HIERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRBOVEN IS GOED
+// ImageIcon(nutriscore.containsKey(trip.plantbased)
+//                              ? nutriscoreimage[trip.plantbased]
+//                              : nutriscoreimage["n"],)
+                  // child: (plantType.containsKey(trip.plantbased))
+                  //           ? plantType[trip.plantbased]
+                  //           : plantType["n"],
+
                   // Text(
                   //   "salt ${salt.toStringAsFixed(1)}",
                   //   style: new TextStyle(fontSize: 16.0),
@@ -344,90 +621,36 @@ class _FoodDateState extends State<FoodDate> {
                   //   "fosfor ${fosfor.toStringAsFixed(1)}",
                   //   style: new TextStyle(fontSize: 16.0),
                   // ),
-
-                  DropdownButton(
-                    hint: Text('Breakfast'),
-                    value: categoryChoice,
-                    onChanged: (newValue) {
-                      setState(() {
-                        categoryChoice = newValue;
-                      });
-                      print(categoryChoice);
-                    },
-                    items: categoryItem.map((valueItem) {
-                      return DropdownMenuItem(
-                        value: valueItem,
-                        child: Text(valueItem),
-                      );
-                    }).toList(),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: TextField(
-                      controller: _budgetController,
-                      maxLines: 1,
-                      maxLength: 4,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.linear_scale),
-                        helperText: "How many grams?",
-                      ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      autofocus: true,
-                    ),
-                  ),
-                  // Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      children: [
-                        RaisedButton(
-                          child: Text("Date intake"),
-                          onPressed: () => _selectDate(context),
-                          // await displayDateRangePicker(context);
-                          //   },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                              "Datum: ${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
-                        )
-                      ],
-                    ),
-                  ),
-                  RaisedButton(
-                    child: Text("Save"),
-                    onPressed: () {
-                      //  widget.trip.startDate = _startDate;
-                      // widget.trip.endDate = _endDate;
-                      widget.trip.kcal = kcal;
-                      widget.trip.co2 = co2;
-                      widget.trip.carbs = koolhy;
-                      widget.trip.protein = protein;
-                      widget.trip.fat = fat;
-                      widget.trip.sugars = sugars;
-                      widget.trip.dietaryfiber = dietaryfiber;
-
-                      widget.trip.saturatedfat = saturatedfat;
-                      widget.trip.eatDate = _eattime;
-                      widget.trip.amount = (_budgetController.text == "")
-                          ? 0
-                          : double.parse(_budgetController.text);
-                      widget.trip.categorie = categoryChoice;
-                      widget.trip.plantbased = plantbased;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                NewFoodSummaryView(trip: widget.trip)),
-                      );
-                    },
-                  ),
                 ]),
               );
             }),
       ),
+    );
+  }
+}
+
+class Inputbar extends StatelessWidget {
+  const Inputbar({
+    Key key,
+    @required TextEditingController budgetController,
+  })  : _budgetController = budgetController,
+        super(key: key);
+
+  final TextEditingController _budgetController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _budgetController,
+      maxLines: 1,
+      maxLength: 4,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.linear_scale),
+        helperText: "How many grams?",
+      ),
+      keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      autofocus: true,
     );
   }
 }

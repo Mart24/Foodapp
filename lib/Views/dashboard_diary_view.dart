@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:food_app/Models/ingredients.dart';
-import 'package:date_range_picker/date_range_picker.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/display_foodintake.dart';
 import 'package:food_app/Views/nutrition_details_page.dart';
@@ -60,7 +59,7 @@ class _HomePageState extends State<HomePage> {
       null,
       null,
       null,
-      // null,
+      null,
       // null,
       // null,
       // null,
@@ -76,22 +75,22 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     print('rebuild dashboard');
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NewFoodIntake(
-                  trip: newTrip,
-                ),
-              ));
-        },
-        label: const Text('Food'),
-        icon: const Icon(Icons.add),
-        backgroundColor: Colors.orange,
-        focusElevation: 2,
-        foregroundColor: Colors.white,
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => NewFoodIntake(
+      //             trip: newTrip,
+      //           ),
+      //         ));
+      //   },
+      //   label: const Text('Food'),
+      //   icon: const Icon(Icons.add),
+      //   backgroundColor: Colors.orange,
+      //   focusElevation: 2,
+      //   foregroundColor: Colors.white,
+      // ),
       body: Container(
         margin: EdgeInsets.only(top: 15),
         child: Column(

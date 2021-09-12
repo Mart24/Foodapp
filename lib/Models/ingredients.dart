@@ -21,7 +21,7 @@ class Trip {
   String unit;
   String portionsize;
   double sizep1;
-  String portionsize2;
+  String nutriscore;
   double sizep2;
   String productgroup;
   String brand;
@@ -71,7 +71,7 @@ class Trip {
       // this.amound,
       // this.portionsize,
       // this.sizep1,
-      // this.portionsize2,
+      this.nutriscore,
       // this.sizep2,
       // this.productgroup,
       // this.productid,
@@ -113,7 +113,7 @@ class Trip {
         'carbs': carbs,
         'protein': protein,
         'fat': fat,
-        // 'portionsize2': portionsize2,
+        'nutriscore': nutriscore,
         // 'sizep2': sizep2,
         // 'productgroup': productgroup,
         // 'unit': unit,
@@ -162,7 +162,7 @@ class Trip {
         co2 = snapshot['co2'],
         carbs = snapshot['carbs'],
         protein = snapshot['protein'],
-        //portionsize2 = snapshot['portionsize2'],
+        nutriscore = snapshot['nutriscore'],
         // sizep2 = snapshot['sizep2'],
         // productgroup = snapshot['productgroup'],
         plantbased = snapshot['plantbased'],
@@ -207,5 +207,23 @@ class Trip {
           AssetImage("assets/icons/leaf_icon.png"),
           color: kPrimaryColor,
         ),
+      };
+
+  Map<String, Image> nutriscoreimage() => {
+        "A": Image.asset("assets/icons/nutriscore_a.svg"),
+        "B": Image.asset("assets/icons/nutriscore_b.svgg"),
+        "C": Image.asset("assets/icons/nutriscore_c.svg"),
+        "D": Image.asset("assets/icons/nutriscore_d.svg"),
+        "E": Image.asset("assets/icons/nutriscore_e.svg"),
+        "U": Image.asset("assets/icons/nutriscore_u.svg"),
+      };
+
+  Map<String, Image> ecoscore() => {
+        "A": Image.asset("assets/icons/ecoscore_a.svg"),
+        "B": Image.asset("assets/icons/ecoscore_b.svgg"),
+        "C": Image.asset("assets/icons/ecoscore_c.svg"),
+        "D": Image.asset("assets/icons/ecoscore_d.svg"),
+        "E": Image.asset("assets/icons/ecoscore_e.svg"),
+        "U": Image.asset("assets/icons/ecoscore_u.svg"),
       };
 }

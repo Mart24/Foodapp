@@ -30,8 +30,8 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
   Widget build(BuildContext context) {
     GoalCubit goalCubit = GoalCubit.instance(context);
 
-    var goalName = '';
-    var goal = '';
+    String goalName = '';
+    String goal = '';
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -84,7 +84,8 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                                                   is DoneUploadingImageState ||
                                               goalCubit.imageAsBytes != null)
                                           ? Image.memory(goalCubit.imageAsBytes)
-                                          : Image.asset('assets/img1.jpg'),
+                                          : Image.asset(
+                                              'assets/Marienplatz.jpg'),
                                 ),
                                 Positioned(
                                   right: 0,
@@ -259,9 +260,10 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                   _formKey.currentState.save();
                   var d = goalCubit.startDate;
 
-                  if(goalCubit.imageAsBytes==null){
-                    ByteData bytes = await rootBundle.load('assets/img1.jpg');
-                      goalCubit.imageAsBytes= bytes.buffer.asUint8List();
+                  if (goalCubit.imageAsBytes == null) {
+                    ByteData bytes =
+                        await rootBundle.load('assets/Marienplatz.jpg');
+                    goalCubit.imageAsBytes = bytes.buffer.asUint8List();
                   }
 
                   AppCubit.instance(context).insertIntoDB('goals', {

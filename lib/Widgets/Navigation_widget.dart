@@ -24,10 +24,58 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final newTrip = Trip(
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      null);
+
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomePage(),
     Foodpage(),
+    NewFoodIntake(),
     GoalsHome(),
     Profiel(),
     //Lijstje(),
@@ -67,7 +115,33 @@ class _HomeState extends State<Home> {
       //     )
       //   ],
       // ),
-      body: _children[_currentIndex],
+      body: Stack(
+        children: [
+          _children[_currentIndex],
+        ],
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewFoodIntake(
+                  trip: newTrip,
+                ),
+              ));
+        },
+        //  label: const Text('Food'),
+        child: const Icon(
+          Icons.add,
+          color: Colors.black54,
+        ),
+        backgroundColor: Colors.white,
+        elevation: 4,
+
+        // foregroundColor: Colors.white,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           onTap: onTabTapped,
@@ -76,12 +150,12 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(icon: Icon(Icons.book), label: "Diary"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.restaurant), label: "Recipes"),
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: "Intake"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.leaderboard), label: "Goals"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person_pin), label: "Profile"),
             // BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
-
           ]),
     );
   }

@@ -44,7 +44,6 @@ class _GoalsHomeState extends State<GoalsHome>
                 borderRadius: BorderRadius.circular(5),
               ),
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-
               tabs: [
                 Tab(child: Text('Goals')),
                 Tab(child: Text('Graphs')),

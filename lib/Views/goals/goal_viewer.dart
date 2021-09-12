@@ -74,13 +74,13 @@ class _GoalViewerState extends State<GoalViewer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       _Header(image: widget.co2data[0]['image']),
-                      Text(
-                        '${widget.co2data[0]['goalName']}',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      // Text(
+                      //   '${widget.co2data[0]['goalName']}',
+                      //   style: TextStyle(
+                      //     fontSize: 25,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 5,
                       ),
@@ -92,7 +92,7 @@ class _GoalViewerState extends State<GoalViewer> {
                         children: [
                           TableRow(children: [
                             Text(
-                              'Saved ${saved.toStringAsFixed(2)} Kg/Co2',
+                              'Saved ${saved.toStringAsFixed(1)} Kg/Co²',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 15,
@@ -100,7 +100,7 @@ class _GoalViewerState extends State<GoalViewer> {
                               textAlign: TextAlign.start,
                             ),
                             Text(
-                              'Goal ${goal.toStringAsFixed(2)} Kg/Co2',
+                              'Goal ${goal.toStringAsFixed(1)} Kg/Co²',
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 15,
@@ -122,27 +122,44 @@ class _GoalViewerState extends State<GoalViewer> {
                           progressColor: kPrimaryColor,
                         ),
                         Center(
-                            child: Text(
-                          '${(goalCubit.percent * 100).toStringAsFixed(2)} %',
-                          style: TextStyle(color: Colors.white),
+                            child: Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                            '${(goalCubit.percent * 100).toStringAsFixed(0)}%',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         )),
                       ]),
+
                       SizedBox(
                         height: 5,
                       ),
                       Table(
                         columnWidths: {
-                          0: FractionColumnWidth(0.58),
-                          1: FractionColumnWidth(0.42)
+                          0: FractionColumnWidth(0.52),
+                          1: FractionColumnWidth(0.50)
                         },
                         children: [
+                          TableRow(children: [
+                            Text('This week',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start),
+                            Text('Save goal',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start),
+                          ]),
+
                           TableRow(children: [
                             RichText(
                                 text: TextSpan(
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.black),
+                                        fontSize: 14, color: Colors.black),
                                     children: <TextSpan>[
-                                  TextSpan(text: 'Week Sum= '),
+                                  TextSpan(text: 'You have eaten '),
                                   TextSpan(
                                     text: '${weekSum.toStringAsFixed(1)}',
                                     style: TextStyle(
@@ -150,15 +167,15 @@ class _GoalViewerState extends State<GoalViewer> {
                                         color: kPrimaryColor),
                                   ),
                                   TextSpan(
-                                      text: ' kg/co2',
-                                      style: TextStyle(fontSize: 14)),
+                                      text: ' kg/Co²',
+                                      style: TextStyle(fontSize: 10)),
                                 ])),
                             RichText(
                                 text: TextSpan(
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.black),
+                                        fontSize: 14, color: Colors.black),
                                     children: <TextSpan>[
-                                  TextSpan(text: 'To Go: '),
+                                  TextSpan(text: 'Co² to save: '),
                                   TextSpan(
                                     text: '${toGo.toStringAsFixed(1)}',
                                     style: TextStyle(
@@ -166,18 +183,18 @@ class _GoalViewerState extends State<GoalViewer> {
                                         color: kPrimaryColor),
                                   ),
                                   TextSpan(
-                                      text: ' kg/co2',
-                                      style: TextStyle(fontSize: 14)),
+                                      text: ' kg/Co²',
+                                      style: TextStyle(fontSize: 10)),
                                 ])),
                           ]),
-                          TableRow(children: [Container(), Container()]),
+                          //  TableRow(children: [Container(), Container()]),
                           TableRow(children: [
                             RichText(
                                 text: TextSpan(
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.black),
+                                        fontSize: 14, color: Colors.black),
                                     children: <TextSpan>[
-                                  TextSpan(text: 'Week Saved= '),
+                                  TextSpan(text: 'You saved '),
                                   TextSpan(
                                     text: '${weekSaved.toStringAsFixed(1)}',
                                     style: TextStyle(
@@ -185,15 +202,15 @@ class _GoalViewerState extends State<GoalViewer> {
                                         color: kPrimaryColor),
                                   ),
                                   TextSpan(
-                                      text: ' kg/co2',
-                                      style: TextStyle(fontSize: 14)),
+                                      text: ' kg/Co2',
+                                      style: TextStyle(fontSize: 10)),
                                 ])),
                             RichText(
                                 text: TextSpan(
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.black),
+                                        fontSize: 14, color: Colors.black),
                                     children: <TextSpan>[
-                                  TextSpan(text: 'Time: '),
+                                  TextSpan(text: 'Goal reached in: '),
                                   TextSpan(
                                     text: '${time.toStringAsFixed(1)}',
                                     style: TextStyle(
@@ -222,14 +239,14 @@ class _GoalViewerState extends State<GoalViewer> {
                                       label: Text('Day'),
                                     ),
                                     DataColumn(
-                                      label: Text('Co2 eaten'),
+                                      label: Text('Co² eaten'),
                                     ),
                                     DataColumn(
-                                      label: Text('Saved Co2 '),
+                                      label: Text('Co² saved'),
                                     ),
                                   ],
                                   rows: result.reversed.map((e) {
-                                    double sub = 5 - e['co2'];
+                                    double sub = 5 - e['co2'] as double;
                                     double cal = e['calories'];
                                     double saved =
                                         (sub < 0 || (sub == 5 && cal == 0))
@@ -276,24 +293,65 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      width: double.infinity,
+      height: 250,
+      width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         color: Color(0xFFF9F9F9),
         border: Border(
           bottom: BorderSide(
             color: Color(0xFFE9E9E9),
-            width: 3,
+            width: 1,
           ),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(2),
-        child: Row(
+        padding: const EdgeInsets.only(top: 10),
+        child: Stack(
           children: <Widget>[
             Expanded(
-              child: Image.memory(image, fit: BoxFit.cover),
+              child: Image.memory(image, fit: BoxFit.fill),
             ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 150.0),
+                child: Text(
+                  'Trainticket Munchen',
+                  style: TextStyle(
+                    fontSize: 30,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 6
+                      ..color = kPrimaryColor,
+                  ),
+                ),
+              ),
+            ),
+            // Solid text as fill.
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 150.0),
+                child: Text(
+                  'Trainticket Munchen',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            // Center(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 180.0),
+            //     child: Text(
+            //       "someText",
+            //       style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 20,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -309,7 +367,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       // leading: const Icon(Icons.menu),
       centerTitle: true,
       title: Text(
-        'Co2',
+        'Co2 saved',
         // style: GoogleFonts.neuton(
         //     color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
       ),
