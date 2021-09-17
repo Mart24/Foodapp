@@ -22,6 +22,7 @@ class Trip {
   String portionsize;
   double sizep1;
   String nutriscore;
+  String ecoscore;
   double sizep2;
   String productgroup;
   String brand;
@@ -72,6 +73,8 @@ class Trip {
       // this.portionsize,
       // this.sizep1,
       this.nutriscore,
+      this.ecoscore,
+
       // this.sizep2,
       // this.productgroup,
       // this.productid,
@@ -114,6 +117,8 @@ class Trip {
         'protein': protein,
         'fat': fat,
         'nutriscore': nutriscore,
+        'ecoscore': ecoscore,
+
         // 'sizep2': sizep2,
         // 'productgroup': productgroup,
         // 'unit': unit,
@@ -163,6 +168,8 @@ class Trip {
         carbs = snapshot['carbs'],
         protein = snapshot['protein'],
         nutriscore = snapshot['nutriscore'],
+        ecoscore = snapshot['ecoscore'],
+
         // sizep2 = snapshot['sizep2'],
         // productgroup = snapshot['productgroup'],
         plantbased = snapshot['plantbased'],
@@ -218,7 +225,7 @@ class Trip {
         "U": Image.asset("assets/icons/nutriscore_u.svg"),
       };
 
-  Map<String, Image> ecoscore() => {
+  Map<String, Image> ecoscoreimage() => {
         "A": Image.asset("assets/icons/ecoscore_a.svg"),
         "B": Image.asset("assets/icons/ecoscore_b.svgg"),
         "C": Image.asset("assets/icons/ecoscore_c.svg"),

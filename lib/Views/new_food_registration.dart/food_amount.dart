@@ -112,6 +112,8 @@ class _FoodDateState extends State<FoodDate> {
 
               //nutriscore
               String nutriscore = foodDocument['nutriscore'];
+              //ecoscore
+              String ecoscore = foodDocument['ecoscore'];
               // Plantbase string
               String plantbased = foodDocument['plantbased'];
               // Calorieën double
@@ -275,6 +277,8 @@ class _FoodDateState extends State<FoodDate> {
                                 : double.parse(_budgetController.text);
                             widget.trip.categorie = categoryChoice;
                             widget.trip.plantbased = plantbased;
+                            widget.trip.nutriscore = nutriscore;
+                            widget.trip.ecoscore = ecoscore;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -468,6 +472,22 @@ class _FoodDateState extends State<FoodDate> {
                               ),
                               Text(
                                 "$nutriscore",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  'Ecoscore',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                "$ecoscore",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ]),

@@ -52,12 +52,14 @@ class DatabaseGService {
 
   Future<List<FooddataSQLJSON>> searchGFooddata(String keyword) async {
     await initDatabase();
-    List<Map> list = await _db
-        .rawQuery("SELECT * FROM groente WHERE name LIKE '%$keyword%'");
+    List<Map> list = await _db.rawQuery(
+        "SELECT * FROM groente WHERE name LIKE '%$keyword%' ORDER BY CASE WHEN brand like 'Algemeen' then 0 else 1 end, brand ASC");
     return list
         .map((foodddata) => FooddataSQLJSON.fromJson(foodddata))
         .toList();
   }
+
+  // myname like 'jack' then 0 else 1 end, myname ASC
   // Future<List<FooddataSQLJSON>> searchFooddata(String keyword) async {
   //   final db = await initDatabase();
   //   List<Map> list = await _db
