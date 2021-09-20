@@ -217,20 +217,20 @@ class Trip {
       };
 
   Map<String, Image> nutriscoreimage() => {
-        "A": Image.asset("assets/icons/nutriscore_a.svg"),
-        "B": Image.asset("assets/icons/nutriscore_b.svgg"),
-        "C": Image.asset("assets/icons/nutriscore_c.svg"),
-        "D": Image.asset("assets/icons/nutriscore_d.svg"),
-        "E": Image.asset("assets/icons/nutriscore_e.svg"),
-        "U": Image.asset("assets/icons/nutriscore_u.svg"),
+        "A": Image.asset("assets/scores/nutriscore_a.png"),
+        "B": Image.asset("assets/scores/nutriscore_b.png"),
+        "C": Image.asset("assets/scores/nutriscore_c.png"),
+        "D": Image.asset("assets/scores/nutriscore_d.png"),
+        "E": Image.asset("assets/scores/nutriscore_e.png"),
+        "U": Image.asset("assets/scores/nutriscore_u.png"),
       };
 
   Map<String, Image> ecoscoreimage() => {
-        "A": Image.asset("assets/icons/ecoscore_a.svg"),
-        "B": Image.asset("assets/icons/ecoscore_b.svgg"),
-        "C": Image.asset("assets/icons/ecoscore_c.svg"),
-        "D": Image.asset("assets/icons/ecoscore_d.svg"),
-        "E": Image.asset("assets/icons/ecoscore_e.svg"),
-        "U": Image.asset("assets/icons/ecoscore_u.svg"),
+        "A": Image.asset("assets/scores/ecoscore_a.png"),
+        "B": Image.asset("assets/scores/ecoscore_b.png"),
+        "C": Image.asset("assets/scores/ecoscore_c.png"),
+        "D": Image.asset("assets/scores/ecoscore_d.png"),
+        "E": Image.asset("assets/scores/ecoscore_e.png"),
+        "U": Image.asset("assets/scores/ecoscore_u.png"),
       };
 }

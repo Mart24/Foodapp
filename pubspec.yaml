@@ -67,3 +67,4 @@ flutter:
     - assets/icons/order_placed.png
     - assets/icons/order_processed.png
     - assets/icons/ready_to_pickup.png
+    - assets/scores/

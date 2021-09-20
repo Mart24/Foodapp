@@ -110,6 +110,8 @@ class _FoodDateState extends State<FoodDate> {
               if (!snapshot.hasData) return const Text("Loading...");
               var foodDocument = snapshot.data;
 
+              final nutriscoreType = widget.trip.nutriscoreimage();
+              final ecoscoreType = widget.trip.ecoscoreimage();
               //nutriscore
               String nutriscore = foodDocument['nutriscore'];
               //ecoscore
@@ -290,6 +292,21 @@ class _FoodDateState extends State<FoodDate> {
                       ],
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        child: nutriscoreType[nutriscore],
+                        width: 100,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: ecoscoreType[ecoscore],
+                        width: 100,
+                      ),
+                    ],
+                  ),
+
                   TextButton(
                     child: Text(
                       'Macronutriënten',
@@ -456,38 +473,6 @@ class _FoodDateState extends State<FoodDate> {
                               ),
                               Text(
                                 "$plantbased",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  'Nutriscore',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Text(
-                                "$nutriscore",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  'Ecoscore',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Text(
-                                "$ecoscore",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ]),

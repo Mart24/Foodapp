@@ -311,6 +311,7 @@ class _Header extends StatelessWidget {
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 150.0),
+                // This name should be the same as the goal name saved in the sqldatabase, Codeline 75 on this page
                 child: Text(
                   'Trainticket Munchen',
                   style: TextStyle(
