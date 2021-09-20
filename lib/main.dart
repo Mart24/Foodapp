@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
@@ -14,6 +15,9 @@ import 'package:food_app/Views/introduction_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarBrightness: Brightness.dark, statusBarColor: Colors.white));
 
   runApp(MyApp());
 }
@@ -30,8 +34,7 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => AppCubit(),
           ),
           BlocProvider(
-            create: (BuildContext context) =>
-                DairyCubit()..getUsersTripsList(Source.cache),
+            create: (BuildContext context) => DairyCubit()..getUsersTripsList(Source.cache),
           ),
           BlocProvider(
             create: (BuildContext context) => GoalCubit(),
@@ -46,10 +49,8 @@ class MyApp extends StatelessWidget {
           ),
           home: HomeController(),
           routes: <String, WidgetBuilder>{
-            '/signUp': (BuildContext context) =>
-                SignUpView(authFormType: AuthFormType.signUp),
-            '/signIn': (BuildContext context) =>
-                SignUpView(authFormType: AuthFormType.signIn),
+            '/signUp': (BuildContext context) => SignUpView(authFormType: AuthFormType.signUp),
+            '/signIn': (BuildContext context) => SignUpView(authFormType: AuthFormType.signIn),
             '/home': (BuildContext context) => HomeController(),
           },
         ),

@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     print('rebuild dashboard');
+    final DairyCubit cubit = DairyCubit.instance(context);
 
     return Scaffold(
       // floatingActionButton: FloatingActionButton.extended(
@@ -88,429 +89,197 @@ class _HomePageState extends State<HomePage> {
       //   focusElevation: 2,
       //   foregroundColor: Colors.white,
       // ),
-      body: Container(
-        margin: EdgeInsets.only(top: 15),
-        child: Column(
-          children: <Widget>[
-            BlocConsumer<AppCubit, AppStates>(
-              listener: (BuildContext context, state) {},
-              builder: (BuildContext context, state) {
-                if (AppCubit.instance(context).database != null) {
-                  return BlocConsumer<DairyCubit, DairyStates>(
-                      listener: (BuildContext context, DairyStates states) {
-                    if (states is CurrentDateUpdated) {
-                      print('current date updated');
-                    } else if (states is GetUserTripsListState) {
-                      DairyCubit.instance(context).sumAll();
-                    } else if (states is SumBasicUpdated) {
-                      final String uid = FirebaseAuth.instance.currentUser.uid;
-                      final DairyCubit dairyCubit =
-                          DairyCubit.instance(context);
-                      final DateTime now = dairyCubit.currentDate;
-                      try {
-                        AppCubit.instance(context).insertIntoDB(uid, {
-                          'date': DateTime(now.year, now.month, now.day)
-                              .toIso8601String(),
-                          'calories': dairyCubit.kCalSum,
-                          'co2': dairyCubit.co2Sum
-                        });
-                      } catch (e) {
-                        print(e);
+      appBar: AppBar(
+        title: DateNavigatorRow(cubit: cubit),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        // foregroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            snap: false,
+            pinned: true,
+            floating: true,
+            expandedHeight: 330,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.transparent,
+            elevation: 0,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text(''),
+              background: BlocConsumer<AppCubit, AppStates>(
+                listener: (BuildContext context, state) {},
+                builder: (BuildContext context, state) {
+                  if (AppCubit.instance(context).database != null) {
+                    return BlocConsumer<DairyCubit, DairyStates>(
+                        listener: (BuildContext context, DairyStates states) {
+                      if (states is CurrentDateUpdated) {
+                        print('current date updated');
+                      } else if (states is GetUserTripsListState) {
+                        DairyCubit.instance(context).sumAll();
+                      } else if (states is SumBasicUpdated) {
+                        final String uid = FirebaseAuth.instance.currentUser.uid;
+                        final DairyCubit dairyCubit = DairyCubit.instance(context);
+                        final DateTime now = dairyCubit.currentDate;
+                        try {
+                          AppCubit.instance(context).insertIntoDB(uid, {
+                            'date': DateTime(now.year, now.month, now.day).toIso8601String(),
+                            'calories': dairyCubit.kCalSum,
+                            'co2': dairyCubit.co2Sum
+                          });
+                        } catch (e) {
+                          print(e);
+                        }
                       }
-                    }
-                  }, builder: (BuildContext context, DairyStates states) {
-                    DairyCubit cubit = DairyCubit.instance(context);
-                    double diff = cubit.kCalSum;
-                    double circularPercent = diff / 2000.0;
-                    if (circularPercent > 1) {
-                      circularPercent = 1;
-                    }
-                    double diff2 = cubit.co2Sum;
-                    double barPercent = diff2 / 5.0;
-                    if (barPercent > 1) {
-                      barPercent = 1;
-                    }
-                    return Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                cubit.updateCurrentDate(cubit.currentDate
-                                    .subtract(Duration(days: 1)));
-                              },
-                              icon: Icon(Icons.arrow_back_ios_sharp),
-                              splashRadius: 28,
-                              iconSize: 20,
-                              //      color: Theme.of(context).accentColor,
-                              color: Colors.black,
-                            ),
-                            TextButton.icon(
-                                icon: Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {
-                                  DatePicker.showDatePicker(
-                                    context,
-                                    showTitleActions: true,
-                                    theme: DatePickerTheme(),
-                                    currentTime:
-                                        cubit.currentDate ?? DateTime.now(),
-                                    minTime: DateTime(DateTime.now().year - 20),
-                                    maxTime: DateTime(DateTime.now().year + 20),
-                                    onChanged: (date) {
-                                      print('change $date');
-                                    },
-                                    onConfirm: (date) {
-                                      print('confirm $date');
-                                      cubit.updateCurrentDate(date);
-                                    },
-                                    locale: LocaleType.en,
-                                  );
-                                },
-                                label: Text(
-                                  '${DateFormat.yMMMMd().format(cubit.currentDate)}',
-                                  style: TextStyle(
-                                      // color: Theme.of(context).accentColor,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 20),
-                                )),
-                            IconButton(
-                              onPressed: () {
-                                cubit.updateCurrentDate(
-                                    cubit.currentDate.add(Duration(days: 1)));
-                              },
-                              icon: Icon(Icons.arrow_forward_ios_sharp),
-                              splashRadius: 28,
-                              iconSize: 20,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              // child: Text(
-                              //   'Eaten ${cubit.kCalSum.toStringAsFixed(0)} ',
-                              //   style: TextStyle(
-                              //       color: Colors.black, fontWeight: FontWeight.normal),
-                              //   maxLines: 2,
-                              //   textAlign: TextAlign.center,
-                              // ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: RichText(
-                                    text: TextSpan(
-                                        style: GoogleFonts.roboto(
-                                            fontSize: 20, color: Colors.black),
-                                        children: <TextSpan>[
-                                      TextSpan(text: 'Eaten '),
-                                      TextSpan(
-                                        text:
-                                            '${cubit.kCalSum.toStringAsFixed(0)}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: kPrimaryColor),
-                                      ),
-                                      TextSpan(
-                                          text: ' kcal',
-                                          style: TextStyle(fontSize: 12)),
-                                    ])),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: CircularPercentIndicator(
-                                radius: 165.0,
-                                lineWidth: 7.5,
-                                animation: true,
-                                backgroundColor: Colors.grey[350],
-                                percent: circularPercent,
-                                center: Text(
-                                  "${diff.toStringAsFixed(0)} Kcal",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                progressColor: kPrimaryColor,
-                                circularStrokeCap: CircularStrokeCap.round,
-                              ),
-                            ),
-                            Expanded(
-                              // child: Text(
-                              //   'Eaten ${cubit.kCalSum.toStringAsFixed(0)} ',
-                              //   style: TextStyle(
-                              //       color: Colors.black, fontWeight: FontWeight.normal),
-                              //   maxLines: 2,
-                              //   textAlign: TextAlign.center,
-                              // ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 15.0),
-                                child: RichText(
-                                    text: TextSpan(
-                                        style: TextStyle(
-                                            fontSize: 16, color: Colors.black),
-                                        children: <TextSpan>[
-                                      TextSpan(text: 'Burned'),
-                                      TextSpan(
-                                        text: '...',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: kPrimaryColor),
-                                      ),
-                                      TextSpan(
-                                          text: ' kcal',
-                                          style: TextStyle(fontSize: 12)),
-                                    ])),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 7.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                // new LinearPercentIndicator(
-                                //   width: 100.0,
-                                //   lineHeight: 8.0,
-                                //   percent: 0.2,
-                                //   progressColor: Colors.red,
-                                // ),
-                                Text(
-                                    'Carbs ${cubit.carbs.toStringAsFixed(0)}g'),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                // new LinearPercentIndicator(
-                                //   width: 100.0,
-                                //   lineHeight: 8.0,
-                                //   percent: 0.7,
-                                //   progressColor: Colors.yellow,
-                                // ),
-                                Text(
-                                    'Protein ${cubit.protein.toStringAsFixed(0)}g'),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                // new LinearPercentIndicator(
-                                //   width: 100.0,
-                                //   lineHeight: 8.0,
-                                //   percent: 0.3,
-                                //   progressColor: Colors.blue,
-                                // ),
-                                Text(' Fat ${cubit.fats.toStringAsFixed(0)}g'),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          new LinearPercentIndicator(
-                            animation: true,
-                            backgroundColor: Colors.grey[350],
-                            width: 300.0,
-                            lineHeight: 25.0,
-                            percent: barPercent,
-                            progressColor: kPrimaryColor,
-                          ),
-                        ],
-                      ),
+                    }, builder: (BuildContext context, DairyStates states) {
+                      DairyCubit cubit = DairyCubit.instance(context);
+                      double diff = cubit.kCalSum;
+                      double circularPercent = diff / 2000.0;
+                      if (circularPercent > 1) {
+                        circularPercent = 1;
+                      }
+                      double diff2 = cubit.co2Sum;
+                      double barPercent = diff2 / 5.0;
+                      if (barPercent > 1) {
+                        barPercent = 1;
+                      }
+                      return Column(children: [
+                        CaloriesIndecator(
+                            cubit: cubit, circularPercent: circularPercent, diff: diff),
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 7.0, bottom: 7.0),
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Text('Co2 ${cubit.co2Sum.toStringAsFixed(1)} kg ',
-                              //     style: TextStyle(fontSize: 20)),
-                              RichText(
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.black),
-                                      children: <TextSpan>[
-                                    TextSpan(text: 'Co2 '),
-                                    TextSpan(
-                                      text:
-                                          '${cubit.co2Sum.toStringAsFixed(1)}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: kPrimaryColor),
-                                    ),
-                                    TextSpan(
-                                        text: 'kg',
-                                        style: TextStyle(fontSize: 12)),
-                                  ])),
+                        CarbsProtienFatRow(cubit: cubit),
 
-                              Text('max 5.0 kg')
-                            ],
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          DairyCubit.instance(context).calcPercents();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => NutritionalDetailsPage()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Details",
-                              style:
-                                  TextStyle(fontSize: 20, color: kPrimaryColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Expanded(
-                      //   child: Builder(
-                      //     builder: (context) {
-                      //       if (cubit.tripsList.isNotEmpty) {
-                      //         return ListView.builder(
-                      //           itemCount: cubit.tripsList.length,
-                      //           itemBuilder: (BuildContext context, int index) =>
-                      //               buildTripCard(context, cubit.tripsList[index]),
-                      //         );
-                      //       }
-                      //       return const Text("No items entered...");
-                      //     },
-                      //   ),
-                      // ),
-                    ]);
-                  });
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+                        SizedBox(height: 10),
+
+                        LinearCo2Indecator(barPercent: barPercent, cubit: cubit),
+
+                        DetailsButton(),
+
+                        // Expanded(
+                        //   child: Builder(
+                        //     builder: (context) {
+                        //       if (cubit.tripsList.isNotEmpty) {
+                        //         return ListView.builder(
+                        //           itemCount: cubit.tripsList.length,
+                        //           itemBuilder: (BuildContext context, int index) =>
+                        //               buildTripCard(context, cubit.tripsList[index]),
+                        //         );
+                        //       }
+                        //       return const Text("No items entered...");
+                        //     },
+                        //   ),
+                        // ),
+                      ]);
+                    });
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+              //Textetwork
             ),
-            BlocConsumer<DairyCubit, DairyStates>(
-              listener: (context, states) {},
-              builder: (context, states) {
-                DairyCubit cubit = DairyCubit.instance(context);
-                print(
-                    'Cubit mystream is: ${cubit.myStream == null ? 'null' : 'no null'}');
-                return Expanded(
-                  child: StreamBuilder(
-                    stream: cubit.myStream,
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      // if (snapshot.hasData || snapshot.connectionState == ConnectionState.active) {
-                      List<Widget> breakfastList = [
-                        CategoryTitle(
-                          title: 'Breakfast',
-                          kcalSum: cubit.breakfastKcalSum,
-                          co2Sum: cubit.breakfastsumco2Sum,
-                        ),
-                      ];
-                      breakfastList.addAll(DairyCubit.instance(context)
-                          .breakfastList
-                          .map((e) => buildTripCard(context, e)));
+            //FlexibleSpaceBar
+          ), //SliverAppBar
 
-                      List<Widget> lunchList = [
-                        CategoryTitle(
-                          title: 'Lunch',
-                          kcalSum: cubit.lunchKcalSum,
-                          co2Sum: cubit.lunchsumco2Sum,
-                        ),
-                      ];
-                      lunchList.addAll(DairyCubit.instance(context)
-                          .lunchList
-                          .map((e) => buildTripCard(context, e)));
+          BlocConsumer<DairyCubit, DairyStates>(
+            listener: (context, states) {},
+            builder: (context, states) {
+              DairyCubit cubit = DairyCubit.instance(context);
+              print('Cubit mystream is: ${cubit.myStream == null ? 'null' : 'no null'}');
+              return StreamBuilder(
+                stream: cubit.myStream,
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  // if (snapshot.hasData || snapshot.connectionState == ConnectionState.active) {
+                  List<Widget> breakfastList = [
+                    CategoryTitle(
+                      title: 'Breakfast',
+                      kcalSum: cubit.breakfastKcalSum,
+                      co2Sum: cubit.breakfastsumco2Sum,
+                    ),
+                  ];
+                  breakfastList.addAll(DairyCubit.instance(context)
+                      .breakfastList
+                      .map((e) => buildTripCard(context, e)));
 
-                      List<Widget> dinerList = [
-                        CategoryTitle(
-                          title: 'Diner',
-                          kcalSum: cubit.dinerKcalSum,
-                          co2Sum: cubit.dinersumco2Sum,
-                        ),
-                      ];
-                      dinerList.addAll(DairyCubit.instance(context)
-                          .dinerList
-                          .map((e) => buildTripCard(context, e)));
+                  List<Widget> lunchList = [
+                    CategoryTitle(
+                      title: 'Lunch',
+                      kcalSum: cubit.lunchKcalSum,
+                      co2Sum: cubit.lunchsumco2Sum,
+                    ),
+                  ];
+                  lunchList.addAll(
+                      DairyCubit.instance(context).lunchList.map((e) => buildTripCard(context, e)));
 
-                      List<Widget> snacksList = [
-                        CategoryTitle(
-                          title: 'Snacks',
-                          kcalSum: cubit.snacksKcalSum,
-                          co2Sum: cubit.snackssumco2Sum,
-                        ),
-                      ];
-                      snacksList.addAll(DairyCubit.instance(context)
-                          .snacksList
-                          .map((e) => buildTripCard(context, e)));
+                  List<Widget> dinerList = [
+                    CategoryTitle(
+                      title: 'Diner',
+                      kcalSum: cubit.dinerKcalSum,
+                      co2Sum: cubit.dinersumco2Sum,
+                    ),
+                  ];
+                  dinerList.addAll(
+                      DairyCubit.instance(context).dinerList.map((e) => buildTripCard(context, e)));
 
-                      List<Widget> othersList = [
-                        CategoryTitle(
-                          title: 'Others',
-                          kcalSum: cubit.othersKcalSum,
-                          co2Sum: cubit.otherssumco2Sum,
-                        ),
-                      ];
-                      othersList.addAll(DairyCubit.instance(context)
-                          .otherList
-                          .map((e) => buildTripCard(context, e)));
+                  List<Widget> snacksList = [
+                    CategoryTitle(
+                      title: 'Snacks',
+                      kcalSum: cubit.snacksKcalSum,
+                      co2Sum: cubit.snackssumco2Sum,
+                    ),
+                  ];
+                  snacksList.addAll(DairyCubit.instance(context)
+                      .snacksList
+                      .map((e) => buildTripCard(context, e)));
 
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Column(
-                              children: breakfastList,
-                            ),
-                            Column(
-                              children: lunchList,
-                            ),
-                            Column(
-                              children: dinerList,
-                            ),
-                            Column(
-                              children: snacksList,
-                            ),
-                            Column(
-                              children: othersList,
-                            ),
-                            SizedBox(
-                              height: 58,
-                            ),
-                          ],
-                        ),
-                      );
-                      // return ListView.builder(
-                      //   itemCount: snapshot.data.docs.length,
-                      //   itemBuilder: (BuildContext context, int index) =>
-                      //       buildTripCard(context, snapshot.data.docs[index]),
-                      // );
-                      // } else {
-                      //   return const Text("No items entered...");
-                      // }
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+                  List<Widget> othersList = [
+                    CategoryTitle(
+                      title: 'Others',
+                      kcalSum: cubit.othersKcalSum,
+                      co2Sum: cubit.otherssumco2Sum,
+                    ),
+                  ];
+                  othersList.addAll(
+                      DairyCubit.instance(context).otherList.map((e) => buildTripCard(context, e)));
+
+                  return SliverList(
+                      delegate: SliverChildListDelegate.fixed([
+                    Column(
+                      children: breakfastList,
+                    ),
+                    Column(
+                      children: lunchList,
+                    ),
+                    Column(
+                      children: dinerList,
+                    ),
+                    Column(
+                      children: snacksList,
+                    ),
+                    Column(
+                      children: othersList,
+                    ),
+                    SizedBox(
+                      height: 150,
+                    ),
+                  ]));
+                  // return ListView.builder(
+                  //   itemCount: snapshot.data.docs.length,
+                  //   itemBuilder: (BuildContext context, int index) =>
+                  //       buildTripCard(context, snapshot.data.docs[index]),
+                  // );
+                  // } else {
+                  //   return const Text("No items entered...");
+                  // }
+                },
+              );
+            },
+          )
+        ],
       ),
     );
   }
@@ -530,8 +299,7 @@ class _HomePageState extends State<HomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => DetailFoodIntakeView(trip: trip)),
+            MaterialPageRoute(builder: (context) => DetailFoodIntakeView(trip: trip)),
           );
         },
         child: Card(
@@ -585,6 +353,308 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DateNavigatorRow extends StatelessWidget {
+  const DateNavigatorRow({
+    Key key,
+    @required this.cubit,
+  }) : super(key: key);
+
+  final DairyCubit cubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: () {
+              cubit.updateCurrentDate(cubit.currentDate.subtract(Duration(days: 1)));
+            },
+            icon: Icon(Icons.arrow_back_ios_sharp),
+            splashRadius: 28,
+            iconSize: 20,
+            //      color: Theme.of(context).accentColor,
+            color: Colors.black,
+          ),
+          TextButton.icon(
+              icon: Icon(
+                Icons.calendar_today,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                DatePicker.showDatePicker(
+                  context,
+                  showTitleActions: true,
+                  theme: DatePickerTheme(),
+                  currentTime: cubit.currentDate ?? DateTime.now(),
+                  minTime: DateTime(DateTime.now().year - 20),
+                  maxTime: DateTime(DateTime.now().year + 20),
+                  onChanged: (date) {
+                    print('change $date');
+                  },
+                  onConfirm: (date) {
+                    print('confirm $date');
+                    cubit.updateCurrentDate(date);
+                  },
+                  locale: LocaleType.en,
+                );
+              },
+              label: BlocConsumer<AppCubit,AppStates>(
+                listener: (BuildContext context, state) {  },
+                builder: (BuildContext context, state) {
+                  return Text(
+                    '${DateFormat.yMMMMd().format(cubit.currentDate)}',
+                    style: TextStyle(
+                      // color: Theme.of(context).accentColor,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20),
+                  );
+                },
+              )),
+          IconButton(
+            onPressed: () {
+              cubit.updateCurrentDate(cubit.currentDate.add(Duration(days: 1)));
+            },
+            icon: Icon(Icons.arrow_forward_ios_sharp),
+            splashRadius: 28,
+            iconSize: 20,
+            color: Colors.black,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CaloriesIndecator extends StatelessWidget {
+  const CaloriesIndecator({
+    Key key,
+    @required this.cubit,
+    @required this.circularPercent,
+    @required this.diff,
+  }) : super(key: key);
+
+  final DairyCubit cubit;
+  final double circularPercent;
+  final double diff;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            // child: Text(
+            //   'Eaten ${cubit.kCalSum.toStringAsFixed(0)} ',
+            //   style: TextStyle(
+            //       color: Colors.black, fontWeight: FontWeight.normal),
+            //   maxLines: 2,
+            //   textAlign: TextAlign.center,
+            // ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: RichText(
+                  text: TextSpan(
+                      style: GoogleFonts.roboto(fontSize: 20, color: Colors.black),
+                      children: <TextSpan>[
+                    TextSpan(text: 'Eaten '),
+                    TextSpan(
+                      text: '${cubit.kCalSum.toStringAsFixed(0)}',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
+                    ),
+                    TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
+                  ])),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: CircularPercentIndicator(
+              radius: 165.0,
+              lineWidth: 7.5,
+              animation: true,
+              backgroundColor: Colors.grey[350],
+              percent: circularPercent,
+              center: Text(
+                "${diff.toStringAsFixed(0)} Kcal",
+                style: TextStyle(fontSize: 20),
+              ),
+              progressColor: kPrimaryColor,
+              circularStrokeCap: CircularStrokeCap.round,
+            ),
+          ),
+          Expanded(
+            // child: Text(
+            //   'Eaten ${cubit.kCalSum.toStringAsFixed(0)} ',
+            //   style: TextStyle(
+            //       color: Colors.black, fontWeight: FontWeight.normal),
+            //   maxLines: 2,
+            //   textAlign: TextAlign.center,
+            // ),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: RichText(
+                  text: TextSpan(
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      children: <TextSpan>[
+                    TextSpan(text: 'Burned'),
+                    TextSpan(
+                      text: '...',
+                      style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
+                    ),
+                    TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
+                  ])),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LinearCo2Indecator extends StatelessWidget {
+  const LinearCo2Indecator({
+    Key key,
+    @required this.barPercent,
+    @required this.cubit,
+  }) : super(key: key);
+
+  final double barPercent;
+  final DairyCubit cubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            new LinearPercentIndicator(
+              animation: true,
+              backgroundColor: Colors.grey[350],
+              width: 300.0,
+              lineHeight: 25.0,
+              percent: barPercent,
+              progressColor: kPrimaryColor,
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 7.0, bottom: 7.0),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Text('Co2 ${cubit.co2Sum.toStringAsFixed(1)} kg ',
+                //     style: TextStyle(fontSize: 20)),
+                RichText(
+                    text: TextSpan(
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                        children: <TextSpan>[
+                      TextSpan(text: 'Co2 '),
+                      TextSpan(
+                        text: '${cubit.co2Sum.toStringAsFixed(1)}',
+                        style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
+                      ),
+                      TextSpan(text: 'kg', style: TextStyle(fontSize: 12)),
+                    ])),
+
+                Text('max 5.0 kg')
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CarbsProtienFatRow extends StatelessWidget {
+  const CarbsProtienFatRow({
+    Key key,
+    @required this.cubit,
+  }) : super(key: key);
+
+  final DairyCubit cubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 7.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            children: [
+              // new LinearPercentIndicator(
+              //   width: 100.0,
+              //   lineHeight: 8.0,
+              //   percent: 0.2,
+              //   progressColor: Colors.red,
+              // ),
+              Text('Carbs ${cubit.carbs.toStringAsFixed(0)}g'),
+            ],
+          ),
+          Column(
+            children: [
+              // new LinearPercentIndicator(
+              //   width: 100.0,
+              //   lineHeight: 8.0,
+              //   percent: 0.7,
+              //   progressColor: Colors.yellow,
+              // ),
+              Text('Protein ${cubit.protein.toStringAsFixed(0)}g'),
+            ],
+          ),
+          Column(
+            children: [
+              // new LinearPercentIndicator(
+              //   width: 100.0,
+              //   lineHeight: 8.0,
+              //   percent: 0.3,
+              //   progressColor: Colors.blue,
+              // ),
+              Text(' Fat ${cubit.fats.toStringAsFixed(0)}g'),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class DetailsButton extends StatelessWidget {
+  const DetailsButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        DairyCubit.instance(context).calcPercents();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => NutritionalDetailsPage()));
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            "Details",
+            style: TextStyle(fontSize: 20, color: kPrimaryColor),
+          ),
+        ],
       ),
     );
   }
