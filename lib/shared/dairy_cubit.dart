@@ -135,10 +135,11 @@ class DairyCubit extends Cubit<DairyStates> {
       fatPercent = fats / daySum;
       carbsPercent = carbs / daySum;
       proteinPercent = protein / daySum;
+      saturatedFatPercent = saturatedFat / daySum;
     }
     if (carbs != 0) sugarsPercent = sugars / carbs;
     if (carbs != 0) dietaryFiberPercent = dietaryFiber / carbs;
-    if (fats != 0) saturatedFatPercent = saturatedFat / fats;
+    // if (fats != 0) saturatedFatPercent = saturatedFat / fats;
 
     fatPercent = double.parse((fatPercent * 100).toStringAsFixed(1));
     carbsPercent = double.parse((carbsPercent * 100).toStringAsFixed(1));

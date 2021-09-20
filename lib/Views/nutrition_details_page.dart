@@ -49,215 +49,319 @@ class NutritionalDetailsPage extends StatelessWidget {
                           ],
                           animationDuration: Duration(seconds: 1),
                           dataMap: {
-                            '${cubit.fatPercent}% Vet': cubit.fatPercent,
-                            '${cubit.carbsPercent}% Koolhydraten':
+                            '${cubit.fatPercent.toStringAsFixed(0)}% Vet':
+                                cubit.fatPercent,
+                            '${cubit.carbsPercent.toStringAsFixed(0)}% Koolhydraten':
                                 cubit.carbsPercent,
-                            '${cubit.proteinPercent}% Eiwitten':
+                            '${cubit.proteinPercent.toStringAsFixed(0)}% Eiwitten':
                                 cubit.proteinPercent,
                           },
-                          centerText: '${cubit.kCalSum} Calorieën',
+                          centerText:
+                              '${cubit.kCalSum.toStringAsFixed(0)} Calorieën',
                           chartType: ChartType.ring,
                         ),
                       ],
                     ),
                   ),
-                  TextButton(
-                    child: Text(
-                      'Macronutriënten',
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: null,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Expanded(
+                  SingleChildScrollView(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      child: Table(
-                        columnWidths: {
-                          0: FractionColumnWidth(0.55),
-                          1: FractionColumnWidth(0.28),
-                          2: FractionColumnWidth(0.2)
-                        },
-                        textBaseline: TextBaseline.alphabetic,
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
+                      child: Column(
                         children: [
-                          TableRow(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
+                          Container(
+                            child: TextButton(
                               child: Text(
-                                'Energie',
+                                'Voedingswaarden',
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                  color: kPrimaryColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
+                              onPressed: null,
                             ),
-                            Text(
-                              '${cubit.kCalSum} kCal',
-                              style: TextStyle(fontSize: 18),
+                          ),
+                          Container(
+                            child: Table(
+                              columnWidths: {
+                                0: FractionColumnWidth(0.52),
+                                1: FractionColumnWidth(0.22),
+                                2: FractionColumnWidth(0.12),
+                                3: FractionColumnWidth(0.15)
+                              },
+                              textBaseline: TextBaseline.alphabetic,
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.middle,
+                              children: [
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      'Soort',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Hoeveel',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    'Grens',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      'Energie',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.kCalSum.toStringAsFixed(0)}kcal',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '${(100 - ((2000 - cubit.kCalSum) / 2000) * 100).toStringAsFixed(0)}%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      'Totaal eiwitten',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.protein.toStringAsFixed(0)}g',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '${cubit.proteinPercent.toStringAsFixed(0)}%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      'Totaal vet',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.fats}g',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '${cubit.fatPercent.toStringAsFixed(0)}%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      '        Verzadigd vet',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.saturatedFat}g',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '${cubit.saturatedFatPercent.toStringAsFixed(0)}%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '10%',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.red),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      'Totaal koolhydraten',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.carbs.toStringAsFixed(0)}g',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '${cubit.carbsPercent.toStringAsFixed(0)}%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      '        Vezels',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.dietaryFiber}g',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '${cubit.dietaryFiberPercent.toStringAsFixed(0)}%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '30-40g',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.green),
+                                  ),
+                                ]),
+                                TableRow(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: Text(
+                                      '        Suiker',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.sugars.toStringAsFixed(0)}g',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                    '${cubit.sugarsPercent.toStringAsFixed(0)}%',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '60g',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.red),
+                                  )
+                                ]),
+                                // TableRow(children: [
+                                //   Padding(
+                                //     padding:
+                                //         const EdgeInsets.symmetric(vertical: 10.0),
+                                //     child: Text(
+                                //       '        Suiker',
+                                //       style: TextStyle(
+                                //           fontSize: 18,
+                                //           fontWeight: FontWeight.bold),
+                                //     ),
+                                //   ),
+                                //   Text(
+                                //     '${cubit.sugars.toStringAsFixed(0)}g',
+                                //     style: TextStyle(fontSize: 18),
+                                //   ),
+                                //   Text(
+                                //     '${cubit.sugarsPercent.toStringAsFixed(0)}%',
+                                //     style: TextStyle(fontSize: 16),
+                                //   ),
+                                //   Text(
+                                //     '60g',
+                                //     style:
+                                //         TextStyle(fontSize: 16, color: Colors.red),
+                                //   )
+                                // ]),
+                                // TableRow(children: [
+                                //   Padding(
+                                //     padding:
+                                //         const EdgeInsets.symmetric(vertical: 10.0),
+                                //     child: Text(
+                                //       '        Suiker',
+                                //       style: TextStyle(
+                                //           fontSize: 18,
+                                //           fontWeight: FontWeight.bold),
+                                //     ),
+                                //   ),
+                                //   Text(
+                                //     '${cubit.sugars.toStringAsFixed(0)}g',
+                                //     style: TextStyle(fontSize: 18),
+                                //   ),
+                                //   Text(
+                                //     '${cubit.sugarsPercent.toStringAsFixed(0)}%',
+                                //     style: TextStyle(fontSize: 16),
+                                //   ),
+                                //   Text(
+                                //     '60g',
+                                //     style:
+                                //         TextStyle(fontSize: 16, color: Colors.red),
+                                //   )
+                                // ]),
+                                // TableRow(children: [
+                                //   Padding(
+                                //     padding:
+                                //         const EdgeInsets.symmetric(vertical: 10.0),
+                                //     child: Text(
+                                //       'Cholesterol',
+                                //       style: TextStyle(
+                                //           fontSize: 18, fontWeight: FontWeight.bold),
+                                //     ),
+                                //   ),
+                                //   Text(
+                                //     '3g',
+                                //     style: TextStyle(fontSize: 18),
+                                //   ),
+                                //   Text(
+                                //     '3%',
+                                //     style: TextStyle(fontSize: 18),
+                                //   ),
+                                // ]),
+                              ],
                             ),
-                            Text(
-                              '${(100 - ((2000 - cubit.kCalSum) / 2000) * 100).toStringAsFixed(1)} %',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            // Text(
-                            //   '100 %',
-                            //   style: TextStyle(fontSize: 16),
-                            // ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(
-                                'Totaal eiwitten',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              '${cubit.protein}g',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              '${cubit.proteinPercent}%',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(
-                                'Totaal vet',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              '${cubit.fats}g',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              '${cubit.fatPercent}%',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(
-                                '        Verzadigd vet',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              '${cubit.saturatedFat}g',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              '${cubit.saturatedFatPercent}%',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(
-                                'Totaal koolhydraten',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              '${cubit.carbs}g',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              '${cubit.carbsPercent}%',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(
-                                '        Vezels',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              '${cubit.dietaryFiber}g',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              '${cubit.dietaryFiberPercent}%',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(
-                                '        Suiker',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              '${cubit.sugars}g',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              '${cubit.sugarsPercent}%',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ]),
-                          // TableRow(children: [
-                          //   Padding(
-                          //     padding:
-                          //         const EdgeInsets.symmetric(vertical: 10.0),
-                          //     child: Text(
-                          //       'Cholesterol',
-                          //       style: TextStyle(
-                          //           fontSize: 18, fontWeight: FontWeight.bold),
-                          //     ),
-                          //   ),
-                          //   Text(
-                          //     '3g',
-                          //     style: TextStyle(fontSize: 18),
-                          //   ),
-                          //   Text(
-                          //     '3%',
-                          //     style: TextStyle(fontSize: 18),
-                          //   ),
-                          // ]),
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  TextButton(
-                    child: Text(
-                      'Micronutriënten',
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: null,
                   ),
                 ],
               ),

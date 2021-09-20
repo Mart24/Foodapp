@@ -47,6 +47,7 @@ class _GoalViewerState extends State<GoalViewer> {
           GoalCubit goalCubit = GoalCubit.instance(context);
           final List<Map> result = goalCubit.goalQueryResult;
           final int goal = widget.co2data[0]['co2Goal'];
+          final String name = widget.co2data[0]['goalName'];
           final saved = goalCubit.overallSavedSum;
           final weekSum = goalCubit.weekCo2Sum;
           final weekSaved = goalCubit.weekSavedSum;
@@ -70,7 +71,8 @@ class _GoalViewerState extends State<GoalViewer> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      _Header(image: widget.co2data[0]['image']),
+                      _Header(
+                          image: widget.co2data[0]['image'], goalname: name),
                       // Text(
                       //   '${widget.co2data[0]['goalName']}',
                       //   style: TextStyle(
@@ -282,10 +284,9 @@ class _GoalViewerState extends State<GoalViewer> {
 
 class _Header extends StatelessWidget {
   final Uint8List image;
+  final String goalname;
 
-  _Header({
-    this.image,
-  });
+  _Header({this.image, this.goalname});
 
   @override
   Widget build(BuildContext context) {
@@ -313,7 +314,7 @@ class _Header extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 150.0),
                 // This name should be the same as the goal name saved in the sqldatabase, Codeline 75 on this page
                 child: Text(
-                  'Trainticket Munchen',
+                  goalname,
                   style: TextStyle(
                     fontSize: 30,
                     foreground: Paint()
@@ -329,7 +330,7 @@ class _Header extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 150.0),
                 child: Text(
-                  'Trainticket Munchen',
+                  goalname,
                   style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
