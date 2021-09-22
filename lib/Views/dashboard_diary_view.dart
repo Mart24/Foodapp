@@ -99,9 +99,9 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            snap: false,
-            pinned: true,
-            floating: true,
+            // snap: false,
+            pinned: false,
+            //floating: true,
             expandedHeight: 330,
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.transparent,
@@ -120,12 +120,15 @@ class _HomePageState extends State<HomePage> {
                       } else if (states is GetUserTripsListState) {
                         DairyCubit.instance(context).sumAll();
                       } else if (states is SumBasicUpdated) {
-                        final String uid = FirebaseAuth.instance.currentUser.uid;
-                        final DairyCubit dairyCubit = DairyCubit.instance(context);
+                        final String uid =
+                            FirebaseAuth.instance.currentUser.uid;
+                        final DairyCubit dairyCubit =
+                            DairyCubit.instance(context);
                         final DateTime now = dairyCubit.currentDate;
                         try {
                           AppCubit.instance(context).insertIntoDB(uid, {
-                            'date': DateTime(now.year, now.month, now.day).toIso8601String(),
+                            'date': DateTime(now.year, now.month, now.day)
+                                .toIso8601String(),
                             'calories': dairyCubit.kCalSum,
                             'co2': dairyCubit.co2Sum
                           });
@@ -147,13 +150,16 @@ class _HomePageState extends State<HomePage> {
                       }
                       return Column(children: [
                         CaloriesIndecator(
-                            cubit: cubit, circularPercent: circularPercent, diff: diff),
+                            cubit: cubit,
+                            circularPercent: circularPercent,
+                            diff: diff),
 
                         CarbsProtienFatRow(cubit: cubit),
 
                         SizedBox(height: 10),
 
-                        LinearCo2Indecator(barPercent: barPercent, cubit: cubit),
+                        LinearCo2Indecator(
+                            barPercent: barPercent, cubit: cubit),
 
                         DetailsButton(),
 
@@ -189,7 +195,8 @@ class _HomePageState extends State<HomePage> {
             listener: (context, states) {},
             builder: (context, states) {
               DairyCubit cubit = DairyCubit.instance(context);
-              print('Cubit mystream is: ${cubit.myStream == null ? 'null' : 'no null'}');
+              print(
+                  'Cubit mystream is: ${cubit.myStream == null ? 'null' : 'no null'}');
               return StreamBuilder(
                 stream: cubit.myStream,
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -212,8 +219,9 @@ class _HomePageState extends State<HomePage> {
                       co2Sum: cubit.lunchsumco2Sum,
                     ),
                   ];
-                  lunchList.addAll(
-                      DairyCubit.instance(context).lunchList.map((e) => buildTripCard(context, e)));
+                  lunchList.addAll(DairyCubit.instance(context)
+                      .lunchList
+                      .map((e) => buildTripCard(context, e)));
 
                   List<Widget> dinerList = [
                     CategoryTitle(
@@ -222,8 +230,9 @@ class _HomePageState extends State<HomePage> {
                       co2Sum: cubit.dinersumco2Sum,
                     ),
                   ];
-                  dinerList.addAll(
-                      DairyCubit.instance(context).dinerList.map((e) => buildTripCard(context, e)));
+                  dinerList.addAll(DairyCubit.instance(context)
+                      .dinerList
+                      .map((e) => buildTripCard(context, e)));
 
                   List<Widget> snacksList = [
                     CategoryTitle(
@@ -243,8 +252,9 @@ class _HomePageState extends State<HomePage> {
                       co2Sum: cubit.otherssumco2Sum,
                     ),
                   ];
-                  othersList.addAll(
-                      DairyCubit.instance(context).otherList.map((e) => buildTripCard(context, e)));
+                  othersList.addAll(DairyCubit.instance(context)
+                      .otherList
+                      .map((e) => buildTripCard(context, e)));
 
                   return SliverList(
                       delegate: SliverChildListDelegate.fixed([
@@ -299,7 +309,8 @@ class _HomePageState extends State<HomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DetailFoodIntakeView(trip: trip)),
+            MaterialPageRoute(
+                builder: (context) => DetailFoodIntakeView(trip: trip)),
           );
         },
         child: Card(
@@ -375,7 +386,8 @@ class DateNavigatorRow extends StatelessWidget {
         children: [
           IconButton(
             onPressed: () {
-              cubit.updateCurrentDate(cubit.currentDate.subtract(Duration(days: 1)));
+              cubit.updateCurrentDate(
+                  cubit.currentDate.subtract(Duration(days: 1)));
             },
             icon: Icon(Icons.arrow_back_ios_sharp),
             splashRadius: 28,
@@ -406,13 +418,13 @@ class DateNavigatorRow extends StatelessWidget {
                   locale: LocaleType.en,
                 );
               },
-              label: BlocConsumer<AppCubit,AppStates>(
-                listener: (BuildContext context, state) {  },
+              label: BlocConsumer<AppCubit, AppStates>(
+                listener: (BuildContext context, state) {},
                 builder: (BuildContext context, state) {
                   return Text(
                     '${DateFormat.yMMMMd().format(cubit.currentDate)}',
                     style: TextStyle(
-                      // color: Theme.of(context).accentColor,
+                        // color: Theme.of(context).accentColor,
                         color: Colors.black,
                         fontWeight: FontWeight.normal,
                         fontSize: 20),
@@ -466,12 +478,14 @@ class CaloriesIndecator extends StatelessWidget {
               padding: const EdgeInsets.only(left: 15.0),
               child: RichText(
                   text: TextSpan(
-                      style: GoogleFonts.roboto(fontSize: 20, color: Colors.black),
+                      style:
+                          GoogleFonts.roboto(fontSize: 20, color: Colors.black),
                       children: <TextSpan>[
                     TextSpan(text: 'Eaten '),
                     TextSpan(
                       text: '${cubit.kCalSum.toStringAsFixed(0)}',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: kPrimaryColor),
                     ),
                     TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
                   ])),
@@ -502,15 +516,18 @@ class CaloriesIndecator extends StatelessWidget {
             //   textAlign: TextAlign.center,
             // ),
             child: Padding(
-              padding: const EdgeInsets.only(right: 15.0),
+              padding: const EdgeInsets.only(right: 5.0),
               child: RichText(
                   text: TextSpan(
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                       children: <TextSpan>[
-                    TextSpan(text: 'Burned'),
+                    TextSpan(text: 'Over '),
                     TextSpan(
-                      text: '...',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
+                      text: '${((2000 - cubit.kCalSum).toStringAsFixed(0))}',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor),
                     ),
                     TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
                   ])),
@@ -565,7 +582,8 @@ class LinearCo2Indecator extends StatelessWidget {
                       TextSpan(text: 'Co2 '),
                       TextSpan(
                         text: '${cubit.co2Sum.toStringAsFixed(1)}',
-                        style: TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: kPrimaryColor),
                       ),
                       TextSpan(text: 'kg', style: TextStyle(fontSize: 12)),
                     ])),
@@ -644,8 +662,8 @@ class DetailsButton extends StatelessWidget {
     return TextButton(
       onPressed: () {
         DairyCubit.instance(context).calcPercents();
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => NutritionalDetailsPage()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => NutritionalDetailsPage()));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
