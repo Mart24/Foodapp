@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
             // snap: false,
             pinned: false,
             //floating: true,
-            expandedHeight: 330,
+            expandedHeight: 340,
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.transparent,
             elevation: 0,
@@ -379,68 +379,71 @@ class DateNavigatorRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            onPressed: () {
-              cubit.updateCurrentDate(
-                  cubit.currentDate.subtract(Duration(days: 1)));
-            },
-            icon: Icon(Icons.arrow_back_ios_sharp),
-            splashRadius: 28,
-            iconSize: 20,
-            //      color: Theme.of(context).accentColor,
-            color: Colors.black,
-          ),
-          TextButton.icon(
-              icon: Icon(
-                Icons.calendar_today,
-                color: Colors.black,
-              ),
+    return Container(
+      // width: 500,
+      margin: const EdgeInsets.only(top: 8.0),
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
               onPressed: () {
-                DatePicker.showDatePicker(
-                  context,
-                  showTitleActions: true,
-                  theme: DatePickerTheme(),
-                  currentTime: cubit.currentDate ?? DateTime.now(),
-                  minTime: DateTime(DateTime.now().year - 20),
-                  maxTime: DateTime(DateTime.now().year + 20),
-                  onChanged: (date) {
-                    print('change $date');
-                  },
-                  onConfirm: (date) {
-                    print('confirm $date');
-                    cubit.updateCurrentDate(date);
-                  },
-                  locale: LocaleType.en,
-                );
+                cubit.updateCurrentDate(
+                    cubit.currentDate.subtract(Duration(days: 1)));
               },
-              label: BlocConsumer<AppCubit, AppStates>(
-                listener: (BuildContext context, state) {},
-                builder: (BuildContext context, state) {
-                  return Text(
-                    '${DateFormat.yMMMMd().format(cubit.currentDate)}',
-                    style: TextStyle(
-                        // color: Theme.of(context).accentColor,
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20),
+              icon: Icon(Icons.arrow_back_ios_sharp),
+              splashRadius: 28,
+              iconSize: 20,
+              //      color: Theme.of(context).accentColor,
+              color: Colors.black,
+            ),
+            TextButton.icon(
+                icon: Icon(
+                  Icons.calendar_today,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  DatePicker.showDatePicker(
+                    context,
+                    showTitleActions: true,
+                    theme: DatePickerTheme(),
+                    currentTime: cubit.currentDate ?? DateTime.now(),
+                    minTime: DateTime(DateTime.now().year - 20),
+                    maxTime: DateTime(DateTime.now().year + 20),
+                    onChanged: (date) {
+                      print('change $date');
+                    },
+                    onConfirm: (date) {
+                      print('confirm $date');
+                      cubit.updateCurrentDate(date);
+                    },
+                    locale: LocaleType.en,
                   );
                 },
-              )),
-          IconButton(
-            onPressed: () {
-              cubit.updateCurrentDate(cubit.currentDate.add(Duration(days: 1)));
-            },
-            icon: Icon(Icons.arrow_forward_ios_sharp),
-            splashRadius: 28,
-            iconSize: 20,
-            color: Colors.black,
-          ),
-        ],
+                label: BlocConsumer<AppCubit, AppStates>(
+                  listener: (BuildContext context, state) {},
+                  builder: (BuildContext context, state) {
+                    return Text(
+                      '${DateFormat.yMMMMd().format(cubit.currentDate)}',
+                      style: TextStyle(
+                          // color: Theme.of(context).accentColor,
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20),
+                    );
+                  },
+                )),
+            IconButton(
+              onPressed: () {
+                cubit.updateCurrentDate(cubit.currentDate.add(Duration(days: 1)));
+              },
+              icon: Icon(Icons.arrow_forward_ios_sharp),
+              splashRadius: 28,
+              iconSize: 20,
+              color: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:food_app/shared/goal_cubit.dart';
+import 'package:food_app/shared/search_cubit.dart';
 import 'Widgets/Navigation_widget.dart';
 import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (BuildContext context) => GoalCubit(),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => SearchCubit(),
           )
         ],
         child: MaterialApp(

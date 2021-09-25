@@ -9,51 +9,51 @@ import 'package:food_app/Views/constants.dart';
 class Trip {
   int id;
   String documentId;
-  double productid;
+  num productid;
   String name;
   DateTime eatDate;
-  double amound;
+  num amound;
   String categorie;
-  double ean;
+  num ean;
   String plantbased;
-  double co2;
-  double amount;
+  num co2;
+  num amount;
   String unit;
   String portionsize;
-  double sizep1;
+  num sizep1;
   String nutriscore;
   String ecoscore;
-  double sizep2;
+  num sizep2;
   String productgroup;
   String brand;
-  double kcal;
-  double fat;
-  double saturatedfat;
-  double sugars;
-  double protein;
-  double carbs;
-  double dietaryfiber;
-  double salt;
-  double alcohol;
-  double natrium;
-  double kalium;
-  double calcium;
-  double magnesium;
-  double iron;
-  double selenium;
-  double zink;
-  double vitA;
-  double vitB;
-  double vitC;
-  double vitE;
-  double vitB1;
-  double vitB2;
-  double vitB6;
-  double vitB12;
-  double foliumzuur;
-  double niacine;
-  double jodium;
-  double fosfor;
+  num kcal;
+  num fat;
+  num saturatedfat;
+  num sugars;
+  num protein;
+  num carbs;
+  num dietaryfiber;
+  num salt;
+  num alcohol;
+  num natrium;
+  num kalium;
+  num calcium;
+  num magnesium;
+  num iron;
+  num selenium;
+  num zink;
+  num vitA;
+  num vitB;
+  num vitC;
+  num vitE;
+  num vitB1;
+  num vitB2;
+  num vitB6;
+  num vitB12;
+  num foliumzuur;
+  num niacine;
+  num jodium;
+  num fosfor;
 
   Trip(
       this.id,
@@ -158,56 +158,60 @@ class Trip {
       };
 
   // creating a Food object from a firebase snapshot
-  Trip.fromSnapshot(DocumentSnapshot snapshot)
-      : id = snapshot['productid'],
-        name = snapshot['name'],
-        eatDate = snapshot['eatDate'].toDate(),
-        amount = snapshot['amount'],
-        kcal = snapshot['kcal'],
-        co2 = snapshot['co2'],
-        carbs = snapshot['carbs'],
-        protein = snapshot['protein'],
-        nutriscore = snapshot['nutriscore'],
-        ecoscore = snapshot['ecoscore'],
+  Trip.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
 
-        // sizep2 = snapshot['sizep2'],
-        // productgroup = snapshot['productgroup'],
-        plantbased = snapshot['plantbased'],
-        categorie = snapshot['categorie'],
-        // ean = snapshot['ean'],
-        // brand = snapshot['brand'],
-        // amound = snapshot['amound'],
-        // portionsize = snapshot['portionsize'],
-        // sizep1 = snapshot['sizep1'],
+    final Map<String,dynamic> snapshotAsMap= snapshot.data();
+    id = snapshotAsMap['productid'];
+    name = snapshotAsMap['name'];
+    // if (snapshot.data().containsKey('eatDate'))
+      eatDate = snapshotAsMap['eatDate']?.toDate();
+    amount = snapshotAsMap['amount'];
+    kcal = snapshotAsMap['kcal'];
+    co2 = snapshotAsMap['co2'];
+    carbs = snapshotAsMap['carbs'];
+    protein = snapshotAsMap['protein'];
+    nutriscore = snapshotAsMap['nutriscore'];
+    ecoscore = snapshotAsMap['ecoscore'];
 
-        saturatedfat = snapshot['saturatedfat'],
-        sugars = snapshot['sugars'],
-        dietaryfiber = snapshot['dietaryfiber'],
+    // sizep2 = snapshot['sizep2'];
+    // productgroup = snapshot['productgroup'];
+    plantbased = snapshotAsMap['plantbased'];
+    categorie = snapshotAsMap['categorie'];
+    // ean = snapshot['ean'];
+    // brand = snapshot['brand'];
+    // amound = snapshot['amound'];
+    // portionsize = snapshot['portionsize'];
+    // sizep1 = snapshot['sizep1'];
 
-        // salt = snapshot['salt'],
-        // selenium = snapshot['selenium'],
-        // unit = snapshot['unit'],
-        // vitA = snapshot['vitA'],
-        // vitB = snapshot['vitB'],
-        // vitB1 = snapshot['vitB1'],
-        // vitB12 = snapshot['vitB12'],
-        // vitB2 = snapshot['vitB2'],
-        // vitB6 = snapshot['vitB6'],
-        // vitC = snapshot['vitC'],
-        // vitE = snapshot['vitE'],
-        // zink = snapshot['zink'],
-        // alcohol = snapshot['alcohol'],
-        // calcium = snapshot['calcium'],
-        // foliumzuur = snapshot['foliumzuur'],
-        // fosfor = snapshot['fosfor'],
-        // iron = snapshot['iron'],
-        // jodium = snapshot['jodium'],
-        // kalium = snapshot['kalium'],
-        // magnesium = snapshot['magnesium'],
-        // natrium = snapshot['natrium'],
-        // niacine = snapshot['niacine'],
+    saturatedfat = snapshotAsMap['saturatedfat'];
+    sugars = snapshotAsMap['sugars'];
+    dietaryfiber = snapshotAsMap['dietaryfiber'];
 
-        documentId = snapshot.id;
+    // salt = snapshot['salt'];
+    // selenium = snapshot['selenium'];
+    // unit = snapshot['unit'];
+    // vitA = snapshot['vitA'];
+    // vitB = snapshot['vitB'];
+    // vitB1 = snapshot['vitB1'];
+    // vitB12 = snapshot['vitB12'];
+    // vitB2 = snapshot['vitB2'];
+    // vitB6 = snapshot['vitB6'];
+    // vitC = snapshot['vitC'];
+    // vitE = snapshot['vitE'];
+    // zink = snapshot['zink'];
+    // alcohol = snapshot['alcohol'];
+    // calcium = snapshot['calcium'];
+    // foliumzuur = snapshot['foliumzuur'];
+    // fosfor = snapshot['fosfor'];
+    // iron = snapshot['iron'];
+    // jodium = snapshot['jodium'];
+    // kalium = snapshot['kalium'];
+    // magnesium = snapshot['magnesium'];
+    // natrium = snapshot['natrium'];
+    // niacine = snapshot['niacine'];
+
+    documentId = snapshot.id;
+  }
 
   Map<String, ImageIcon> planticon() => {
         "WAAR": ImageIcon(
