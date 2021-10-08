@@ -1,8 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/Views/compare_feature/Search_page.dart';
+import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Views/constants.dart';
 
+import 'comparison_search_page.dart';
+
 class CompareFeature extends StatelessWidget {
+  final newTrip = Trip(
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      // null,
+      null);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +67,9 @@ class CompareFeature extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CompareSearch(),
+                builder: (context) => CompareSearch(
+                  trip: newTrip,
+                ),
               ));
         },
         label: const Text('Compare'),

@@ -11,6 +11,8 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:food_app/Widgets/rounded_button.dart';
 import 'package:food_app/shared/search_cubit.dart';
 
+import 'comparison_view.dart';
+
 // Step 1: his is the class for a new Food intake by the user
 // The data is clicked on then sended to food_amount.dart and then send to summary.dart
 // The item is caled Trip, because I used a trip database in this app. Renames breakes everything, so I let it be trips.
@@ -131,7 +133,7 @@ class _CompareSearchState extends State<CompareSearch> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            FoodDate(trip: widget.trip)),
+                                            ComparisonView(trip: widget.trip)),
                                   );
                                 },
                               );
