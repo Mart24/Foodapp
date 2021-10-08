@@ -65,7 +65,7 @@ class _ComparisonViewState extends State<ComparisonView> {
               ),
             ),
             onPressed: () {},
-            child: Text('Delete'),
+            child: Text('Melden'),
           ),
         ],
       ),
@@ -182,16 +182,23 @@ class _ComparisonViewState extends State<ComparisonView> {
 
               return Container(
                 child: Column(children: <Widget>[
+                  // Icon(Icons.disabled_by_default,
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: Container(
                         width: 75.0,
                         child: Inputbar(budgetController: _budgetController)),
                   ),
-                  FittedBox(
-                    child: Text(
-                      "${foodDocument['name']}",
-                      style: new TextStyle(fontSize: 18.0),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Container(
+                        width: 70,
+                        child: Text(
+                          "${foodDocument['name']}",
+                          style: new TextStyle(fontSize: 16.0),
+                        ),
+                      ),
                     ),
                   ),
 
@@ -564,7 +571,7 @@ class Inputbar extends StatelessWidget {
       maxLength: 4,
       decoration: InputDecoration(
         //     prefixIcon: Icon(Icons.linear_scale),
-        helperText: "change",
+        helperText: "gram",
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
