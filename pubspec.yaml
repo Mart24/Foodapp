@@ -42,6 +42,8 @@ dependencies:
   timeline_tile: ^2.0.0
 #  flutter_showcase:
   image_picker: ^0.8.3+2
+  font_awesome_flutter: ^9.1.0
+
 
 
 dev_dependencies:
@@ -63,8 +65,5 @@ flutter:
   assets:
     - assets/
     - assets/icons/
-    - assets/icons/order_confirmed.png
-    - assets/icons/order_placed.png
-    - assets/icons/order_processed.png
-    - assets/icons/ready_to_pickup.png
+
     - assets/scores/

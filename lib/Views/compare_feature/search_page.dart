@@ -16,16 +16,16 @@ import 'package:food_app/shared/search_cubit.dart';
 // The item is caled Trip, because I used a trip database in this app. Renames breakes everything, so I let it be trips.
 // Trip can be seen as Food.
 
-class NewFoodIntake extends StatefulWidget {
+class CompareSearch extends StatefulWidget {
   final Trip trip;
 
-  NewFoodIntake({Key key, @required this.trip}) : super(key: key);
+  CompareSearch({Key key, @required this.trip}) : super(key: key);
 
   @override
-  _NewFoodIntakeState createState() => _NewFoodIntakeState();
+  _CompareSearchState createState() => _CompareSearchState();
 }
 
-class _NewFoodIntakeState extends State<NewFoodIntake> {
+class _CompareSearchState extends State<CompareSearch> {
   final dbService = DatabaseGService();
   String keyword;
   Trip trip;

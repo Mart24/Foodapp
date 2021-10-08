@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Models/ingredients.dart';
+import 'package:food_app/Views/compare_feature/compare_page.dart';
 import 'package:food_app/Views/goals/goals_home.dart';
-import 'package:food_app/Views/pages.dart';
 import 'package:food_app/Views/dashboard_diary_view.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import '../Views/new_food_registration.dart/food_search.dart';
 import '../Views/profile/profile_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const colordarkgreen = const Color(0xFF7AA573);
 
@@ -66,7 +67,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     HomePage(),
-    Foodpage(),
+    CompareFeature(),
     NewFoodIntake(),
     GoalsHome(),
     Profiel(),
@@ -141,7 +142,8 @@ class _HomeState extends State<Home> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.book), label: "Diary"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.restaurant), label: "Recipes"),
+                icon: FaIcon(FontAwesomeIcons.balanceScaleRight),
+                label: 'Compare'),
             BottomNavigationBarItem(icon: Icon(Icons.add), label: "Intake"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.leaderboard), label: "Goals"),

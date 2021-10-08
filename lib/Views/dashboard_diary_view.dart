@@ -435,7 +435,8 @@ class DateNavigatorRow extends StatelessWidget {
                 )),
             IconButton(
               onPressed: () {
-                cubit.updateCurrentDate(cubit.currentDate.add(Duration(days: 1)));
+                cubit.updateCurrentDate(
+                    cubit.currentDate.add(Duration(days: 1)));
               },
               icon: Icon(Icons.arrow_forward_ios_sharp),
               splashRadius: 28,
@@ -478,7 +479,7 @@ class CaloriesIndecator extends StatelessWidget {
             //   textAlign: TextAlign.center,
             // ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
+              padding: const EdgeInsets.only(left: 10.0),
               child: RichText(
                   text: TextSpan(
                       style:
@@ -624,7 +625,19 @@ class CarbsProtienFatRow extends StatelessWidget {
               //   percent: 0.2,
               //   progressColor: Colors.red,
               // ),
-              Text('Carbs ${cubit.carbs.toStringAsFixed(0)}g'),
+
+              Row(
+                children: [
+                  Icon(
+                    Icons.circle,
+                    color: kPrimaryColor,
+                    size: 10,
+                  ),
+                  Text(
+                    ' Carbs ${cubit.carbs.toStringAsFixed(0)}g',
+                  ),
+                ],
+              ),
             ],
           ),
           Column(
@@ -635,7 +648,16 @@ class CarbsProtienFatRow extends StatelessWidget {
               //   percent: 0.7,
               //   progressColor: Colors.yellow,
               // ),
-              Text('Protein ${cubit.protein.toStringAsFixed(0)}g'),
+              Row(
+                children: [
+                  Icon(
+                    Icons.circle,
+                    color: kPrimaryColor,
+                    size: 10,
+                  ),
+                  Text(' Proteins ${cubit.protein.toStringAsFixed(0)}g'),
+                ],
+              ),
             ],
           ),
           Column(
@@ -646,7 +668,16 @@ class CarbsProtienFatRow extends StatelessWidget {
               //   percent: 0.3,
               //   progressColor: Colors.blue,
               // ),
-              Text(' Fat ${cubit.fats.toStringAsFixed(0)}g'),
+              Row(
+                children: [
+                  Icon(
+                    Icons.circle,
+                    color: kPrimaryColor,
+                    size: 10,
+                  ),
+                  Text(' Fats ${cubit.fats.toStringAsFixed(0)}g'),
+                ],
+              ),
             ],
           )
         ],

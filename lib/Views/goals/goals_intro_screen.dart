@@ -47,9 +47,10 @@ class _TimelineGoal extends StatelessWidget {
                   padding: EdgeInsets.all(6),
                 ),
                 endChild: const _RightChild(
-                  asset: 'assets/icons/order_placed.png',
-                  title: 'Order Placed',
-                  message: 'We have received your order.',
+                  asset: 'assets/icons/first_idea.png',
+                  title: 'Think of a Goal',
+                  message:
+                      'It can be anything; a train ticket, clothing basket, car ride.',
                 ),
                 beforeLineStyle: const LineStyle(
                   color: Color(0xFF27AA69),
@@ -64,9 +65,9 @@ class _TimelineGoal extends StatelessWidget {
                   padding: EdgeInsets.all(6),
                 ),
                 endChild: const _RightChild(
-                  asset: 'assets/icons/order_confirmed.png',
-                  title: 'Order Confirmed',
-                  message: 'Your order has been confirmed.',
+                  asset: 'assets/icons/second_calculate.png',
+                  title: 'Calculate Goal',
+                  message: 'Search online for the amount of CO² it costs.',
                 ),
                 beforeLineStyle: const LineStyle(
                   color: Color(0xFF27AA69),
@@ -81,9 +82,9 @@ class _TimelineGoal extends StatelessWidget {
                   padding: EdgeInsets.all(6),
                 ),
                 endChild: const _RightChild(
-                  asset: 'assets/icons/order_processed.png',
-                  title: 'Order Processed',
-                  message: 'We are preparing your order.',
+                  asset: 'assets/icons/third_fillin.png',
+                  title: 'Fill in this App',
+                  message: 'Stay below 500 kg/Co² for a reachable goal.',
                 ),
                 beforeLineStyle: const LineStyle(
                   color: Color(0xFF27AA69),
@@ -103,9 +104,10 @@ class _TimelineGoal extends StatelessWidget {
                 ),
                 endChild: const _RightChild(
                   disabled: false,
-                  asset: 'assets/icons/ready_to_pickup.png',
-                  title: 'Ready to Pickup',
-                  message: 'Your order is ready for pickup.',
+                  asset: 'assets/icons/fourth_start.png',
+                  title: 'Start eating Sustainable',
+                  message:
+                      'Fill in starting your date. The more sustainable your diet, the more you save!',
                 ),
                 beforeLineStyle: const LineStyle(
                   color: Color(0xFF27AA69),
@@ -114,12 +116,17 @@ class _TimelineGoal extends StatelessWidget {
             ],
           ),
         ),
-        CustomButton(
-          onPressed: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => GoalsAddScreen()));
-          },
-          text: Text('set up co2 goal'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            CustomButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => GoalsAddScreen()));
+              },
+              text: Text('Set up Co2 Goal'),
+            ),
+          ],
         ),
       ]),
     );
@@ -208,7 +215,7 @@ class _Header extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Set a Co2 goal for yourself',
+                    'Each day below 5kg/Co² is saved',
                     style: GoogleFonts.yantramanav(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
@@ -230,7 +237,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       // leading: const Icon(Icons.menu),
       centerTitle: true,
       title: Text(
-        'Co2',
+        'Set a Co2 goal',
         // style: GoogleFonts.neuton(
         //     color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import 'constants.dart';
@@ -64,23 +65,46 @@ class NutritionalDetailsPage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            child: Text(
+                              'Voedingswaarden',
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onPressed: null,
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.info), color: kPrimaryColor,
+                            // tooltip: 'Increase volume by 10',
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    _buildPopupDialog(context),
+                              );
+                            },
+                          ),
+                          // onPressed: () {
+                          //   showDialog(
+                          //     context: context,
+                          //     builder: (BuildContext context) =>
+                          //         _buildPopupDialog(context),
+                          //   );
+                          // },
+                        ],
+                      ),
+                    ),
                     SingleChildScrollView(
                       child: Container(
                         child: Column(
                           children: [
-                            Container(
-                              child: TextButton(
-                                child: Text(
-                                  'Voedingswaarden',
-                                  style: TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: null,
-                              ),
-                            ),
                             Container(
                               child: Table(
                                 columnWidths: {
@@ -113,10 +137,11 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       style: TextStyle(fontSize: 16),
                                     ),
                                     Text(
-                                      'Grens',
+                                      'Advies',
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ]),
+
                                   TableRow(children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -371,4 +396,52 @@ class NutritionalDetailsPage extends StatelessWidget {
           }),
     );
   }
+}
+
+Widget _buildPopupDialog(BuildContext context) {
+  return new AlertDialog(
+    title: const Text(
+      'Richtlijn Voedingscentrum',
+      style: TextStyle(fontSize: 18),
+    ),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        RichText(
+            text: TextSpan(
+                style: GoogleFonts.roboto(fontSize: 16, color: Colors.black),
+                children: <TextSpan>[
+              TextSpan(
+                  text:
+                      'Let op: Dit zijn richtlijnen. Met een gevarieerd dieet krijg je de juiste voedingsstoffen binnen. '),
+              TextSpan(
+                text: 'Rood',
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+              ),
+              TextSpan(
+                  text: ' is het maximale en ', style: TextStyle(fontSize: 16)),
+              TextSpan(
+                text: 'Groen',
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+              ),
+              TextSpan(
+                  text:
+                      ' staat voor de minimale consumptie per dag. Voor meer informatie, kijk op de website voedingscentrum.nl',
+                  style: TextStyle(fontSize: 16)),
+            ])),
+      ],
+    ),
+    actions: <Widget>[
+      new FlatButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        textColor: Theme.of(context).primaryColor,
+        child: const Text('Sluit'),
+      ),
+    ],
+  );
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/goal_cubit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../constants.dart';
@@ -90,22 +91,63 @@ class _GoalViewerState extends State<GoalViewer> {
                         },
                         children: [
                           TableRow(children: [
-                            Text(
-                              'Saved ${saved.toStringAsFixed(1)} Kg/Co²',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.start,
-                            ),
-                            Text(
-                              'Goal ${goal.toStringAsFixed(1)} Kg/Co²',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
+                            RichText(
+                                text: TextSpan(
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    children: <TextSpan>[
+                                  TextSpan(text: 'Saved '),
+                                  TextSpan(
+                                    text: '${saved.toStringAsFixed(1)}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22,
+                                        color: Colors.green),
+                                  ),
+                                  TextSpan(
+                                    text: ' kg/co2',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ])),
+
+                            RichText(
+                              text: TextSpan(
+                                style: GoogleFonts.roboto(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(text: 'Goal '),
+                                  TextSpan(
+                                    text: '${goal.toStringAsFixed(1)}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22,
+                                        color: Colors.green),
+                                  ),
+                                  TextSpan(
+                                    text: ' kg/co2',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                               textAlign: TextAlign.end,
                             ),
+
+                            // Text(
+                            //   'Goal ${goal.toStringAsFixed(1)} Kg/Co²',
+                            //   style: TextStyle(
+                            //       color: Theme.of(context).primaryColor,
+                            //       fontSize: 18,
+                            //       fontWeight: FontWeight.bold),
+                            //   textAlign: TextAlign.end,
+                            // ),
                           ])
                         ],
                       ),
@@ -291,7 +333,7 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: 200,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         color: Color(0xFFF9F9F9),

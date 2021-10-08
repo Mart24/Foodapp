@@ -82,8 +82,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                                                   is DoneUploadingImageState ||
                                               goalCubit.imageAsBytes != null)
                                           ? Image.memory(goalCubit.imageAsBytes)
-                                          : Image.asset(
-                                              'assets/Marienplatz.jpg'),
+                                          : Image.asset('assets/new_goal.png'),
                                 ),
                                 Positioned(
                                   right: 0,
@@ -260,7 +259,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
 
                   if (goalCubit.imageAsBytes == null) {
                     ByteData bytes =
-                        await rootBundle.load('assets/Marienplatz.jpg');
+                        await rootBundle.load('assets/new_goal.png');
                     goalCubit.imageAsBytes = bytes.buffer.asUint8List();
                   }
 
