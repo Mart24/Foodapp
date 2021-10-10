@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:food_app/Views/sign_up_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const colorlightgreen = const Color(0xFFE0EFD9);
 const colordarkgreen = const Color(0xFF7AA573);
@@ -46,26 +47,24 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           // title: "Het eten op ons bord komt van over de hele wereld",
           // body:
           //     "Het komt binnen middels vliegtuig, boot, trein, vrachtwagen en noem maar op",
-          title: "The food on our plate comes from all over the world",
-          body:
-              "It is imported by plane, boat, train, truck, from a lot of different countries",
+          title: AppLocalizations.of(context).introtexttitleone,
+          body: AppLocalizations.of(context).introtextone,
           image: _buildImage('img1'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           // title: "Veel producten leggen een zware last op het milieu",
           // body: "Zo komt bij de productie van vlees en zuivel veel CO² vrij",
-          title: "Some of these products have a higher negative impact",
-          body:
-              "A lot of CO² emissions come for example from the production of meat and dairy products",
+          title: AppLocalizations.of(context).introtexttitletwo,
+          body: AppLocalizations.of(context).introtexttwo,
           image: _buildImage('img2'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           // title: "Ontwikkel daarom een duurzaam eetpatroon",
           // body: "Met Eetmissie was een duurzaam eten nog nooit zo makkelijk",
-          title: "Develop a healthy and sustainable diet",
-          body: "With Eatmission, sustainable choices have never been easier.",
+          title: AppLocalizations.of(context).introtexttitlethird,
+          body: AppLocalizations.of(context).introtextthird,
           image: _buildImage('img3'),
           footer: RaisedButton(
             onPressed: () {

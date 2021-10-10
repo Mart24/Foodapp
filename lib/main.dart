@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import '../l10n/l10n.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:food_app/shared/goal_cubit.dart';
@@ -12,13 +14,14 @@ import 'package:food_app/Services/auth_service.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Views/sign_up_view.dart';
 import 'package:food_app/Views/introduction_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarBrightness: Brightness.dark, statusBarColor: Colors.white));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark, statusBarColor: Colors.white));
 
   runApp(MyApp());
 }
@@ -35,7 +38,8 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => AppCubit(),
           ),
           BlocProvider(
-            create: (BuildContext context) => DairyCubit()..getUsersTripsList(Source.cache),
+            create: (BuildContext context) =>
+                DairyCubit()..getUsersTripsList(Source.cache),
           ),
           BlocProvider(
             create: (BuildContext context) => GoalCubit(),
@@ -53,10 +57,19 @@ class MyApp extends StatelessWidget {
           ),
           home: HomeController(),
           routes: <String, WidgetBuilder>{
-            '/signUp': (BuildContext context) => SignUpView(authFormType: AuthFormType.signUp),
-            '/signIn': (BuildContext context) => SignUpView(authFormType: AuthFormType.signIn),
+            '/signUp': (BuildContext context) =>
+                SignUpView(authFormType: AuthFormType.signUp),
+            '/signIn': (BuildContext context) =>
+                SignUpView(authFormType: AuthFormType.signIn),
             '/home': (BuildContext context) => HomeController(),
           },
+          supportedLocales: L10n.all,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
         ),
       ),
     );

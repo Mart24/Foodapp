@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   cloud_firestore: ^2.5.0
 
@@ -29,7 +31,6 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter_svg: ^0.22.0
   percent_indicator: ^3.0.1
-
   bloc: ^7.1.0
   flutter_bloc: ^7.1.0
   datetime_picker_formfield: ^2.0.0
@@ -59,7 +60,7 @@ dependency_overrides:
 
 flutter:
 
-
+  generate: true
   uses-material-design: true
 
   assets:

@@ -1,0 +1,30 @@
+{
+    "language": "English",
+    "@language":{
+      "description": "The current Language"
+        },
+    "introtexttitleone": "The food on our plate comes from all over the world",
+    "@introtexttitleone": {
+      "description": "The first title in the introduction screen"
+    },
+    "introtextone": "It is imported by plane, boat, train, truck, from a lot of different countries",
+    "@introtexteone": {
+      "description": "The first title in the introduction screen"
+     },
+    "introtexttitletwo": "Some of these products have a higher negative impact",
+    "@introtexteone": {
+      "description": "The second title in the introduction screen"
+     },
+    "introtexttwo": "A lot of CO² emissions come for example from the production of meat and dairy products.",
+    "@introtexteone": {
+      "description": "The second text in the introduction screen"
+    },
+    "introtexttitlethird": "Develop a healthy and sustainable diet",
+    "@introtexteone": {
+      "description": "The third title in the introduction screen"
+     },
+    "introtextthird": "With Eatmission, sustainable choices have never been easier.",
+    "@introtexteone": {
+      "description": "The third text in the introduction screen"
+    }
+}
