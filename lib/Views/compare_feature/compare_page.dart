@@ -74,7 +74,7 @@ class CompareFeature extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  color: Colors.red,
+                  color: Colors.grey[300],
                   height: double.infinity,
                   child: BlocConsumer<ProductOneCubit, ProductOneStates>(
                       listener: (context, state) {},
@@ -113,7 +113,7 @@ class CompareFeature extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: double.infinity,
-                  color: Colors.green,
+                  color: Colors.grey[300],
                   child: BlocConsumer<ProductTwoCubit, ProductTwoStates>(
                       listener: (context, state) {},
                       builder: (context, state) {

@@ -62,6 +62,7 @@ class _ComparisonViewState extends State<ComparisonView> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
         title: Text(
@@ -248,18 +249,18 @@ class _ComparisonViewState extends State<ComparisonView> {
                           width: 75.0,
                           child: Inputbar(budgetController: _budgetController)),
                     ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Container(
-                          width: 70,
-                          child: Text(
-                            "${foodDocument['name']}",
-                            style: new TextStyle(fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Center(
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(top: 8.0),
+                    //     child: Container(
+                    //       width: 70,
+                    //       child: Text(
+                    //         "${foodDocument['name']}",
+                    //         style: new TextStyle(fontSize: 16.0),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
 
                     // Spacer(),
                     Padding(
@@ -283,21 +284,25 @@ class _ComparisonViewState extends State<ComparisonView> {
                       ),
                     ),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextButton(
-                          child: Text(
-                            'Macronutriënten',
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                    FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          TextButton(
+                            child: Text(
+                              'Macronutriënten',
+                              maxLines: 2,
+                              overflow: TextOverflow.fade,
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            onPressed: null,
                           ),
-                          onPressed: null,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
 
                     Expanded(
@@ -307,8 +312,8 @@ class _ComparisonViewState extends State<ComparisonView> {
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Table(
                             columnWidths: {
-                              0: FractionColumnWidth(0.30),
-                              1: FractionColumnWidth(0.7),
+                              0: FractionColumnWidth(0.50),
+                              1: FractionColumnWidth(0.5),
                             },
                             textBaseline: TextBaseline.alphabetic,
                             defaultVerticalAlignment:
@@ -321,13 +326,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Energie',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${kcal.toStringAsFixed(1)} kcal",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -337,13 +342,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Co²',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${co2.toStringAsFixed(1)} kg/co²",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -353,13 +358,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Koolhydraten',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${koolhy.toStringAsFixed(1)} g",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -369,13 +374,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Eiwitten',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${protein.toStringAsFixed(1)} g",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -385,13 +390,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Vetten',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${fat.toStringAsFixed(1)} g",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -401,13 +406,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Verzadigd vet',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${saturatedfat.toStringAsFixed(1)} g",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -417,13 +422,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Suikers',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${sugars.toStringAsFixed(1)} g",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -433,13 +438,13 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Vezels',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                   "${dietaryfiber.toStringAsFixed(1)} g",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                               TableRow(children: [
@@ -449,7 +454,7 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   child: Text(
                                     'Plantbased',
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
