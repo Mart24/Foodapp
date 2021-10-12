@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:food_app/shared/productOne_cubit.dart';
+import 'package:food_app/shared/productTwo_cubit.dart';
 import '../l10n/l10n.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
@@ -46,6 +48,12 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (BuildContext context) => SearchCubit(),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => ProductOneCubit(),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => ProductTwoCubit(),
           )
         ],
         child: MaterialApp(

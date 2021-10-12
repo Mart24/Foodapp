@@ -92,8 +92,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: DateNavigatorRow(cubit: cubit),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
-        // foregroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent.withOpacity(0.03),
         elevation: 0,
       ),
       body: CustomScrollView(
@@ -380,6 +380,7 @@ class DateNavigatorRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Colors.red,
       // width: 500,
       margin: const EdgeInsets.only(top: 8.0),
       child: FittedBox(

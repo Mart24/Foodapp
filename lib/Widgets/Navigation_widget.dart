@@ -154,20 +154,20 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void onTabTapped(int index) {
-    if (index == 2) {
-      final appCubit = AppCubit.instance(context);
-      final uid = FirebaseAuth.instance.currentUser.uid;
-      appCubit.getOneWeekData(appCubit.database, uid);
-      // DateTime now = DateTime.now();
-      // now =DateTime(now.year,now.month,now.day);
-      // appCubit.getDataFromDatabase(appCubit.database, uid,
-      //     limit: 7,
-      //     where:"date > ? and date <= ?",
-      //     whereArgs: [now.subtract(Duration(days: 7)).toIso8601String(),now.toIso8601String()]);
+    void onTabTapped(int index) {
+      if (index == 2) {
+        final appCubit = AppCubit.instance(context);
+        final uid = FirebaseAuth.instance.currentUser.uid;
+        appCubit.getOneWeekData(appCubit.database, uid);
+        // DateTime now = DateTime.now();
+        // now =DateTime(now.year,now.month,now.day);
+        // appCubit.getDataFromDatabase(appCubit.database, uid,
+        //     limit: 7,
+        //     where:"date > ? and date <= ?",
+        //     whereArgs: [now.subtract(Duration(days: 7)).toIso8601String(),now.toIso8601String()]);
+      }
+      setState(() {
+        _currentIndex = index;
+      });
     }
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 }
