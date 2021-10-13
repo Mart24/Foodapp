@@ -16,7 +16,7 @@ class ProductOneCubit extends Cubit<ProductOneStates> {
       BlocProvider.of(context, listen: false);
 
   String scanResult='';
-  Trip tappedTripP1;
+  static Trip tappedTripP1;
 
   Future scanBarcode() async {
     String scanResult;

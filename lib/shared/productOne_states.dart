@@ -1,5 +1,6 @@
 part of 'productOne_cubit.dart';
 
+@immutable
 abstract class ProductOneStates {
   const ProductOneStates();
 }

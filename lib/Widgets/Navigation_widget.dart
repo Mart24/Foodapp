@@ -171,14 +171,15 @@ class _HomeState extends State<Home> {
     if (index != 1) {
       if ((ProductOneCubit.instance(context)).state is SearchResultFound1) {
         print(
-            'get out and product 1: ${(ProductOneCubit.instance(context)).tappedTripP1.name}');
+            'get out and product 1: ${(ProductOneCubit.tappedTripP1.name)}');
       }
 
       if ((ProductTwoCubit.instance(context)).state is SearchResultFoundTwo) {
         print(
-            'get out and product 2: ${(ProductTwoCubit.instance(context)).tappedTrip.name}');
+            'get out and product 2: ${(ProductTwoCubit.tappedTrip.name)}');
       }
-    }else{
+    }
+    else{
       ProductOneCubit.instance(context) .deleteChosenItem();
       ProductTwoCubit.instance(context) .deleteChosenItem();
 

@@ -22,7 +22,6 @@ import 'comparison_view.dart';
 
 class CompareSearch1 extends StatefulWidget {
   final Trip trip;
-
   // final int productNumber;
 
   CompareSearch1({
@@ -42,11 +41,117 @@ class _CompareSearch1State extends State<CompareSearch1> {
   // Trip trip;
   String scanResult;
 
+  Widget myWidget() {
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            //     Text(scanResult == null ? 'Scan a code!' : 'Scan Result : $scanResult'),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Type something'),
+                onChanged: (value) {
+                  keyword = value;
+                  setState(() {});
+                },
+              ),
+            ),
+            Container(
+              height: 800,
+              child: FutureBuilder<List<FooddataSQLJSON>>(
+                future: dbService.searchGFooddata(keyword),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(snapshot.data[index].foodname),
+                          subtitle: Text(snapshot.data[index].brand),
+                          // Text(snapshot.data[index].productid.toString()),
+                          // trailing: Text(snapshot.data[index].productid.toString()),
+                          onTap: () {
+                            Trip t= widget.trip;
+                            t.name = snapshot.data[index].foodname;
+                            t.id = snapshot.data[index].productid;
+                            // push the amount value to the summary page
 
+                            print(
+                                'product1 tapped: ${t.name} ${t.id}');
+                            // (ProductOneCubit.instance(context))
+                            //     .deleteChosenItem();
+                            (ProductOneCubit.instance(context))
+                                .searchedItemChoose(t);
+                          },
+                        );
+                      });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    Widget body;
     ProductOneCubit productOneCubit = ProductOneCubit.instance(context);
+    body = BlocConsumer<ProductOneCubit, ProductOneStates>(
+      buildWhen: (previous, current) {
+        if (current ==previous) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      listener: (context, state) {
+        if (state is ScanValidResultReturned1) {
+          print('SearchValidResultReturned');
+          print(productOneCubit.scanResult);
+
+          productOneCubit.searchOnDb();
+        } else if (state is SearchResultFound1) {
+          print('SearchResultFound');
+          print(productOneCubit.scanResult);
+
+          Navigator.of(context).pop();
+        } else if (state is SearchResultNotFound1) {
+          print('SearchResultNotFound');
+          print(productOneCubit.scanResult);
+
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('This Product is not found currently'),
+                  content: Text(
+                      'we work hard to include all the product in our database, please search for a similar product or send us an email'),
+                  actions: [
+                    RoundedButton(
+                      color: Colors.green,
+                      text: 'OK',
+                    )
+                  ],
+                );
+              });
+        } else {
+          print('___^----^___');
+        }
+      },
+      builder: (context, state) {
+        return myWidget();
+      },
+    );
+
 
     // print('Comparison page of Product: ${widget.productNumber}');
     return Scaffold(
@@ -59,69 +164,16 @@ class _CompareSearch1State extends State<CompareSearch1> {
               onPressed: productOneCubit.scanBarcode)
         ],
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              //     Text(scanResult == null ? 'Scan a code!' : 'Scan Result : $scanResult'),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Type something'),
-                  onChanged: (value) {
-                    keyword = value;
-                    setState(() {});
-                  },
-                ),
-              ),
-              Container(
-                height: 800,
-                child: FutureBuilder<List<FooddataSQLJSON>>(
-                  future: dbService.searchGFooddata(keyword),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData)
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    return ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(snapshot.data[index].foodname),
-                            subtitle: Text(snapshot.data[index].brand),
-                            // Text(snapshot.data[index].productid.toString()),
-                            // trailing: Text(snapshot.data[index].productid.toString()),
-                            onTap: () {
-                              Trip t = widget.trip;
-                              t.name = snapshot.data[index].foodname;
-                              t.id = snapshot.data[index].productid;
-                              // push the amount value to the summary page
-
-                              print('product1 tapped: ${t.name} ${t.id}');
-                              // (ProductOneCubit.instance(context))
-                              //     .deleteChosenItem();
-                              (ProductOneCubit.instance(context))
-                                  .searchedItemChoose(t);
-                            },
-                          );
-                        });
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: body,
     );
   }
 }
 
+
+
+
 class CompareSearch2 extends StatefulWidget {
   final Trip trip;
-
   // final int productNumber;
 
   CompareSearch2({
@@ -141,11 +193,115 @@ class _CompareSearch2State extends State<CompareSearch2> {
   // Trip trip;
   String scanResult;
 
+  Widget myWidget() {
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Type something'),
+                onChanged: (value) {
+                  keyword = value;
+                  setState(() {});
+                },
+              ),
+            ),
+            Container(
+              height: 800,
+              child: FutureBuilder<List<FooddataSQLJSON>>(
+                future: dbService.searchGFooddata(keyword),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(snapshot.data[index].foodname),
+                          subtitle: Text(snapshot.data[index].brand),
+                          // Text(snapshot.data[index].productid.toString()),
+                          // trailing: Text(snapshot.data[index].productid.toString()),
+                          onTap: () {
+                            Trip t= widget.trip;
+                            t.name = snapshot.data[index].foodname;
+                            t.id = snapshot.data[index].productid;
+                            // push the amount value to the summary page
+                            print(
+                                'product2 tapped: ${t.name} ${t.id}');
+                            // (ProductTwoCubit.instance(context))
+                            //     .deleteChosenItem();
+                            (ProductTwoCubit.instance(context))
+                                .searchedItemChoose(t);
 
+                          },
+                        );
+                      });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    Widget body;
     ProductTwoCubit productTwoCubit = ProductTwoCubit.instance(context);
+    body = BlocConsumer<ProductTwoCubit, ProductTwoStates>(
+      buildWhen: (previous, current) {
+        if (current ==previous) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      listener: (context, state) {
+        if (state is ScanValidResultReturned2) {
+          print('SearchValidResultReturned');
+          print(productTwoCubit.scanResult);
+
+          productTwoCubit.searchOnDb();
+        } else if (state is SearchResultFoundTwo) {
+          print('SearchResultFound');
+          print(productTwoCubit.scanResult);
+          Navigator.of(context).pop();
+        } else if (state is SearchResultNotFound2) {
+          print('SearchResultNotFound');
+          print(productTwoCubit.scanResult);
+
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('This Product is not found currently'),
+                  content: Text(
+                      'we work hard to include all the product in our database, please search for a similar product or send us an email'),
+                  actions: [
+                    RoundedButton(
+                      color: Colors.green,
+                      text: 'OK',
+                    )
+                  ],
+                );
+              });
+        } else {
+          print('___^----^___');
+        }
+      },
+      builder: (context, state) {
+        return myWidget();
+      },
+    );
+
 
     // print('Comparison page of Product: ${widget.productNumber}');
     return Scaffold(
@@ -158,60 +314,7 @@ class _CompareSearch2State extends State<CompareSearch2> {
               onPressed: productTwoCubit.scanBarcode)
         ],
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Type something'),
-                  onChanged: (value) {
-                    keyword = value;
-                    setState(() {});
-                  },
-                ),
-              ),
-              Container(
-                height: 800,
-                child: FutureBuilder<List<FooddataSQLJSON>>(
-                  future: dbService.searchGFooddata(keyword),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData)
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    return ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(snapshot.data[index].foodname),
-                            subtitle: Text(snapshot.data[index].brand),
-                            // Text(snapshot.data[index].productid.toString()),
-                            // trailing: Text(snapshot.data[index].productid.toString()),
-                            onTap: () {
-                              Trip t = widget.trip;
-                              t.name = snapshot.data[index].foodname;
-                              t.id = snapshot.data[index].productid;
-                              // push the amount value to the summary page
-                              print('product2 tapped: ${t.name} ${t.id}');
-                              // (ProductTwoCubit.instance(context))
-                              //     .deleteChosenItem();
-                              (ProductTwoCubit.instance(context))
-                                  .searchedItemChoose(t);
-                            },
-                          );
-                        });
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: body,
     );
   }
 }

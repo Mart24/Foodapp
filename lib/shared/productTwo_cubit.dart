@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Models/ingredients.dart';
-import 'package:food_app/shared/productOne_cubit.dart';
 
 part 'productTwo_states.dart';
 
@@ -17,7 +16,7 @@ class ProductTwoCubit extends Cubit<ProductTwoStates> {
       BlocProvider.of(context, listen: false);
 
   String scanResult='';
-  Trip tappedTrip;
+  static Trip tappedTrip;
 
   Future scanBarcode() async {
     String scanResult;
@@ -56,6 +55,7 @@ class ProductTwoCubit extends Cubit<ProductTwoStates> {
       print('searchDB');
       print(productDoc['productid']);
       Trip trip = Trip.fromSnapshot(productDoc);
+      tappedTrip= trip;
       emit(SearchResultFoundTwo());
     } else {
       emit(SearchResultNotFound2());

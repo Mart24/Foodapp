@@ -1,8 +1,10 @@
 part of 'productTwo_cubit.dart';
 
+@immutable
 abstract class ProductTwoStates {
   const ProductTwoStates();
 }
+
 
 class SearchStateInitial2 extends ProductTwoStates {}
 

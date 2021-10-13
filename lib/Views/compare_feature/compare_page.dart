@@ -74,7 +74,7 @@ class _ComparePageState extends State<ComparePage> {
     ProductTwoCubit productTwoCubit = ProductTwoCubit.instance(context);
     try {
       print(
-          'rebuild compare page: ${productOneCubit.tappedTripP1.name ?? ''}, ${productTwoCubit.tappedTrip.name ?? ''}');
+          'rebuild compare page: ${ProductOneCubit.tappedTripP1.name ?? ''}, ${ProductTwoCubit.tappedTrip.name ?? ''}');
     } catch (e) {
       print('first rebuild');
     }
@@ -141,46 +141,48 @@ class ProductTwo extends StatelessWidget {
             },
             key: ValueKey('p2'),
             bloc: productTwoCubit,
-            listener: (context, state) {
-              if (state is ScanValidResultReturned2) {
-                print('SearchValidResultReturned');
-                print(productTwoCubit.scanResult);
+            listener: (context, state){},
 
-                productTwoCubit.searchOnDb();
-              } else if (state is SearchResultFoundTwo) {
-                print('SearchResultFound');
-                print(productTwoCubit.scanResult);
-                Navigator.of(context).pop();
-              } else if (state is SearchResultNotFound2) {
-                print('SearchResultNotFound');
-                print(productTwoCubit.scanResult);
-
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('This Product is not found currently'),
-                        content: Text(
-                            'we work hard to include all the product in our database, please search for a similar product or send us an email'),
-                        actions: [
-                          RoundedButton(
-                            color: Colors.green,
-                            text: 'OK',
-                          )
-                        ],
-                      );
-                    });
-              } else {
-                print('___^----^___');
-              }
-            },
-            builder: (context, statep2) {
-              if (statep2 is SearchResultFoundTwo) {
-                print('product2: ${productTwoCubit.tappedTrip.name}');
+            // listener: (context, state) {
+            //   if (state is ScanValidResultReturned2) {
+            //     print('SearchValidResultReturned');
+            //     print(productTwoCubit.scanResult);
+            //
+            //     productTwoCubit.searchOnDb();
+            //   } else if (state is SearchResultFoundTwo) {
+            //     print('SearchResultFound');
+            //     print(productTwoCubit.scanResult);
+            //     Navigator.of(context).pop();
+            //   } else if (state is SearchResultNotFound2) {
+            //     print('SearchResultNotFound');
+            //     print(productTwoCubit.scanResult);
+            //
+            //     showDialog(
+            //         context: context,
+            //         builder: (context) {
+            //           return AlertDialog(
+            //             title: Text('This Product is not found currently'),
+            //             content: Text(
+            //                 'we work hard to include all the product in our database, please search for a similar product or send us an email'),
+            //             actions: [
+            //               RoundedButton(
+            //                 color: Colors.green,
+            //                 text: 'OK',
+            //               )
+            //             ],
+            //           );
+            //         });
+            //   } else {
+            //     print('___^----^___');
+            //   }
+            // },
+            builder: (context, state) {
+              if (state is SearchResultFoundTwo) {
+                print('product2: ${ProductTwoCubit.tappedTrip.name}');
 
                 return ComparisonView(
                   key: ValueKey('product2'),
-                  trip: productTwoCubit.tappedTrip,
+                  trip: ProductTwoCubit.tappedTrip,
                   productNumber: 2,
                   scrollController: scrollController,
                 );
@@ -239,46 +241,47 @@ class ProductOne extends StatelessWidget {
             },
             key: ValueKey('p1'),
             bloc: productOneCubit,
-            listener: (context, state) {
-              if (state is ScanValidResultReturned1) {
-                print('SearchValidResultReturned');
-                print(productOneCubit.scanResult);
-
-                productOneCubit.searchOnDb();
-              } else if (state is SearchResultFound1) {
-                print('SearchResultFound');
-                print(productOneCubit.scanResult);
-
-                Navigator.of(context).pop();
-              } else if (state is SearchResultNotFound1) {
-                print('SearchResultNotFound');
-                print(productOneCubit.scanResult);
-
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('This Product is not found currently'),
-                        content: Text(
-                            'we work hard to include all the product in our database, please search for a similar product or send us an email'),
-                        actions: [
-                          RoundedButton(
-                            color: Colors.green,
-                            text: 'OK',
-                          )
-                        ],
-                      );
-                    });
-              } else {
-                print('___^----^___');
-              }
-            },
+            listener: (context, state){},
+            // listener: (context, state) {
+            //   if (state is ScanValidResultReturned1) {
+            //     print('SearchValidResultReturned');
+            //     print(productOneCubit.scanResult);
+            //
+            //     productOneCubit.searchOnDb();
+            //   } else if (state is SearchResultFound1) {
+            //     print('SearchResultFound');
+            //     print(productOneCubit.scanResult);
+            //
+            //     Navigator.of(context).pop();
+            //   } else if (state is SearchResultNotFound1) {
+            //     print('SearchResultNotFound');
+            //     print(productOneCubit.scanResult);
+            //
+            //     showDialog(
+            //         context: context,
+            //         builder: (context) {
+            //           return AlertDialog(
+            //             title: Text('This Product is not found currently'),
+            //             content: Text(
+            //                 'we work hard to include all the product in our database, please search for a similar product or send us an email'),
+            //             actions: [
+            //               RoundedButton(
+            //                 color: Colors.green,
+            //                 text: 'OK',
+            //               )
+            //             ],
+            //           );
+            //         });
+            //   } else {
+            //     print('___^----^___');
+            //   }
+            // },
             builder: (context, state) {
               if (state is SearchResultFound1) {
-                print('product1: ${productOneCubit.tappedTripP1.name}');
+                print('product1: ${ProductOneCubit.tappedTripP1.name}');
                 return ComparisonView(
                   key: ValueKey('product1'),
-                  trip: productOneCubit.tappedTripP1,
+                  trip: ProductOneCubit.tappedTripP1,
                   productNumber: 1,
                   scrollController: scrollController,
                 );
