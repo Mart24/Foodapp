@@ -4,7 +4,7 @@ abstract class ProductOneStates {
   const ProductOneStates();
 }
 
-class SearchStateInitial extends ProductOneStates {}
+class SearchStateInitial1 extends ProductOneStates {}
 
 class ScanValidResultReturned1 extends ProductOneStates {
   final String scanResult;
@@ -17,9 +17,11 @@ class SearchCancelled1 extends ProductOneStates {}
 class SearchPlatformError1 extends ProductOneStates {}
 
 class SearchResultFound1 extends ProductOneStates {
-  final Trip trip;
+  // final Trip trip;
 
-  SearchResultFound1({@required this.trip});
+  SearchResultFound1(
+      // {@required this.trip}
+      );
 }
 
 class SearchResultNotFound1 extends ProductOneStates {}

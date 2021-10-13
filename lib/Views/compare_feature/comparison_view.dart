@@ -20,11 +20,13 @@ import 'comparison_search_page.dart';
 class ComparisonView extends StatefulWidget {
   final Trip trip;
   final int productNumber;
+  final ScrollController scrollController;
 
   ComparisonView({
     Key key,
     @required this.trip,
     @required this.productNumber,
+    @required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -54,7 +56,7 @@ class _ComparisonViewState extends State<ComparisonView> {
 
   _setBudgetTotal() {
     setState(() {
-      _budgetTotal = int.parse(_budgetController.text);
+      _budgetTotal = int.tryParse(_budgetController.text);
     });
   }
 
@@ -64,6 +66,7 @@ class _ComparisonViewState extends State<ComparisonView> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kPrimaryColor,
         title: Text(
           '${widget.trip.name}',
@@ -73,6 +76,8 @@ class _ComparisonViewState extends State<ComparisonView> {
         ),
         bottom: AppBar(
           toolbarHeight: 33,
+          automaticallyImplyLeading: false,
+
           backgroundColor: kPrimaryColor,
           actions: [
             IconButton(
@@ -111,20 +116,28 @@ class _ComparisonViewState extends State<ComparisonView> {
                       });
                 },
                 icon: Icon(Icons.delete_outline_outlined)),
-            IconButton(
-              iconSize: 20,
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CompareSearch(
-                        trip: widget.trip,
-                        productNumber: widget.productNumber,
-                      ),
-                    ));
-              },
-            ),
+            // IconButton(
+            //   iconSize: 20,
+            //   icon: Icon(Icons.edit),
+            //   onPressed: () {
+            //     // if (widget.productNumber == 1) {
+            //     //   (ProductOneCubit.instance(context)).deleteChosenItem();
+            //     // }
+            //     //
+            //     // if (widget.productNumber == 2) {
+            //     //   (ProductTwoCubit.instance(context)).deleteChosenItem();
+            //     // }
+            //
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => CompareSearch(
+            //             trip: widget.trip,
+            //             productNumber: widget.productNumber,
+            //           ),
+            //         ));
+            //   },
+            // ),
           ],
         ),
       ),
@@ -240,6 +253,8 @@ class _ComparisonViewState extends State<ComparisonView> {
               //     0.01.toDouble());
 
               return SingleChildScrollView(
+                controller: widget.scrollController,
+                physics: NeverScrollableScrollPhysics(),
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   child: Column(children: <Widget>[
@@ -247,7 +262,9 @@ class _ComparisonViewState extends State<ComparisonView> {
                       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: Container(
                           width: 75.0,
-                          child: Inputbar(budgetController: _budgetController)),
+                          child: Inputbar(
+                              budgetController: _budgetController,
+                              num: widget.productNumber)),
                     ),
                     // Center(
                     //   child: Padding(
@@ -307,13 +324,15 @@ class _ComparisonViewState extends State<ComparisonView> {
 
                     Expanded(
                       child: SingleChildScrollView(
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: widget.scrollController,
                         child: Container(
                           width: double.infinity,
                           padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Table(
                             columnWidths: {
-                              0: FractionColumnWidth(0.50),
-                              1: FractionColumnWidth(0.5),
+                              0: FractionColumnWidth(0.60),
+                              1: FractionColumnWidth(0.40),
                             },
                             textBaseline: TextBaseline.alphabetic,
                             defaultVerticalAlignment:
@@ -460,7 +479,7 @@ class _ComparisonViewState extends State<ComparisonView> {
                                 ),
                                 Text(
                                   "$plantbased",
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 14),
                                 ),
                               ]),
                             ],
@@ -625,14 +644,16 @@ class Inputbar extends StatelessWidget {
   const Inputbar({
     Key key,
     @required TextEditingController budgetController,
+    @required this.num,
   })  : _budgetController = budgetController,
         super(key: key);
-
+  final int num;
   final TextEditingController _budgetController;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      key: ValueKey('TextField' + num.toString()),
       controller: _budgetController,
       maxLines: 1,
       maxLength: 4,
@@ -642,7 +663,7 @@ class Inputbar extends StatelessWidget {
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      autofocus: true,
+      // autofocus: true,
     );
   }
 }

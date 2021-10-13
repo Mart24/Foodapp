@@ -10,12 +10,13 @@ import 'package:food_app/Models/ingredients.dart';
 part 'productOne_states.dart';
 
 class ProductOneCubit extends Cubit<ProductOneStates> {
-  ProductOneCubit() : super(SearchStateInitial());
+  ProductOneCubit() : super(SearchStateInitial1());
 
   static ProductOneCubit instance(BuildContext context) =>
       BlocProvider.of(context, listen: false);
 
-  String scanResult;
+  String scanResult='';
+  Trip tappedTripP1;
 
   Future scanBarcode() async {
     String scanResult;
@@ -54,16 +55,22 @@ class ProductOneCubit extends Cubit<ProductOneStates> {
       print('searchDB');
       print(productDoc['productid']);
       Trip trip = Trip.fromSnapshot(productDoc);
-      emit(SearchResultFound1(trip: trip));
+      tappedTripP1= trip;
+      emit(SearchResultFound1());
     } else {
       emit(SearchResultNotFound1());
     }
   }
 
   searchedItemChoose(Trip trip) {
-    emit(SearchResultFound1(trip: trip));
+    tappedTripP1 = trip;
+    print('product one choosed to be : ${trip.name}');
+    // emit(ScanValidResultReturned1(scanResult: (trip.ean).toString()));
+
+    emit(SearchResultFound1());
   }
   deleteChosenItem() {
+    tappedTripP1 =  null;
     emit(SearchCancelled1());
   }
 }

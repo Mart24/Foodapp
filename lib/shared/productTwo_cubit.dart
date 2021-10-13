@@ -13,9 +13,11 @@ part 'productTwo_states.dart';
 class ProductTwoCubit extends Cubit<ProductTwoStates> {
   ProductTwoCubit() : super(SearchStateInitial2());
 
-  static ProductTwoCubit instance(BuildContext context) => BlocProvider.of(context, listen: false);
+  static ProductTwoCubit instance(BuildContext context) =>
+      BlocProvider.of(context, listen: false);
 
-  String scanResult;
+  String scanResult='';
+  Trip tappedTrip;
 
   Future scanBarcode() async {
     String scanResult;
@@ -42,27 +44,34 @@ class ProductTwoCubit extends Cubit<ProductTwoStates> {
   }
 
   Future searchOnDb() async {
-    QuerySnapshot<Map<String, dynamic>> searchResult = await FirebaseFirestore.instance
+    QuerySnapshot<Map<String, dynamic>> searchResult = await FirebaseFirestore
+        .instance
         .collection('fdd')
         .where('ean', isEqualTo: num.tryParse(scanResult))
         .get();
-    List<QueryDocumentSnapshot<Map<String,dynamic>>> productDocs = searchResult.docs;
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> productDocs =
+        searchResult.docs;
     if (productDocs.length > 0) {
-      QueryDocumentSnapshot<Map<String,dynamic>> productDoc = productDocs[0];
+      QueryDocumentSnapshot<Map<String, dynamic>> productDoc = productDocs[0];
       print('searchDB');
       print(productDoc['productid']);
       Trip trip = Trip.fromSnapshot(productDoc);
-      emit(SearchResultFound2(trip: trip));
+      emit(SearchResultFoundTwo());
     } else {
       emit(SearchResultNotFound2());
     }
   }
+
   searchedItemChoose(Trip trip) {
-    emit(SearchResultFound2(trip: trip));
+    tappedTrip = trip;
+    print('product Two choosed to be : ${trip.name}');
+    // emit(ScanValidResultReturned2(scanResult: (trip.ean).toString()));
+
+    emit(SearchResultFoundTwo());
   }
 
   deleteChosenItem() {
+    tappedTrip = null;
     emit(SearchCancelled2());
   }
-
 }

@@ -16,10 +16,12 @@ class SearchCancelled2 extends ProductTwoStates {}
 
 class SearchPlatformError2 extends ProductTwoStates {}
 
-class SearchResultFound2 extends ProductTwoStates {
-  final Trip trip;
+class SearchResultFoundTwo extends ProductTwoStates {
+  // final Trip trip;
 
-  SearchResultFound2({@required this.trip});
+  SearchResultFoundTwo(
+      // {@required this.trip}
+      );
 }
 
 class SearchResultNotFound2 extends ProductTwoStates {}

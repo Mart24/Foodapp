@@ -18,15 +18,56 @@ import 'package:food_app/Views/sign_up_view.dart';
 import 'package:food_app/Views/introduction_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Custom [BlocObserver] which observes all bloc and cubit instances.
+class MyBlocObserver extends BlocObserver {
+  @override
+  void onCreate(BlocBase bloc) {
+    super.onCreate(bloc);
+    print('onCreate -- ${bloc.runtimeType}');
+  }
+
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print('onEvent -- ${bloc.runtimeType}, $event');
+  }
+
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print('onChange -- ${bloc.runtimeType}, $change');
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print('onTransition -- ${bloc.runtimeType}, $transition');
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    print('onError -- ${bloc.runtimeType}, $error');
+    super.onError(bloc, error, stackTrace);
+  }
+
+  @override
+  void onClose(BlocBase bloc) {
+    super.onClose(bloc);
+    print('onClose -- ${bloc.runtimeType}');
+  }
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark, statusBarColor: Colors.white));
+  Bloc.observer = MyBlocObserver();
 
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of the application.
@@ -50,11 +91,12 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => SearchCubit(),
           ),
           BlocProvider(
-            create: (BuildContext context) => ProductOneCubit(),
+            create: (BuildContext context) => ProductTwoCubit(),
           ),
           BlocProvider(
-            create: (BuildContext context) => ProductTwoCubit(),
-          )
+            create: (BuildContext context) => ProductOneCubit(),
+          ),
+
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
