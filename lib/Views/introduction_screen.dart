@@ -71,7 +71,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               _onIntroEnd(context);
             },
             child: const Text(
-              'Lets start!',
+              'Start!',
               style: TextStyle(color: Colors.white),
             ),
             color: colordarkgreen,

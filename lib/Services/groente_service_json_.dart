@@ -14,9 +14,9 @@ class DatabaseGService {
   Database _db;
 
   initDatabase() async {
-    _db = await openDatabase('assets/groente.db');
+    _db = await openDatabase('assets/groentevlees.db');
     var databasePath = await getDatabasesPath();
-    var path = join(databasePath, 'groente.db');
+    var path = join(databasePath, 'groentevlees.db');
 
     //Check if DB exists
     var exists = await databaseExists(path);
@@ -30,7 +30,7 @@ class DatabaseGService {
       } catch (_) {}
 
       //Copy from assets
-      ByteData data = await rootBundle.load(join("assets", "groente.db"));
+      ByteData data = await rootBundle.load(join("assets", "groentevlees.db"));
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
