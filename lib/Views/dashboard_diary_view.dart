@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
         title: DateNavigatorRow(cubit: cubit),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent.withOpacity(0.03),
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: CustomScrollView(

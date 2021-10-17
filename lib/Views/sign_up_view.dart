@@ -3,6 +3,7 @@ import 'package:food_app/Services/auth_service.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:auth_buttons/auth_buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // TODO move this to tone location
 final primaryColor = const Color(0xFF7AA573);
@@ -31,7 +32,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   void switchFormState(String state) {
     formKey.currentState.reset();
-    if (state == "Registreer") {
+    if (state == AppLocalizations.of(context).register) {
       setState(() {
         authFormType = AuthFormType.signUp;
       });
@@ -64,8 +65,7 @@ class _SignUpViewState extends State<SignUpView> {
         } else if (authFormType == AuthFormType.reset) {
           await auth.sendPasswordResetEmail(_email);
           print("Password reset email sent");
-          _warning =
-              "Een herstel mail voor je wachtwoord is gestuurd naar $_email";
+          _warning = "An email has been sent to $_email";
           setState(() {
             authFormType = AuthFormType.signIn;
           });
@@ -160,11 +160,11 @@ class _SignUpViewState extends State<SignUpView> {
   AutoSizeText buildHeaderText() {
     String _headerText;
     if (authFormType == AuthFormType.signUp) {
-      _headerText = "Start jouw eetmissie";
+      _headerText = AppLocalizations.of(context).starttext;
     } else if (authFormType == AuthFormType.reset) {
-      _headerText = "Reset Wachtwoord";
+      _headerText = AppLocalizations.of(context).resetpassword;
     } else {
-      _headerText = "Welkom terug!";
+      _headerText = AppLocalizations.of(context).welcomeback;
     }
     return AutoSizeText(
       _headerText,
@@ -200,7 +200,8 @@ class _SignUpViewState extends State<SignUpView> {
         TextFormField(
           validator: NameValidator.validate,
           style: TextStyle(fontSize: 22.0),
-          decoration: buildSignUpInputDecoration("Naam"),
+          decoration:
+              buildSignUpInputDecoration(AppLocalizations.of(context).name),
           onSaved: (value) => _name = value,
         ),
       );
@@ -222,7 +223,8 @@ class _SignUpViewState extends State<SignUpView> {
       TextFormField(
         validator: PasswordValidator.validate,
         style: TextStyle(fontSize: 22.0),
-        decoration: buildSignUpInputDecoration("Wachtwoord"),
+        decoration:
+            buildSignUpInputDecoration(AppLocalizations.of(context).password),
         obscureText: true,
         onSaved: (value) => _password = value,
       ),
@@ -251,19 +253,19 @@ class _SignUpViewState extends State<SignUpView> {
     bool _showSocial = true;
 
     if (authFormType == AuthFormType.signIn) {
-      _switchButtonText = "Nog geen account? Registeer hier";
-      _newFormState = "Registreer";
+      _switchButtonText = AppLocalizations.of(context).noaccountyet;
+      _newFormState = AppLocalizations.of(context).register;
       _submitButtonText = "Log in";
       _showForgotPassword = true;
     } else if (authFormType == AuthFormType.reset) {
-      _switchButtonText = "Terug naar log in";
+      _switchButtonText = AppLocalizations.of(context).backtologin;
       _newFormState = "Log in";
-      _submitButtonText = "Ask email";
+      _submitButtonText = AppLocalizations.of(context).askemail;
       _showSocial = false;
     } else {
-      _switchButtonText = "Al een account? Log in";
+      _switchButtonText = AppLocalizations.of(context).alreadyaccount;
       _newFormState = "Log in";
-      _submitButtonText = "Registreer";
+      _submitButtonText = AppLocalizations.of(context).register;
     }
 
     return [
@@ -302,7 +304,7 @@ class _SignUpViewState extends State<SignUpView> {
     return Visibility(
       child: FlatButton(
         child: Text(
-          "Wachtwoord vergeten?",
+          AppLocalizations.of(context).forgotpassword,
           //   style: TextStyle(color: Colors.white),
         ),
         onPressed: () {

@@ -26,6 +26,51 @@
     "introtextthird": "With Eatmission, sustainable choices have never been easier.",
     "@introtexteone": {
       "description": "The third text in the introduction screen"
+     },
+    "password": "Password",
+    "@password": {
+      "description": "translation of the word password"
+    },
+    "name": "Name",
+    "@name": {
+      "description": "translation of the word name"
+    },
+    "starttext": "Start your eatmission",
+    "@starttext": {
+      "description": "translation of the first text"
+        },
+    "register": "Register",
+    "@register": {
+      "description": "translation of the word register"
+     },
+    "alreadyaccount": "Already an account? Sign in",
+    "@alreadyaccount": {
+      "description": "already account text"
+    },
+    "welcomeback": "Welcome back!",
+    "@welcomeback": {
+      "description": "welcome back text"
+    },
+    "forgotpassword": "Forgot Password?",
+    "@forgotpassword": {
+      "description": "forgot password text"
+    },
+    "noaccountyet": "No account yet? Please register",
+    "@noaccountyet": {
+      "description": "no account yet text"
+    },
+    "askemail": "Ask email",
+    "@noaccountyet": {
+      "description": "ask email text"
+    },
+    "backtologin": "Back to sign in page",
+    "@noaccountyet": {
+      "description": "back to sign in text"
+     },
+    "resetpassword": "Reset Password",
+    "@resetpassword": {
+      "description": "reset password text"
     }
+
     
 }

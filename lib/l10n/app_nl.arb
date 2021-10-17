@@ -5,7 +5,18 @@
    "introtexttitletwo": "Bepaalde production hebben een hogere impact op het klimaat",
    "introtexttwo": "Een groot deel van de CO² uitstoot komt van dierlijke en zuivel producten",
    "introtexttitlethird": "Ontwikkel een gezond en duurzaam dieet",
-   "introtextthird": "Met Eetmissie worden duurzame keuzes een stuk makkkelijker"
-  
+   "introtextthird": "Met Eetmissie worden duurzame keuzes een stuk makkkelijker",
+   "password": "Wachtwoord",
+   "name": "Naam",
+   "register": "Registreer",
+   "starttext": "Begin jouw eetmissie",
+   "alreadyaccount": "Al een account? Log in",
+   "welcome": "Welkom Terug",
+   "forgotpassword": "Wachtwoord vergeten?",
+   "noaccountyet": "Nog geen account? Regisreer hier",
+   "askemail": "Stuur email",
+   "backtologin": "Terug naar log in",
+   "resetpassword": "Verander Wachtwoord"
+
     }
     

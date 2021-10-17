@@ -130,7 +130,7 @@ class ProductTwo extends StatelessWidget {
       key: ValueKey('e2'),
       child: Container(
         height: double.infinity,
-        color: Colors.grey[300],
+        color: Colors.grey[100],
         child: BlocConsumer<ProductTwoCubit, ProductTwoStates>(
             buildWhen: (previous, current) {
               if (current == previous) {
@@ -141,7 +141,7 @@ class ProductTwo extends StatelessWidget {
             },
             key: ValueKey('p2'),
             bloc: productTwoCubit,
-            listener: (context, state){},
+            listener: (context, state) {},
 
             // listener: (context, state) {
             //   if (state is ScanValidResultReturned2) {
@@ -229,7 +229,7 @@ class ProductOne extends StatelessWidget {
     return Expanded(
       key: ValueKey('e1'),
       child: Container(
-        color: Colors.grey[300],
+        color: Colors.grey[100],
         height: double.infinity,
         child: BlocConsumer<ProductOneCubit, ProductOneStates>(
             buildWhen: (previous, current) {
@@ -241,7 +241,7 @@ class ProductOne extends StatelessWidget {
             },
             key: ValueKey('p1'),
             bloc: productOneCubit,
-            listener: (context, state){},
+            listener: (context, state) {},
             // listener: (context, state) {
             //   if (state is ScanValidResultReturned1) {
             //     print('SearchValidResultReturned');

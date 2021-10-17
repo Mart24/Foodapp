@@ -77,7 +77,6 @@ class _ComparisonViewState extends State<ComparisonView> {
         bottom: AppBar(
           toolbarHeight: 33,
           automaticallyImplyLeading: false,
-
           backgroundColor: kPrimaryColor,
           actions: [
             IconButton(

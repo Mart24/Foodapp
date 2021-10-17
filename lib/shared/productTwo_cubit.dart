@@ -15,7 +15,7 @@ class ProductTwoCubit extends Cubit<ProductTwoStates> {
   static ProductTwoCubit instance(BuildContext context) =>
       BlocProvider.of(context, listen: false);
 
-  String scanResult='';
+  String scanResult = '';
   static Trip tappedTrip;
 
   Future scanBarcode() async {
@@ -55,7 +55,7 @@ class ProductTwoCubit extends Cubit<ProductTwoStates> {
       print('searchDB');
       print(productDoc['productid']);
       Trip trip = Trip.fromSnapshot(productDoc);
-      tappedTrip= trip;
+      tappedTrip = trip;
       emit(SearchResultFoundTwo());
     } else {
       emit(SearchResultNotFound2());
