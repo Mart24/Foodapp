@@ -8,6 +8,7 @@ import 'package:food_app/Views/new_food_registration.dart/summary.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Step 2: The user chooses the amount he or she have eaten
 // The fooddata changes due to the budgetcontroller
@@ -86,7 +87,7 @@ class _FoodDateState extends State<FoodDate> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: Text('Choose amount'),
+        title: Text(AppLocalizations.of(context).chooseamountstext),
         actions: [
           TextButton(
             style: TextButton.styleFrom(
@@ -96,7 +97,7 @@ class _FoodDateState extends State<FoodDate> {
               ),
             ),
             onPressed: () {},
-            child: Text('Melden'),
+            child: Text(AppLocalizations.of(context).reporttext),
           ),
         ],
       ),
@@ -215,7 +216,7 @@ class _FoodDateState extends State<FoodDate> {
                 child: Column(children: <Widget>[
                   FittedBox(
                     child: Text(
-                      "Product: ${foodDocument['name']}",
+                      "${foodDocument['name']}",
                       style: new TextStyle(fontSize: 24.0),
                     ),
                   ),
@@ -260,7 +261,7 @@ class _FoodDateState extends State<FoodDate> {
                           }).toList(),
                         ),
                         RaisedButton(
-                          child: Text("Save"),
+                          child: Text(AppLocalizations.of(context).savetext),
                           onPressed: () {
                             //  widget.trip.startDate = _startDate;
                             // widget.trip.endDate = _endDate;
@@ -309,7 +310,7 @@ class _FoodDateState extends State<FoodDate> {
 
                   TextButton(
                     child: Text(
-                      'Macronutriënten',
+                      AppLocalizations.of(context).macronutrients,
                       style: TextStyle(
                         color: kPrimaryColor,
                         fontSize: 20,
@@ -337,7 +338,7 @@ class _FoodDateState extends State<FoodDate> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Text(
-                                  'Energie',
+                                  AppLocalizations.of(context).energy,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -369,7 +370,7 @@ class _FoodDateState extends State<FoodDate> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Text(
-                                  'Koolhydraten',
+                                  AppLocalizations.of(context).carbsfulltext,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -385,7 +386,7 @@ class _FoodDateState extends State<FoodDate> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Text(
-                                  'Eiwitten',
+                                  AppLocalizations.of(context).proteinfulltext,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -401,7 +402,7 @@ class _FoodDateState extends State<FoodDate> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Text(
-                                  'Vetten',
+                                  AppLocalizations.of(context).fatstext,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -417,7 +418,7 @@ class _FoodDateState extends State<FoodDate> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Text(
-                                  'Verzadigd vet',
+                                  AppLocalizations.of(context).saturatedfats,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -433,7 +434,7 @@ class _FoodDateState extends State<FoodDate> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Text(
-                                  'Suikers',
+                                  AppLocalizations.of(context).sugartext,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -449,7 +450,7 @@ class _FoodDateState extends State<FoodDate> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Text(
-                                  'Vezels',
+                                  AppLocalizations.of(context).fiberstext,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -650,7 +651,7 @@ class Inputbar extends StatelessWidget {
       maxLength: 4,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.linear_scale),
-        helperText: "How many grams?",
+        helperText: AppLocalizations.of(context).howmanygramstext,
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],

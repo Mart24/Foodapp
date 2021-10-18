@@ -10,6 +10,7 @@ import 'package:food_app/Services/groente_service_json_.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:food_app/Widgets/rounded_button.dart';
 import 'package:food_app/shared/search_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Step 1: his is the class for a new Food intake by the user
 // The data is clicked on then sended to food_amount.dart and then send to summary.dart
@@ -37,7 +38,7 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search your product'),
+        title: Text(AppLocalizations.of(context).searchyourproductstext),
         backgroundColor: kPrimaryColor,
         actions: [
           IconButton(
@@ -97,7 +98,8 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
                       autofocus: true,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Type something'),
+                          labelText:
+                              AppLocalizations.of(context).typesomething),
                       onChanged: (value) {
                         keyword = value;
                         setState(() {});

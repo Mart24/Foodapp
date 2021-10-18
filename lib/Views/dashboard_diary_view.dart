@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -203,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                   // if (snapshot.hasData || snapshot.connectionState == ConnectionState.active) {
                   List<Widget> breakfastList = [
                     CategoryTitle(
-                      title: 'Breakfast',
+                      title: AppLocalizations.of(context).breakfast,
                       kcalSum: cubit.breakfastKcalSum,
                       co2Sum: cubit.breakfastsumco2Sum,
                     ),
@@ -247,7 +248,7 @@ class _HomePageState extends State<HomePage> {
 
                   List<Widget> othersList = [
                     CategoryTitle(
-                      title: 'Others',
+                      title: AppLocalizations.of(context).otherstext,
                       kcalSum: cubit.othersKcalSum,
                       co2Sum: cubit.otherssumco2Sum,
                     ),
@@ -486,11 +487,13 @@ class CaloriesIndecator extends StatelessWidget {
                       style:
                           GoogleFonts.roboto(fontSize: 20, color: Colors.black),
                       children: <TextSpan>[
-                    TextSpan(text: 'Eaten '),
+                    TextSpan(text: AppLocalizations.of(context).eatentext),
                     TextSpan(
                       text: '${cubit.kCalSum.toStringAsFixed(0)}',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: kPrimaryColor),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor),
                     ),
                     TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
                   ])),
@@ -634,9 +637,21 @@ class CarbsProtienFatRow extends StatelessWidget {
                     color: kPrimaryColor,
                     size: 10,
                   ),
-                  Text(
-                    ' Carbs ${cubit.carbs.toStringAsFixed(0)}g',
-                  ),
+                  RichText(
+                      text: TextSpan(
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          children: <TextSpan>[
+                        TextSpan(text: AppLocalizations.of(context).carbstext),
+                        TextSpan(
+                          text: '${cubit.carbs.toStringAsFixed(0)}',
+                          // style: TextStyle(
+                          //     fontWeight: FontWeight.bold, color: kPrimaryColor),
+                        ),
+                        TextSpan(text: 'g', style: TextStyle(fontSize: 14)),
+                      ])),
+                  // Text(
+                  //   ' Carbs ${cubit.carbs.toStringAsFixed(0)}g',
+                  // ),
                 ],
               ),
             ],
@@ -656,7 +671,22 @@ class CarbsProtienFatRow extends StatelessWidget {
                     color: kPrimaryColor,
                     size: 10,
                   ),
-                  Text(' Proteins ${cubit.protein.toStringAsFixed(0)}g'),
+
+                  RichText(
+                      text: TextSpan(
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          children: <TextSpan>[
+                        TextSpan(
+                            text: AppLocalizations.of(context).proteintext),
+                        TextSpan(
+                          text: '${cubit.protein.toStringAsFixed(0)}',
+                          // style: TextStyle(
+                          //     fontWeight: FontWeight.bold, color: kPrimaryColor),
+                        ),
+                        TextSpan(text: 'g', style: TextStyle(fontSize: 14)),
+                      ])),
+
+                  //  Text(' Proteins ${cubit.protein.toStringAsFixed(0)}g'),
                 ],
               ),
             ],
@@ -676,7 +706,20 @@ class CarbsProtienFatRow extends StatelessWidget {
                     color: kPrimaryColor,
                     size: 10,
                   ),
-                  Text(' Fats ${cubit.fats.toStringAsFixed(0)}g'),
+
+                  RichText(
+                      text: TextSpan(
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          children: <TextSpan>[
+                        TextSpan(text: AppLocalizations.of(context).fatstext),
+                        TextSpan(
+                          text: '${cubit.fats.toStringAsFixed(0)}',
+                          // style: TextStyle(
+                          //     fontWeight: FontWeight.bold, color: kPrimaryColor),
+                        ),
+                        TextSpan(text: 'g', style: TextStyle(fontSize: 14)),
+                      ])),
+                  //   Text(' Fats ${cubit.fats.toStringAsFixed(0)}g'),
                 ],
               ),
             ],

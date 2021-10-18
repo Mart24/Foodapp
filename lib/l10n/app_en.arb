@@ -70,7 +70,38 @@
     "resetpassword": "Reset Password",
     "@resetpassword": {
       "description": "reset password text"
-    }
+    },
+    "eatentext": "Eaten",
+    "carbstext": "Carbs",
+    "proteintext": "Proteins",
+    "fatstext": "Fats",
+    "breakfast": "Breakfast",
+    "otherstext": "Others",
+    "diarytext": "Diary",
+    "comparetext": "Compare",
+    "intaketext": "Intake",
+    "goalstext": "Goals",
+    "profiletext": "Profile",
+    "searchyourproductstext": "Search your product",
+    "typesomething": "Type something",
+    "chooseamountstext": "Choose amount",
+    "reporttext": "Report",
+    "howmanygramstext": "How many grams?",
+
+    "macronutrients": "Macronutrients",
+    "energy": "Energy",
+    "carbsfulltext": "Carbohydrates",
+    "proteinfulltext": "Proteins",
+    "saturatedfats": "Saturated Fats",
+    "sugartext": "Sugars",
+    "fiberstext": "Fibers",
+    "savetext": "Save"
+   
+
+
+
+
+    
 
     
 }

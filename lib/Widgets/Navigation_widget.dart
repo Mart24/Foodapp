@@ -10,6 +10,7 @@ import 'package:food_app/shared/productTwo_cubit.dart';
 import '../Views/new_food_registration.dart/food_search.dart';
 import '../Views/profile/profile_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const colordarkgreen = const Color(0xFF7AA573);
 
@@ -142,15 +143,21 @@ class _HomeState extends State<Home> {
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.book), label: "Diary"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.book),
+                label: AppLocalizations.of(context).diarytext),
             BottomNavigationBarItem(
                 icon: FaIcon(FontAwesomeIcons.balanceScaleRight),
-                label: 'Compare'),
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: "Intake"),
+                label: AppLocalizations.of(context).comparetext),
             BottomNavigationBarItem(
-                icon: Icon(Icons.leaderboard), label: "Goals"),
+                icon: Icon(Icons.add),
+                label: AppLocalizations.of(context).intaketext),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person_pin), label: "Profile"),
+                icon: Icon(Icons.leaderboard),
+                label: AppLocalizations.of(context).goalstext),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_pin),
+                label: AppLocalizations.of(context).profiletext),
             // BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "List"),
           ]),
     );
@@ -170,21 +177,16 @@ class _HomeState extends State<Home> {
     }
     if (index != 1) {
       if ((ProductOneCubit.instance(context)).state is SearchResultFound1) {
-        print(
-            'get out and product 1: ${(ProductOneCubit.tappedTripP1.name)}');
+        print('get out and product 1: ${(ProductOneCubit.tappedTripP1.name)}');
       }
 
       if ((ProductTwoCubit.instance(context)).state is SearchResultFoundTwo) {
-        print(
-            'get out and product 2: ${(ProductTwoCubit.tappedTrip.name)}');
+        print('get out and product 2: ${(ProductTwoCubit.tappedTrip.name)}');
       }
+    } else {
+      ProductOneCubit.instance(context).deleteChosenItem();
+      ProductTwoCubit.instance(context).deleteChosenItem();
     }
-    else{
-      ProductOneCubit.instance(context) .deleteChosenItem();
-      ProductTwoCubit.instance(context) .deleteChosenItem();
-
-    }
-
 
     setState(() {
       _currentIndex = index;
