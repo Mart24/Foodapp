@@ -199,7 +199,6 @@ class ProductTwo extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => CompareSearch2(
                                   key: ValueKey('CompareSearch2'),
-                                  trip: newTrip,
                                   // productNumber: 2,
                                 ),
                               ));
@@ -298,7 +297,6 @@ class ProductOne extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => CompareSearch1(
                                   key: ValueKey('CompareSearch1'),
-                                  trip: newTrip,
                                   // productNumber: 1,
                                 ),
                               ));

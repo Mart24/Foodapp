@@ -21,12 +21,10 @@ import 'comparison_view.dart';
 // Trip can be seen as Food.
 
 class CompareSearch1 extends StatefulWidget {
-  final Trip trip;
   // final int productNumber;
 
   CompareSearch1({
     Key key,
-    @required this.trip,
     // @required this.productNumber,
   }) : super(key: key);
 
@@ -78,7 +76,7 @@ class _CompareSearch1State extends State<CompareSearch1> {
                           // Text(snapshot.data[index].productid.toString()),
                           // trailing: Text(snapshot.data[index].productid.toString()),
                           onTap: () {
-                            Trip t= widget.trip;
+                            Trip t= Trip.empty();
                             t.name = snapshot.data[index].foodname;
                             t.id = snapshot.data[index].productid;
                             // push the amount value to the summary page
@@ -173,12 +171,10 @@ class _CompareSearch1State extends State<CompareSearch1> {
 
 
 class CompareSearch2 extends StatefulWidget {
-  final Trip trip;
   // final int productNumber;
 
   CompareSearch2({
     Key key,
-    @required this.trip,
     // @required this.productNumber,
   }) : super(key: key);
 
@@ -229,7 +225,7 @@ class _CompareSearch2State extends State<CompareSearch2> {
                           // Text(snapshot.data[index].productid.toString()),
                           // trailing: Text(snapshot.data[index].productid.toString()),
                           onTap: () {
-                            Trip t= widget.trip;
+                            Trip t= Trip.empty();
                             t.name = snapshot.data[index].foodname;
                             t.id = snapshot.data[index].productid;
                             // push the amount value to the summary page

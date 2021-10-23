@@ -115,28 +115,36 @@ class _ComparisonViewState extends State<ComparisonView> {
                       });
                 },
                 icon: Icon(Icons.delete_outline_outlined)),
-            // IconButton(
-            //   iconSize: 20,
-            //   icon: Icon(Icons.edit),
-            //   onPressed: () {
-            //     // if (widget.productNumber == 1) {
-            //     //   (ProductOneCubit.instance(context)).deleteChosenItem();
-            //     // }
-            //     //
-            //     // if (widget.productNumber == 2) {
-            //     //   (ProductTwoCubit.instance(context)).deleteChosenItem();
-            //     // }
-            //
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) => CompareSearch(
-            //             trip: widget.trip,
-            //             productNumber: widget.productNumber,
-            //           ),
-            //         ));
-            //   },
-            // ),
+            IconButton(
+              iconSize: 20,
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                if (widget.productNumber == 1) {
+                  // ProductOneCubit.instance(context).deleteChosenItem();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CompareSearch1(
+                          // productNumber: widget.productNumber,
+                        ),
+                      ));
+
+                }
+
+                if (widget.productNumber == 2) {
+                  // ProductTwoCubit.instance(context).deleteChosenItem();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CompareSearch2(
+                          // productNumber: widget.productNumber,
+                        ),
+                      ));
+
+                }
+
+              },
+            ),
           ],
         ),
       ),
