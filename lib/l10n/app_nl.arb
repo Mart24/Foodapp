@@ -41,7 +41,41 @@
     "saturatedfats": "Verzadigd vet",
     "sugartext": "Suikers",
     "fiberstext": "Vezels",
-    "savetext": "Opslaan"
+    "savetext": "Opslaan",
+
+"fooddetailstext": "Voedings details",
+    "nutritiontext": "Voedingswaarden",
+    "typetext": "Soort",
+    "totallproteintext": "Totaal eiwitten",
+    "totalfattext": "Totaal vetten",
+    "totalcarbstext": "Totaal koolhydraten",
+    "calortiestext": "Calorieën",
+    "howmuchtext": "Hoeveel",
+    "advicetext": "Advies",
+    "infotext1": "Let op: Dit zijn richtlijnen. Met een gevarieerd dieet krijg je de juiste voedingsstoffen binnen. ",
+    "infotext2": " is het maximale en ",
+    "infotext3": "staat voor de minimale consumptie per dag. Voor meer informatie, kijk op de website voedingscentrum.nl",
+    "redtext": "Rood",
+    "greentext": "Groen",
+
+
+    "dotsfiberstext": "        Vezels",
+    "dotssaturatedstext": "        Verzadigd vet",
+    "dotssugarsstext": "        Suiker",
+
+    "goal1atext": "Bedenk een spaardoel",
+    "goal1btext": "Het kan van alles zijn, een trein ticket, kledingstukken, auto rit etc.",
+    "goal2atext": "Bereken spaardoel",
+    "goal2btext": "Zoek online naar hoeveel Co² jouw doel is",
+    "goal3atext": "Vul het spaardoel in de app",
+    "goal3btext": "Blijf onder de 100 kg/Co² voor een haalbaar doel",
+    "goal4atext": "Start met duurzaam eten!",
+    "goal4btext": "Geef je startdatum op. Hoe duurzamer jouw voedingsschema, hoe meer je compenseert.",
+    "goalheaderntext": "Neem een spaardoel",
+    "goalheader2ntext": "Onder 5 kg/Co² per dag spaar je uit",
+    "goalbuttontext": "Ga verder",
+    "comparevietheadertext": "Vergelijk producten"
+
 
     }
     

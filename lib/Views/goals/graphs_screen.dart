@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/Views/constants.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -50,7 +51,7 @@ class _GraphsScreenState extends State<GraphsScreen>
         preferredSize: Size(double.infinity, 50),
         child: Container(
           height: 50,
-          color: Theme.of(context).accentColor,
+          color: kPrimaryColor,
           child: TabBar(
             onTap: (index) {
               if (index == 0) {

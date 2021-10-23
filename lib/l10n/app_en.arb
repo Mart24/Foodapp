@@ -72,9 +72,9 @@
       "description": "reset password text"
     },
     "eatentext": "Eaten",
-    "carbstext": "Carbs",
-    "proteintext": "Proteins",
-    "fatstext": "Fats",
+    "carbstext": " Carbs ",
+    "proteintext": " Proteins ",
+    "fatstext": " Fats ",
     "breakfast": "Breakfast",
     "otherstext": "Others",
     "diarytext": "Diary",
@@ -95,8 +95,44 @@
     "saturatedfats": "Saturated Fats",
     "sugartext": "Sugars",
     "fiberstext": "Fibers",
-    "savetext": "Save"
-   
+    "savetext": "Save",
+
+    "fooddetailstext": "Food details",
+    "nutritiontext": "Nutritional values",
+    "typetext": "Type",
+    "totallproteintext": "Total proteins",
+    "totalfattext": "Total Fats",
+    "totalcarbstext": "Total Carbohydrates",
+    "calortiestext": "Calories",
+    "howmuchtext": "Amount",
+    "advicetext": "Advice",
+    "infotext1": "Advice",
+    "infotext2": "Advice",
+    "infotext3": "Advice",
+    "redtext": "Red",
+    "greentext": "Green",
+
+    "dotsfiberstext": "        Fibers",
+    "dotssaturatedstext": "        Saturated fat",
+    "dotssugarsstext": "        Sugars",
+
+
+
+    "goal1atext": "Think of a Goal",
+    "goal1btext": "It can be anything, a train ticket, clothing basket, car ride etc.",
+    "goal2atext": "Calculate Goal",
+    "goal2btext": "Search online for the amount of CO² it costs",
+    "goal3atext": "Fill goal in this App",
+    "goal3btext": "Stay below 300 kg/Co² for a reachable goal",
+    "goal4atext": "Start eating sustainable",
+    "goal4btext": "Fill in your starting data. The more sustainable your diet, the more you save!",
+    "goalheaderntext": "Set a Co² goal",
+    "goalheader2ntext": "Each day below the 5kg/Co² is saved",
+    "goalbuttontext": "Set a Co² Goal",
+
+
+    "comparevietheadertext": "Compare products"
+    
 
 
 

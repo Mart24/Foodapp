@@ -349,7 +349,7 @@ class _Header extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Expanded(
-              child: Image.memory(image, fit: BoxFit.fill),
+              child: Image.memory(image, fit: BoxFit.cover),
             ),
             Center(
               child: Padding(
@@ -404,7 +404,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // backgroundColor: const Color(0xFF27AA69),
+      backgroundColor: kPrimaryColor,
       // leading: const Icon(Icons.menu),
       centerTitle: true,
       title: Text(

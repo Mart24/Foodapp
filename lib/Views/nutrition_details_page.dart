@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'constants.dart';
 
@@ -13,7 +14,7 @@ class NutritionalDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Voedings Details'),
+        title: Text(AppLocalizations.of(context).fooddetailstext),
         backgroundColor: kPrimaryColor,
       ),
       body: BlocConsumer<DairyCubit, DairyStates>(
@@ -71,7 +72,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                         children: [
                           TextButton(
                             child: Text(
-                              'Voedingswaarden',
+                              AppLocalizations.of(context).nutritiontext,
                               style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 20,
@@ -122,14 +123,14 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        'Soort',
+                                        AppLocalizations.of(context).typetext,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Text(
-                                      'Hoeveel',
+                                      AppLocalizations.of(context).howmuchtext,
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     Text(
@@ -137,7 +138,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       style: TextStyle(fontSize: 16),
                                     ),
                                     Text(
-                                      'Advies',
+                                      AppLocalizations.of(context).advicetext,
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ]),
@@ -147,7 +148,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        'Energie',
+                                        AppLocalizations.of(context).energy,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -171,7 +172,8 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        'Totaal eiwitten',
+                                        AppLocalizations.of(context)
+                                            .totallproteintext,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -195,7 +197,8 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        'Totaal vet',
+                                        AppLocalizations.of(context)
+                                            .totalfattext,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -219,7 +222,8 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        '        Verzadigd vet',
+                                        AppLocalizations.of(context)
+                                            .dotssaturatedstext,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -244,7 +248,8 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        'Totaal koolhydraten',
+                                        AppLocalizations.of(context)
+                                            .totalcarbstext,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -268,7 +273,8 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        '        Vezels',
+                                        AppLocalizations.of(context)
+                                            .dotsfiberstext,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -293,7 +299,8 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        '        Suiker',
+                                        AppLocalizations.of(context)
+                                            .dotssugarsstext,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),

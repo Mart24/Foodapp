@@ -6,6 +6,7 @@ import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Widgets/rounded_button.dart';
 import 'package:food_app/shared/productOne_cubit.dart';
 import 'package:food_app/shared/productTwo_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'comparison_search_page.dart';
 
@@ -81,7 +82,7 @@ class _ComparePageState extends State<ComparePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Compare products'),
+        title: Text(AppLocalizations.of(context).comparevietheadertext),
         backgroundColor: kPrimaryColor,
       ),
       body: Container(
@@ -203,7 +204,7 @@ class ProductTwo extends StatelessWidget {
                                 ),
                               ));
                         },
-                        label: const Text('2nd product'),
+                        label: const Text('Product 2'),
                         icon: const Icon(Icons.search),
                         backgroundColor: kPrimaryColor,
                       ),
@@ -302,7 +303,7 @@ class ProductOne extends StatelessWidget {
                                 ),
                               ));
                         },
-                        label: const Text('1st product'),
+                        label: const Text('Product 1'),
                         icon: const Icon(Icons.search),
                         backgroundColor: kPrimaryColor,
                       ),

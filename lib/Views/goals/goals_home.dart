@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/goals/graphs_screen.dart';
 
 import 'goals_screen.dart';
@@ -33,11 +34,11 @@ class _GoalsHomeState extends State<GoalsHome>
           preferredSize: Size(double.infinity, 50),
           child: Container(
             height: 50,
-            color: Colors.green,
+            color: kPrimaryColor,
             child: TabBar(
               controller: tabController,
               indicator: BoxDecoration(
-                color: Colors.black.withOpacity(0.4),
+                color: Colors.black.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(5),
               ),
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),

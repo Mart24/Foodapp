@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Widgets/custom_button.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/goal_cubit.dart';
@@ -35,6 +36,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Goals add screen'),
+          backgroundColor: kPrimaryColor,
         ),
         body: Column(
           children: [
@@ -95,9 +97,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                                                   BorderRadius.circular(20))),
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              Theme.of(context)
-                                                  .primaryColor
-                                                  .withOpacity(0.7)),
+                                              kPrimaryColor.withOpacity(0.7)),
                                     ),
                                     icon: Icon(
                                       Icons.image,
@@ -122,7 +122,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
+                            color: kPrimaryColor,
                           ),
                         ),
                       ),
@@ -147,7 +147,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
+                              color: kPrimaryColor,
                             ),
                           ),
                           SizedBox(
@@ -155,7 +155,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                           ),
                           Icon(
                             Icons.info_outline,
-                            color: Theme.of(context).primaryColor,
+                            color: kPrimaryColor,
                           ),
                         ]),
                       ),
@@ -188,7 +188,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
+                              color: kPrimaryColor,
                             ),
                           )
                         ],

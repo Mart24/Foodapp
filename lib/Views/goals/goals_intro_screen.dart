@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/goals/goals_add_screen.dart';
 import 'package:food_app/Widgets/custom_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timeline_tile/timeline_tile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GoalsIntroScreen extends StatelessWidget {
   @override
@@ -43,17 +45,16 @@ class _TimelineGoal extends StatelessWidget {
                 isFirst: true,
                 indicatorStyle: const IndicatorStyle(
                   width: 20,
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                   padding: EdgeInsets.all(6),
                 ),
-                endChild: const _RightChild(
+                endChild: _RightChild(
                   asset: 'assets/icons/first_idea.png',
-                  title: 'Think of a Goal',
-                  message:
-                      'It can be anything; a train ticket, clothing basket, car ride.',
+                  title: AppLocalizations.of(context).goal1atext,
+                  message: AppLocalizations.of(context).goal1btext,
                 ),
                 beforeLineStyle: const LineStyle(
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                 ),
               ),
               TimelineTile(
@@ -61,16 +62,16 @@ class _TimelineGoal extends StatelessWidget {
                 lineXY: 0.1,
                 indicatorStyle: const IndicatorStyle(
                   width: 20,
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                   padding: EdgeInsets.all(6),
                 ),
-                endChild: const _RightChild(
+                endChild: _RightChild(
                   asset: 'assets/icons/second_calculate.png',
-                  title: 'Calculate Goal',
-                  message: 'Search online for the amount of CO² it costs.',
+                  title: AppLocalizations.of(context).goal2atext,
+                  message: AppLocalizations.of(context).goal2btext,
                 ),
                 beforeLineStyle: const LineStyle(
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                 ),
               ),
               TimelineTile(
@@ -78,19 +79,19 @@ class _TimelineGoal extends StatelessWidget {
                 lineXY: 0.1,
                 indicatorStyle: const IndicatorStyle(
                   width: 20,
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                   padding: EdgeInsets.all(6),
                 ),
-                endChild: const _RightChild(
+                endChild: _RightChild(
                   asset: 'assets/icons/third_fillin.png',
-                  title: 'Fill in this App',
-                  message: 'Stay below 500 kg/Co² for a reachable goal.',
+                  title: AppLocalizations.of(context).goal3atext,
+                  message: AppLocalizations.of(context).goal3btext,
                 ),
                 beforeLineStyle: const LineStyle(
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                 ),
                 afterLineStyle: const LineStyle(
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                 ),
               ),
               TimelineTile(
@@ -99,18 +100,17 @@ class _TimelineGoal extends StatelessWidget {
                 isLast: true,
                 indicatorStyle: const IndicatorStyle(
                   width: 20,
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                   padding: EdgeInsets.all(6),
                 ),
-                endChild: const _RightChild(
+                endChild: _RightChild(
                   disabled: false,
                   asset: 'assets/icons/fourth_start.png',
-                  title: 'Start eating Sustainable',
-                  message:
-                      'Fill in starting your date. The more sustainable your diet, the more you save!',
+                  title: AppLocalizations.of(context).goal4atext,
+                  message: AppLocalizations.of(context).goal4btext,
                 ),
                 beforeLineStyle: const LineStyle(
-                  color: Color(0xFF27AA69),
+                  color: kPrimaryColor,
                 ),
               ),
             ],
@@ -124,7 +124,7 @@ class _TimelineGoal extends StatelessWidget {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => GoalsAddScreen()));
               },
-              text: Text('Set up Co2 Goal'),
+              text: Text(AppLocalizations.of(context).goalbuttontext),
             ),
           ],
         ),
@@ -215,7 +215,7 @@ class _Header extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    'Each day below 5kg/Co² is saved',
+                    AppLocalizations.of(context).goalheader2ntext,
                     style: GoogleFonts.yantramanav(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
@@ -233,11 +233,11 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // backgroundColor: const Color(0xFF27AA69),
+      backgroundColor: kPrimaryColor,
       // leading: const Icon(Icons.menu),
       centerTitle: true,
       title: Text(
-        'Set a Co2 goal',
+        AppLocalizations.of(context).goalheaderntext,
         // style: GoogleFonts.neuton(
         //     color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
       ),
