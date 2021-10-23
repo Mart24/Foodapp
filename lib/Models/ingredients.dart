@@ -105,6 +105,8 @@ class Trip {
       this.vitE,
       this.zink);
 
+  Trip.empty();
+
   // formatting for upload to Firbase
   Map<String, dynamic> toJson() => {
         'productid': id,
