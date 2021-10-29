@@ -5,6 +5,7 @@ import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/new_food_registration.dart/summary.dart';
+import 'package:food_app/Views/profile/utils.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -96,7 +97,12 @@ class _FoodDateState extends State<FoodDate> {
                 fontSize: 20,
               ),
             ),
-            onPressed: () {},
+            onPressed: () => Utils.openEmail(
+              toEmail: 'martijnformer24@gmail.com',
+              subject:
+                  'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
+              body: 'I have a question or suggestion for this product',
+            ),
             child: Text(AppLocalizations.of(context).reporttext),
           ),
         ],
@@ -223,7 +229,11 @@ class _FoodDateState extends State<FoodDate> {
 
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Inputbar(budgetController: _budgetController),
+                    child: Column(
+                      children: [
+                        Inputbar(budgetController: _budgetController),
+                      ],
+                    ),
                   ),
                   // Spacer(),
                   Padding(

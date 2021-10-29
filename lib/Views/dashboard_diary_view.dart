@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
 
                         CarbsProtienFatRow(cubit: cubit),
 
-                        SizedBox(height: 10),
+                        SizedBox(height: 20),
 
                         LinearCo2Indecator(
                             barPercent: barPercent, cubit: cubit),
@@ -567,10 +567,11 @@ class LinearCo2Indecator extends StatelessWidget {
             new LinearPercentIndicator(
               animation: true,
               backgroundColor: Colors.grey[350],
+              // backgroundColor: calculateBackgroundColor(barPercent: barPercent),
               width: 300.0,
               lineHeight: 25.0,
               percent: barPercent,
-              progressColor: kPrimaryColor,
+              progressColor: calculateBackgroundColor(barPercent: barPercent),
             ),
           ],
         ),
@@ -603,6 +604,16 @@ class LinearCo2Indecator extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+Color calculateBackgroundColor({double barPercent}) {
+  if (barPercent > 0.99) {
+    return Colors.redAccent;
+  } else if (barPercent > 0.60) {
+    return Colors.orangeAccent;
+  } else {
+    return kPrimaryColor;
   }
 }
 

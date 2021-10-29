@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart'
+    as settingsscreen;
 import 'package:food_app/shared/productOne_cubit.dart';
 import 'package:food_app/shared/productTwo_cubit.dart';
 import '../l10n/l10n.dart';
@@ -56,18 +58,22 @@ class MyBlocObserver extends BlocObserver {
     print('onClose -- ${bloc.runtimeType}');
   }
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  //This can be used for accessing the darkmode.
+  await settingsscreen.Settings.init(
+      cacheProvider: settingsscreen.SharePreferenceCache());
+
   await Firebase.initializeApp();
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark, statusBarColor: Colors.white));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //     statusBarBrightness: Brightness.dark, statusBarColor: Colors.white));
   Bloc.observer = MyBlocObserver();
 
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of the application.
@@ -96,7 +102,6 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (BuildContext context) => ProductOneCubit(),
           ),
-
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
