@@ -7,6 +7,7 @@ import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/display_foodintake.dart';
 import 'package:food_app/Views/nutrition_details_page.dart';
+import 'package:food_app/Widgets/custom_dialog_impact.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:intl/intl.dart';
@@ -161,8 +162,13 @@ class _HomePageState extends State<HomePage> {
 
                         LinearCo2Indecator(
                             barPercent: barPercent, cubit: cubit),
-
-                        DetailsButton(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ImpactButton(),
+                            DetailsButton(),
+                          ],
+                        ),
 
                         // Expanded(
                         //   child: Builder(
@@ -754,14 +760,37 @@ class DetailsButton extends StatelessWidget {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => NutritionalDetailsPage()));
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            "Details",
-            style: TextStyle(fontSize: 20, color: kPrimaryColor),
-          ),
-        ],
+      child: Text(
+        "Details",
+        style: TextStyle(fontSize: 20, color: kPrimaryColor),
+      ),
+    );
+  }
+}
+
+class ImpactButton extends StatelessWidget {
+  const ImpactButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: "Jouw klimaat impact",
+                descriptions:
+                    "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
+                text: "Yes",
+              );
+            });
+      },
+      child: Text(
+        "Impact",
+        style: TextStyle(fontSize: 20, color: kPrimaryColor),
       ),
     );
   }
