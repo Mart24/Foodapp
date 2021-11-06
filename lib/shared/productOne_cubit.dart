@@ -54,7 +54,7 @@ class ProductOneCubit extends Cubit<ProductOneStates> {
       QueryDocumentSnapshot<Map<String, dynamic>> productDoc = productDocs[0];
       print('searchDB');
       print(productDoc['productid']);
-      Trip trip = Trip.fromSnapshot(productDoc);
+      Trip trip = Trip.fromSnapshot(productDoc,'gram');
       tappedTripP1= trip;
       emit(SearchResultFound1());
     } else {
