@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
       null,
       null,
       null,
+      null,
       // null,
       // null,
       // null,
@@ -308,8 +309,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  Widget buildTripCard(BuildContext context, DocumentSnapshot document) {
-    final trip = Trip.fromSnapshot(document);
+  Widget buildTripCard(BuildContext context, QueryDocumentSnapshot<Map<String, dynamic>> document) {
+    final trip = Trip.fromSnapshot(document, document.data()['amountUnit']);
     final plantType = trip.planticon();
     return Container(
       child: InkWell(
@@ -359,7 +360,7 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: <Widget>[
                     Text(
-                      "${(trip.amount == null) ? "n/a" : trip.amount.toStringAsFixed(0)} gram",
+                      "${(trip.amount == null) ? "n/a" : trip.amount.toStringAsFixed(0)} ${trip.amountUnit??'gram'}",
                       style: new TextStyle(fontSize: 15.0),
                     ),
                     Spacer(),

@@ -18,6 +18,7 @@ class Trip {
   String plantbased;
   num co2;
   num amount;
+  String amountUnit;
   String unit;
   String portionsize;
   num sizep1;
@@ -60,6 +61,7 @@ class Trip {
       this.name,
       this.eatDate,
       this.amount,
+      this.amountUnit,
       this.kcal,
       this.co2,
       this.carbs,
@@ -113,6 +115,8 @@ class Trip {
         'name': name,
         'eatDate': eatDate,
         'amount': amount,
+        'amountUnit': amountUnit,
+
         'kcal': kcal,
         'co2': co2,
         'carbs': carbs,
@@ -160,14 +164,15 @@ class Trip {
       };
 
   // creating a Food object from a firebase snapshot
-  Trip.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
-
-    final Map<String,dynamic> snapshotAsMap= snapshot.data();
+  Trip.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
+      String myAmountUnit) {
+    final Map<String, dynamic> snapshotAsMap = snapshot.data();
     id = snapshotAsMap['productid'];
     name = snapshotAsMap['name'];
     // if (snapshot.data().containsKey('eatDate'))
-      eatDate = snapshotAsMap['eatDate']?.toDate();
+    eatDate = snapshotAsMap['eatDate']?.toDate();
     amount = snapshotAsMap['amount'];
+    amountUnit = myAmountUnit;
     kcal = snapshotAsMap['kcal'];
     co2 = snapshotAsMap['co2'];
     carbs = snapshotAsMap['carbs'];

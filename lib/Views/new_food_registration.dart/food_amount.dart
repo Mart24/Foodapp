@@ -32,6 +32,8 @@ class _FoodDateState extends State<FoodDate> {
   final db = FirebaseFirestore.instance;
   String categoryChoice = "Breakfast";
   List categoryItem = ["Breakfast", "Lunch", "Diner", "Snacks", "Other"];
+  String _portion = 'gram';
+  String _portionUnit = 'gram';
 
   Future displayDateRangePicker(BuildContext context) async {
     final List<DateTime> picked = await DateRagePicker.showDatePicker(
@@ -69,17 +71,46 @@ class _FoodDateState extends State<FoodDate> {
 
   TextEditingController _budgetController = TextEditingController()
     ..text = '100';
+  TextEditingController _portionController = TextEditingController()
+    ..text = '1';
+  TextEditingController _portionUnitController = TextEditingController()
+    ..text = 'gram';
 
   @override
   void initState() {
     super.initState();
     _budgetController.addListener(_setBudgetTotal);
+    _portionController.addListener(_setPortionTotal);
+    // _portionUnitController.addListener(_setPortionUnit);
   }
 
   _setBudgetTotal() {
+    print('set budget total');
     setState(() {
-      _budgetTotal = int.parse(_budgetController.text);
+      _budgetTotal = int.tryParse(_budgetController.text);
     });
+  }
+
+  _setPortionTotal() {
+    print('set portion total');
+    setState(() {
+      _portion = (_portionController.text);
+    });
+  }
+
+  _setPortionUnit() {
+    print('set portion unit ');
+    setState(() {
+      _portionUnit = (_portionUnitController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _portionUnitController.dispose();
+    _portionController.dispose();
+    _budgetController.dispose();
+    super.dispose();
   }
 
   @override
@@ -128,31 +159,39 @@ class _FoodDateState extends State<FoodDate> {
               // Calorieën double
               double kcal = ((foodDocument['kcal'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën CO2
               double co2 = ((foodDocument['co2'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën Koolhydraten
               double koolhy = ((foodDocument['carbs'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën Eiwitten
               double protein = ((foodDocument['proteins'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën Vetten
               double fat = ((foodDocument['fat'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               double saturatedfat = ((foodDocument['saturatedfat'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               double sugars = ((foodDocument['sugars'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               double dietaryfiber = ((foodDocument['dietaryfiber'].toDouble()) *
                   ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // double salt = ((foodDocument['salt'].toDouble()) *
               //     ((double.tryParse(_budgetController.text) ?? 100)) *
@@ -220,19 +259,18 @@ class _FoodDateState extends State<FoodDate> {
 
               return Container(
                 child: Column(children: <Widget>[
-                  FittedBox(
-                    child: Text(
-                      "${foodDocument['name']}",
-                      style: new TextStyle(fontSize: 24.0),
-                    ),
+                  Text(
+                    "${foodDocument['name']}",
+                    style: new TextStyle(fontSize: 24.0),
                   ),
 
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Column(
-                      children: [
-                        Inputbar(budgetController: _budgetController),
-                      ],
+                    child: InputBar(
+                      budgetController: _budgetController,
+                      portionController: _portionController,
+                      portionUnitController: _portionUnitController,
+                      id: widget.trip.id.toString(),
                     ),
                   ),
                   // Spacer(),
@@ -292,6 +330,7 @@ class _FoodDateState extends State<FoodDate> {
                             widget.trip.plantbased = plantbased;
                             widget.trip.nutriscore = nutriscore;
                             widget.trip.ecoscore = ecoscore;
+                            widget.trip.amountUnit = _portionUnitController.text;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -644,28 +683,128 @@ class _FoodDateState extends State<FoodDate> {
   }
 }
 
-class Inputbar extends StatelessWidget {
-  const Inputbar({
+class InputBar extends StatelessWidget {
+  InputBar({
     Key key,
     @required TextEditingController budgetController,
+    @required TextEditingController portionController,
+    @required TextEditingController portionUnitController,
+    @required this.id,
   })  : _budgetController = budgetController,
+        _portionController = portionController,
+        _portionUnitController = portionUnitController,
         super(key: key);
 
   final TextEditingController _budgetController;
+  final TextEditingController _portionController;
+
+  final TextEditingController _portionUnitController;
+  final String id;
+
+  final ValueNotifier<String> currentValue = ValueNotifier('gram');
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _budgetController,
-      maxLines: 1,
-      maxLength: 4,
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.linear_scale),
-        helperText: AppLocalizations.of(context).howmanygramstext,
+    return Row(children: [
+      Expanded(
+        flex: 3,
+        child: TextFormField(
+          controller: _budgetController,
+          // maxLines: 1,
+          // maxLength: 4,
+          decoration: InputDecoration(
+            // prefixIcon: Icon(Icons.linear_scale),
+            prefixIcon: Container(
+              width: 30,
+              // height: 30,
+              // color: Colors.red,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'size',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  // textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            // helperText: AppLocalizations.of(context).howmanygramstext,
+          ),
+          keyboardType: TextInputType.number,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          autofocus: true,
+        ),
       ),
-      keyboardType: TextInputType.number,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      autofocus: true,
-    );
+      Spacer(
+        flex: 1,
+      ),
+      Expanded(
+        flex: 3,
+        child: FutureBuilder(
+          future: FirebaseFirestore.instance.collection('fdd').doc(id).get(),
+          builder: (context, AsyncSnapshot<DocumentSnapshot> snap) {
+            if (snap.hasData) {
+              Map<String, num> itemsData = {
+                "gram": 1,
+              };
+              for (int i = 1; i <= 4; i++) {
+                if (snap.data["portionsize$i"] != null &&
+                    snap.data["portionsize$i"] != '') {
+                  itemsData.putIfAbsent(
+                      snap.data["portionsize$i"], () => snap.data["sizep$i"]);
+                }
+              }
+
+              print(itemsData.keys);
+              print(itemsData.values);
+              List<DropdownMenuItem<String>> itemsWidgets =
+                  itemsData.keys.map((e) {
+                return DropdownMenuItem<String>(
+                  child: Container(
+                      // width: 80,
+                      child: Text(
+                    e,
+                    maxLines: 2,
+                    softWrap: true,
+                    overflow: TextOverflow.fade,
+                  )),
+                  value: e,
+                );
+              }).toList();
+
+              return ValueListenableBuilder<String>(
+                  valueListenable: currentValue,
+                  builder:
+                      (BuildContext context, String hasError, Widget child) {
+                    return DropdownButtonFormField(
+                      // value: _portionController.value.text,
+                      value: currentValue.value,
+                      isExpanded: true,
+                      items: itemsWidgets,
+                      onChanged: (s) {
+                        print(s);
+                        _portionController.value =
+                            TextEditingValue(text: itemsData[s].toString());
+                        _portionUnitController.value= TextEditingValue(text: s);
+                        currentValue.value = s;
+                      },
+                    );
+                  });
+            } else {
+              return DropdownButtonFormField(
+                // value: 'gram',
+                items: [
+                  DropdownMenuItem(
+                    child: Text('Gram'),
+                    value: 'gram',
+                  )
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    ]);
   }
 }

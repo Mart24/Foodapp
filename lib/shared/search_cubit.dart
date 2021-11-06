@@ -50,7 +50,7 @@ class SearchCubit extends Cubit<SearchStates> {
       QueryDocumentSnapshot<Map<String,dynamic>> productDoc = productDocs[0];
       print('searchDB');
       print(productDoc['productid']);
-      Trip trip = Trip.fromSnapshot(productDoc);
+      Trip trip = Trip.fromSnapshot(productDoc,'gram');
       emit(SearchResultFound(trip: trip));
     } else {
       emit(SearchResultNotFound());
