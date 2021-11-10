@@ -69,8 +69,7 @@ class _FoodDateState extends State<FoodDate> {
         .get();
   }
 
-  TextEditingController _budgetController = TextEditingController()
-    ..text = '100';
+  TextEditingController _sizeController = TextEditingController()..text = '100';
   TextEditingController _portionController = TextEditingController()
     ..text = '1';
   TextEditingController _portionUnitController = TextEditingController()
@@ -79,7 +78,7 @@ class _FoodDateState extends State<FoodDate> {
   @override
   void initState() {
     super.initState();
-    _budgetController.addListener(_setBudgetTotal);
+    _sizeController.addListener(_setBudgetTotal);
     _portionController.addListener(_setPortionTotal);
     // _portionUnitController.addListener(_setPortionUnit);
   }
@@ -87,12 +86,23 @@ class _FoodDateState extends State<FoodDate> {
   _setBudgetTotal() {
     print('set budget total');
     setState(() {
-      _budgetTotal = int.tryParse(_budgetController.text);
+      _budgetTotal = int.tryParse(_sizeController.text);
     });
   }
 
   _setPortionTotal() {
-    print('set portion total');
+    print('set portion total:  ${_portionController.text}g');
+    if (_portionController.text == '1') {// selected gram unit
+      _sizeController.value= TextEditingValue(text:'100');
+      setState(() {
+        _budgetTotal = 100;
+      });
+    }else{ // selected anything except the gram
+      _sizeController.value= TextEditingValue(text:'1');
+      setState(() {
+        _budgetTotal = 1;
+      });
+    }
     setState(() {
       _portion = (_portionController.text);
     });
@@ -109,7 +119,7 @@ class _FoodDateState extends State<FoodDate> {
   void dispose() {
     _portionUnitController.dispose();
     _portionController.dispose();
-    _budgetController.dispose();
+    _sizeController.dispose();
     super.dispose();
   }
 
@@ -158,39 +168,39 @@ class _FoodDateState extends State<FoodDate> {
               String plantbased = foodDocument['plantbased'];
               // Calorieën double
               double kcal = ((foodDocument['kcal'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën CO2
               double co2 = ((foodDocument['co2'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën Koolhydraten
               double koolhy = ((foodDocument['carbs'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën Eiwitten
               double protein = ((foodDocument['proteins'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // Calorieën Vetten
               double fat = ((foodDocument['fat'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               double saturatedfat = ((foodDocument['saturatedfat'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               double sugars = ((foodDocument['sugars'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               double dietaryfiber = ((foodDocument['dietaryfiber'].toDouble()) *
-                  ((double.tryParse(_budgetController.text) ?? 100)) *
+                  ((double.tryParse(_sizeController.text) ?? 100)) *
                   ((double.tryParse(_portionController.text) ?? 1)) *
                   0.01.toDouble());
               // double salt = ((foodDocument['salt'].toDouble()) *
@@ -267,7 +277,7 @@ class _FoodDateState extends State<FoodDate> {
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: InputBar(
-                      budgetController: _budgetController,
+                      sizeController: _sizeController,
                       portionController: _portionController,
                       portionUnitController: _portionUnitController,
                       id: widget.trip.id.toString(),
@@ -323,14 +333,15 @@ class _FoodDateState extends State<FoodDate> {
 
                             widget.trip.saturatedfat = saturatedfat;
                             widget.trip.eatDate = _eattime;
-                            widget.trip.amount = (_budgetController.text == "")
+                            widget.trip.amount = (_sizeController.text == "")
                                 ? 0
-                                : double.parse(_budgetController.text);
+                                : double.parse(_sizeController.text);
                             widget.trip.categorie = categoryChoice;
                             widget.trip.plantbased = plantbased;
                             widget.trip.nutriscore = nutriscore;
                             widget.trip.ecoscore = ecoscore;
-                            widget.trip.amountUnit = _portionUnitController.text;
+                            widget.trip.amountUnit =
+                                _portionUnitController.text;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -686,16 +697,16 @@ class _FoodDateState extends State<FoodDate> {
 class InputBar extends StatelessWidget {
   InputBar({
     Key key,
-    @required TextEditingController budgetController,
+    @required TextEditingController sizeController,
     @required TextEditingController portionController,
     @required TextEditingController portionUnitController,
     @required this.id,
-  })  : _budgetController = budgetController,
+  })  : _sizeController = sizeController,
         _portionController = portionController,
         _portionUnitController = portionUnitController,
         super(key: key);
 
-  final TextEditingController _budgetController;
+  final TextEditingController _sizeController;
   final TextEditingController _portionController;
 
   final TextEditingController _portionUnitController;
@@ -709,7 +720,7 @@ class InputBar extends StatelessWidget {
       Expanded(
         flex: 3,
         child: TextFormField(
-          controller: _budgetController,
+          controller: _sizeController,
           // maxLines: 1,
           // maxLength: 4,
           decoration: InputDecoration(
@@ -764,7 +775,7 @@ class InputBar extends StatelessWidget {
                   child: Container(
                       // width: 80,
                       child: Text(
-                    e,
+                    e + ' (' + itemsData[e].toString() + 'g)',
                     maxLines: 2,
                     softWrap: true,
                     overflow: TextOverflow.fade,
@@ -786,7 +797,8 @@ class InputBar extends StatelessWidget {
                         print(s);
                         _portionController.value =
                             TextEditingValue(text: itemsData[s].toString());
-                        _portionUnitController.value= TextEditingValue(text: s);
+                        _portionUnitController.value =
+                            TextEditingValue(text: s);
                         currentValue.value = s;
                       },
                     );
