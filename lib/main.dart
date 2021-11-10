@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart'
     as settingsscreen;
+import 'package:food_app/Widgets/theme_provider.dart';
 import 'package:food_app/shared/productOne_cubit.dart';
 import 'package:food_app/shared/productTwo_cubit.dart';
 import '../l10n/l10n.dart';
@@ -106,10 +107,13 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Test123',
-          theme: ThemeData(
-            primarySwatch: Colors.green,
-            backgroundColor: Colors.yellow,
-          ),
+          // theme: ThemeData(
+          //   primarySwatch: Colors.green,
+          //   backgroundColor: Colors.yellow,
+          // ),
+          themeMode: ThemeMode.system,
+          theme: Mythemes.lightTheme,
+          darkTheme: Mythemes.darkTheme,
           home: HomeController(),
           routes: <String, WidgetBuilder>{
             '/signUp': (BuildContext context) =>

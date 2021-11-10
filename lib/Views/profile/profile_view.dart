@@ -20,6 +20,9 @@ class Profiel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final text = MediaQuery.of(context).platformBrightness == Brightness.dark
+        ? 'Darktheme'
+        : 'LightTheme';
     //   SizeConfig().init(context);
     // return Scaffold(
     //   body: Body(),

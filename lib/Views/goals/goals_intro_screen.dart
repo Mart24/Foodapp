@@ -17,7 +17,7 @@ class GoalsIntroScreen extends StatelessWidget {
         ),
         child: Scaffold(
           appBar: _AppBar(),
-          backgroundColor: Colors.white,
+          //  backgroundColor: Colors.white,
           body: Column(
             children: <Widget>[
               _Header(),
@@ -166,9 +166,9 @@ class _RightChild extends StatelessWidget {
                 Text(
                   title,
                   style: GoogleFonts.yantramanav(
-                    color: disabled
-                        ? const Color(0xFFBABABA)
-                        : const Color(0xFF636564),
+                    // color: disabled
+                    //     ? const Color(0xFFBABABA)
+                    //     : const Color(0xFF636564),
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
@@ -178,9 +178,9 @@ class _RightChild extends StatelessWidget {
                   message,
                   overflow: TextOverflow.fade,
                   style: GoogleFonts.yantramanav(
-                    color: disabled
-                        ? const Color(0xFFD5D5D5)
-                        : const Color(0xFF636564),
+                    // color: disabled
+                    //     ? const Color(0xFFD5D5D5)
+                    //     : const Color(0xFF636564),
                     fontSize: 16,
                   ),
                 ),
@@ -198,7 +198,7 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Color(0xFFF9F9F9),
+        //    color: Color(0xFFF9F9F9),
         border: Border(
           bottom: BorderSide(
             color: Color(0xFFE9E9E9),
@@ -217,7 +217,9 @@ class _Header extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context).goalheader2ntext,
                     style: GoogleFonts.yantramanav(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ],
               ),
@@ -238,6 +240,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         AppLocalizations.of(context).goalheaderntext,
+        style: TextStyle(color: Colors.white),
         // style: GoogleFonts.neuton(
         //     color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
       ),
