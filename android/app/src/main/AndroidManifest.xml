@@ -25,9 +25,10 @@
 
 
     <application
-        android:label="food_app"
+        android:label="Eatmission"
         android:requestLegacyExternalStorage="true"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/applogo">
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
