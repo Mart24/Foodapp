@@ -129,23 +129,27 @@ class _FoodDateState extends State<FoodDate> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
-        title: Text(AppLocalizations.of(context).chooseamountstext),
+        // title: Text(AppLocalizations.of(context).chooseamountstext),
+        title: Text(widget.trip.name),
         actions: [
-          TextButton(
-            style: TextButton.styleFrom(
-              primary: Colors.white,
-              textStyle: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            onPressed: () => Utils.openEmail(
-              toEmail: 'martijnformer24@gmail.com',
-              subject:
-                  'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
-              body: 'I have a question or suggestion for this product',
-            ),
-            child: Text(AppLocalizations.of(context).reporttext),
-          ),
+          IconButton(onPressed: () {}, icon: Icon(Icons.save)),
+          IconButton(
+              onPressed: () => Utils.openEmail(
+                    toEmail: 'martijnformer24@gmail.com',
+                    subject:
+                        'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
+                    body: 'I have a question or suggestion for this product',
+                  ),
+              icon: Icon(Icons.message)),
+
+          //   onPressed: () => Utils.openEmail(
+          //     toEmail: 'martijnformer24@gmail.com',
+          //     subject:
+          //         'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
+          //     body: 'I have a question or suggestion for this product',
+          //   ),
+          //   child: Text(AppLocalizations.of(context).reporttext),
+          // ),
         ],
       ),
       body: Center(

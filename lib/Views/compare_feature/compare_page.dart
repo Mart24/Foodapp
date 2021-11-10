@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Models/ingredients.dart';
@@ -83,7 +85,10 @@ class _ComparePageState extends State<ComparePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(AppLocalizations.of(context).comparevietheadertext),
+        title: Text(
+          AppLocalizations.of(context).comparevietheadertext,
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: kPrimaryColor,
       ),
       body: Container(
@@ -132,7 +137,7 @@ class ProductTwo extends StatelessWidget {
       key: ValueKey('e2'),
       child: Container(
         height: double.infinity,
-        color: Colors.grey[100],
+        //  color: Colors.grey[100],
         child: BlocConsumer<ProductTwoCubit, ProductTwoStates>(
             buildWhen: (previous, current) {
               if (current == previous) {
@@ -204,8 +209,14 @@ class ProductTwo extends StatelessWidget {
                                 ),
                               ));
                         },
-                        label: const Text('Product 2'),
-                        icon: const Icon(Icons.search),
+                        label: const Text(
+                          'Product 2',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
                         backgroundColor: kPrimaryColor,
                       ),
                     ]);
@@ -230,7 +241,7 @@ class ProductOne extends StatelessWidget {
     return Expanded(
       key: ValueKey('e1'),
       child: Container(
-        color: Colors.grey[100],
+        //  color: Colors.grey[100],
         height: double.infinity,
         child: BlocConsumer<ProductOneCubit, ProductOneStates>(
             buildWhen: (previous, current) {
@@ -302,8 +313,12 @@ class ProductOne extends StatelessWidget {
                                 ),
                               ));
                         },
-                        label: const Text('Product 1'),
-                        icon: const Icon(Icons.search),
+                        label: const Text('Product 1',
+                            style: TextStyle(color: Colors.white)),
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
                         backgroundColor: kPrimaryColor,
                       ),
                     ]);

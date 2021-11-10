@@ -200,7 +200,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                         TextButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
-                                Theme.of(context).primaryColor),
+                                Theme.of(context).buttonColor),
                           ),
                           onPressed: () {
                             DatePicker.showDatePicker(
@@ -224,8 +224,8 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                           child: Text(
                             'Start Date',
                             style: TextStyle(
-                                // color: Theme.of(context).primaryColor,
-                                color: Colors.white,
+                                //color: Theme.of(context).primaryColor,
+                                // color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16),
                           ),
@@ -238,8 +238,8 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                           builder: (BuildContext context, state) => Text(
                             '${DateFormat.yMMMMd().format(goalCubit.startDate)}',
                             style: TextStyle(
-                                // color: Theme.of(context).accentColor,
-                                color: Colors.black,
+                                color: Theme.of(context).primaryColor,
+                                //   color: Colors.black,
                                 fontWeight: FontWeight.normal,
                                 fontSize: 16),
                           ),

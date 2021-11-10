@@ -43,7 +43,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                               showChartValues: false,
                               showChartValuesInPercentage: true,
                               showChartValuesOutside: true,
-                              chartValueBackgroundColor: Colors.transparent,
+                              chartValueBackgroundColor: Colors.white,
                             ),
                             colorList: [
                               Colors.green[200],
@@ -61,6 +61,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                             },
                             centerText:
                                 '${cubit.kCalSum.toStringAsFixed(0)} Calorieën',
+
                             chartType: ChartType.ring,
                           ),
                         ],
@@ -415,10 +416,11 @@ Widget _buildPopupDialog(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        RichText(
-            text: TextSpan(
-                style: GoogleFonts.roboto(fontSize: 16, color: Colors.black),
-                children: <TextSpan>[
+        Text.rich(TextSpan(
+            style: GoogleFonts.roboto(
+              fontSize: 16,
+            ),
+            children: <TextSpan>[
               TextSpan(
                   text:
                       'Let op: Dit zijn richtlijnen. Met een gevarieerd dieet krijg je de juiste voedingsstoffen binnen. '),
@@ -446,8 +448,8 @@ Widget _buildPopupDialog(BuildContext context) {
         onPressed: () {
           Navigator.of(context).pop();
         },
-        textColor: Theme.of(context).primaryColor,
-        child: const Text('Sluit'),
+        //textColor: Theme.of(context).primaryColor,
+        child: Text('Sluit'),
       ),
     ],
   );

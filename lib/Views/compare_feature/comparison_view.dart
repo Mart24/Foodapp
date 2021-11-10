@@ -64,7 +64,7 @@ class _ComparisonViewState extends State<ComparisonView> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[300],
+      //  backgroundColor: Colors.grey[300],
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: kPrimaryColor,
@@ -72,7 +72,7 @@ class _ComparisonViewState extends State<ComparisonView> {
           '${widget.trip.name}',
           maxLines: 2,
           softWrap: true,
-          style: TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         bottom: AppBar(
           toolbarHeight: 33,
@@ -81,6 +81,7 @@ class _ComparisonViewState extends State<ComparisonView> {
           actions: [
             IconButton(
                 iconSize: 20,
+                color: Colors.white,
                 onPressed: () {
                   showDialog(
                       context: context,
@@ -118,6 +119,7 @@ class _ComparisonViewState extends State<ComparisonView> {
             IconButton(
               iconSize: 20,
               icon: Icon(Icons.edit),
+              color: Colors.white,
               onPressed: () {
                 if (widget.productNumber == 1) {
                   // ProductOneCubit.instance(context).deleteChosenItem();
@@ -125,10 +127,9 @@ class _ComparisonViewState extends State<ComparisonView> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => CompareSearch1(
-                          // productNumber: widget.productNumber,
-                        ),
+                            // productNumber: widget.productNumber,
+                            ),
                       ));
-
                 }
 
                 if (widget.productNumber == 2) {
@@ -137,12 +138,10 @@ class _ComparisonViewState extends State<ComparisonView> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => CompareSearch2(
-                          // productNumber: widget.productNumber,
-                        ),
+                            // productNumber: widget.productNumber,
+                            ),
                       ));
-
                 }
-
               },
             ),
           ],
@@ -473,22 +472,22 @@ class _ComparisonViewState extends State<ComparisonView> {
                                   style: TextStyle(fontSize: 14),
                                 ),
                               ]),
-                              TableRow(children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
-                                  child: Text(
-                                    'Plantbased',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Text(
-                                  "$plantbased",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ]),
+                              // TableRow(children: [
+                              //   Padding(
+                              //     padding: const EdgeInsets.symmetric(
+                              //         vertical: 10.0),
+                              //     child: Text(
+                              //       'Plantbased',
+                              //       style: TextStyle(
+                              //           fontSize: 14,
+                              //           fontWeight: FontWeight.bold),
+                              //     ),
+                              //   ),
+                              //   Text(
+                              //     "$plantbased",
+                              //     style: TextStyle(fontSize: 14),
+                              //   ),
+                              // ]),
                             ],
                           ),
                         ),

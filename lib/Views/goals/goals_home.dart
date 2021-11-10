@@ -41,7 +41,11 @@ class _GoalsHomeState extends State<GoalsHome>
                 color: Colors.black.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(5),
               ),
-              labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+              labelColor: Colors.white,
               tabs: [
                 Tab(child: Text('Goals')),
                 Tab(child: Text('Graphs')),

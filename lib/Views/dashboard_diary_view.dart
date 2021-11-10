@@ -7,6 +7,7 @@ import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/display_foodintake.dart';
 import 'package:food_app/Views/nutrition_details_page.dart';
+import 'package:food_app/Widgets/custom_dialog_impact.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:intl/intl.dart';
@@ -162,8 +163,13 @@ class _HomePageState extends State<HomePage> {
 
                         LinearCo2Indecator(
                             barPercent: barPercent, cubit: cubit),
-
-                        DetailsButton(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ImpactButton(),
+                            DetailsButton(),
+                          ],
+                        ),
 
                         // Expanded(
                         //   child: Builder(
@@ -303,7 +309,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  Widget buildTripCard(BuildContext context, QueryDocumentSnapshot<Map<String, dynamic>> document) {
+  Widget buildTripCard(BuildContext context,
+      QueryDocumentSnapshot<Map<String, dynamic>> document) {
     final trip = Trip.fromSnapshot(document, document.data()['amountUnit']);
     final plantType = trip.planticon();
     return Container(
@@ -354,7 +361,7 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: <Widget>[
                     Text(
-                      "${(trip.amount == null) ? "n/a" : trip.amount.toStringAsFixed(0)} ${trip.amountUnit??'gram'}",
+                      "${(trip.amount == null) ? "n/a" : trip.amount.toStringAsFixed(0)} ${trip.amountUnit ?? 'gram'}",
                       style: new TextStyle(fontSize: 15.0),
                     ),
                     Spacer(),
@@ -390,20 +397,22 @@ class DateNavigatorRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              onPressed: () {
-                cubit.updateCurrentDate(
-                    cubit.currentDate.subtract(Duration(days: 1)));
-              },
-              icon: Icon(Icons.arrow_back_ios_sharp),
-              splashRadius: 28,
-              iconSize: 20,
-              //      color: Theme.of(context).accentColor,
-              color: Colors.black,
-            ),
+                onPressed: () {
+                  cubit.updateCurrentDate(
+                      cubit.currentDate.subtract(Duration(days: 1)));
+                },
+                icon: Icon(Icons.arrow_back_ios_sharp),
+                splashRadius: 28,
+                iconSize: 20,
+                color: Theme.of(context).primaryColor
+                //      color: Theme.of(context).accentColor,
+                //  color: Colors.black,
+                ),
             TextButton.icon(
                 icon: Icon(
                   Icons.calendar_today,
-                  color: Colors.black,
+                  color: Theme.of(context).primaryColor,
+                  //  color: Colors.black,
                 ),
                 onPressed: () {
                   DatePicker.showDatePicker(
@@ -429,23 +438,24 @@ class DateNavigatorRow extends StatelessWidget {
                     return Text(
                       '${DateFormat.yMMMMd().format(cubit.currentDate)}',
                       style: TextStyle(
-                          // color: Theme.of(context).accentColor,
-                          color: Colors.black,
+                          color: Theme.of(context).primaryColor,
+                          //    color: Colors.black,
                           fontWeight: FontWeight.normal,
                           fontSize: 20),
                     );
                   },
                 )),
             IconButton(
-              onPressed: () {
-                cubit.updateCurrentDate(
-                    cubit.currentDate.add(Duration(days: 1)));
-              },
-              icon: Icon(Icons.arrow_forward_ios_sharp),
-              splashRadius: 28,
-              iconSize: 20,
-              color: Colors.black,
-            ),
+                onPressed: () {
+                  cubit.updateCurrentDate(
+                      cubit.currentDate.add(Duration(days: 1)));
+                },
+                icon: Icon(Icons.arrow_forward_ios_sharp),
+                splashRadius: 28,
+                iconSize: 20,
+                color: Theme.of(context).primaryColor
+                // color: Colors.black,
+                ),
           ],
         ),
       ),
@@ -483,11 +493,11 @@ class CaloriesIndecator extends StatelessWidget {
             // ),
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: RichText(
-                  text: TextSpan(
-                      style:
-                          GoogleFonts.roboto(fontSize: 20, color: Colors.black),
-                      children: <TextSpan>[
+              child: Text.rich(TextSpan(
+                  style: GoogleFonts.roboto(
+                    fontSize: 20,
+                  ),
+                  children: <TextSpan>[
                     TextSpan(text: AppLocalizations.of(context).eatentext),
                     TextSpan(
                       text: '${cubit.kCalSum.toStringAsFixed(0)}',
@@ -526,20 +536,18 @@ class CaloriesIndecator extends StatelessWidget {
             // ),
             child: Padding(
               padding: const EdgeInsets.only(right: 5.0),
-              child: RichText(
-                  text: TextSpan(
-                      style: TextStyle(fontSize: 20, color: Colors.black),
-                      children: <TextSpan>[
-                    TextSpan(text: 'Over '),
-                    TextSpan(
-                      text: '${((2000 - cubit.kCalSum).toStringAsFixed(0))}',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: kPrimaryColor),
-                    ),
-                    TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
-                  ])),
+              child: Text.rich(
+                  TextSpan(style: TextStyle(fontSize: 20), children: <TextSpan>[
+                TextSpan(text: 'Over '),
+                TextSpan(
+                  text: '${((2000 - cubit.kCalSum).toStringAsFixed(0))}',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor),
+                ),
+                TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
+              ])),
             ),
           ),
         ],
@@ -585,10 +593,11 @@ class LinearCo2Indecator extends StatelessWidget {
               children: [
                 // Text('Co2 ${cubit.co2Sum.toStringAsFixed(1)} kg ',
                 //     style: TextStyle(fontSize: 20)),
-                RichText(
-                    text: TextSpan(
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                        children: <TextSpan>[
+                Text.rich(TextSpan(
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    children: <TextSpan>[
                       TextSpan(text: 'Co2 '),
                       TextSpan(
                         text: '${cubit.co2Sum.toStringAsFixed(1)}',
@@ -649,10 +658,9 @@ class CarbsProtienFatRow extends StatelessWidget {
                     color: kPrimaryColor,
                     size: 10,
                   ),
-                  RichText(
-                      text: TextSpan(
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                          children: <TextSpan>[
+                  Text.rich(TextSpan(
+                      style: TextStyle(fontSize: 14),
+                      children: <TextSpan>[
                         TextSpan(text: AppLocalizations.of(context).carbstext),
                         TextSpan(
                           text: '${cubit.carbs.toStringAsFixed(0)}',
@@ -684,10 +692,11 @@ class CarbsProtienFatRow extends StatelessWidget {
                     size: 10,
                   ),
 
-                  RichText(
-                      text: TextSpan(
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                          children: <TextSpan>[
+                  Text.rich(TextSpan(
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                      children: <TextSpan>[
                         TextSpan(
                             text: AppLocalizations.of(context).proteintext),
                         TextSpan(
@@ -719,10 +728,9 @@ class CarbsProtienFatRow extends StatelessWidget {
                     size: 10,
                   ),
 
-                  RichText(
-                      text: TextSpan(
-                          style: TextStyle(fontSize: 14, color: Colors.black),
-                          children: <TextSpan>[
+                  Text.rich(TextSpan(
+                      style: TextStyle(fontSize: 14),
+                      children: <TextSpan>[
                         TextSpan(text: AppLocalizations.of(context).fatstext),
                         TextSpan(
                           text: '${cubit.fats.toStringAsFixed(0)}',
@@ -755,14 +763,37 @@ class DetailsButton extends StatelessWidget {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => NutritionalDetailsPage()));
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            "Details",
-            style: TextStyle(fontSize: 20, color: kPrimaryColor),
-          ),
-        ],
+      child: Text(
+        "Details",
+        style: TextStyle(fontSize: 20, color: kPrimaryColor),
+      ),
+    );
+  }
+}
+
+class ImpactButton extends StatelessWidget {
+  const ImpactButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: "Jouw klimaat impact",
+                descriptions:
+                    "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
+                text: "Yes",
+              );
+            });
+      },
+      child: Text(
+        "Impact",
+        style: TextStyle(fontSize: 20, color: kPrimaryColor),
       ),
     );
   }

@@ -70,6 +70,7 @@ class _GraphsScreenState extends State<GraphsScreen>
             ),
             controller: tabController,
             labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            labelColor: Colors.white,
             tabs: [
               Text('1 Week'),
               Text('1 Month'),
