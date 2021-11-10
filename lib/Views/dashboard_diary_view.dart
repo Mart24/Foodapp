@@ -142,7 +142,9 @@ class _HomePageState extends State<HomePage> {
                     }, builder: (BuildContext context, DairyStates states) {
                       DairyCubit cubit = DairyCubit.instance(context);
                       double diff = cubit.kCalSum;
-                      double circularPercent = diff / 2000.0;
+                      double calGoal = cubit.calGoal;
+                      double kCalSum = cubit.kCalSum;
+                      double circularPercent = diff / calGoal;
                       if (circularPercent > 1) {
                         circularPercent = 1;
                       }
@@ -153,7 +155,9 @@ class _HomePageState extends State<HomePage> {
                       }
                       return Column(children: [
                         CaloriesIndecator(
-                            cubit: cubit,
+                            // cubit: cubit,
+                            kCalSum: kCalSum,
+                            calGoal: calGoal,
                             circularPercent: circularPercent,
                             diff: diff),
 
@@ -466,14 +470,18 @@ class DateNavigatorRow extends StatelessWidget {
 class CaloriesIndecator extends StatelessWidget {
   const CaloriesIndecator({
     Key key,
-    @required this.cubit,
+    // @required this.cubit,
     @required this.circularPercent,
     @required this.diff,
+    @required this.kCalSum,
+    @required this.calGoal,
   }) : super(key: key);
 
-  final DairyCubit cubit;
+  // final DairyCubit cubit;
   final double circularPercent;
   final double diff;
+  final double kCalSum;
+  final double calGoal;
 
   @override
   Widget build(BuildContext context) {
@@ -500,7 +508,7 @@ class CaloriesIndecator extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(text: AppLocalizations.of(context).eatentext),
                     TextSpan(
-                      text: '${cubit.kCalSum.toStringAsFixed(0)}',
+                      text: '${kCalSum.toStringAsFixed(0)}',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -537,17 +545,21 @@ class CaloriesIndecator extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 5.0),
               child: Text.rich(
-                  TextSpan(style: TextStyle(fontSize: 20), children: <TextSpan>[
-                TextSpan(text: 'Over '),
-                TextSpan(
-                  text: '${((2000 - cubit.kCalSum).toStringAsFixed(0))}',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: kPrimaryColor),
-                ),
-                TextSpan(text: ' kcal', style: TextStyle(fontSize: 12)),
-              ])),
+                TextSpan(style: TextStyle(fontSize: 20), children: <TextSpan>[
+                  TextSpan(text: 'Over '),
+                  TextSpan(
+                    text: '${((calGoal - kCalSum).toStringAsFixed(0))}',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor),
+                  ),
+                  TextSpan(
+                    text: ' kcal',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ]),
+              ),
             ),
           ),
         ],

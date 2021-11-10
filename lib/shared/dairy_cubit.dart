@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'dairy_states.dart';
 
@@ -242,4 +243,30 @@ class DairyCubit extends Cubit<DairyStates> {
 
     getUsersTripsList(Source.serverAndCache);
   }
+
+  double calGoal = 2000.0;
+
+  setCalGoal(double goal) async {
+    calGoal = goal;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setDouble('calGoal', goal).then((value) {
+        emit(CalGoalUpdatedState());
+      });
+    });
+  }
+
+  getCalGoal() async {
+    SharedPreferences.getInstance().then((prefs) {
+      if (prefs.containsKey('calGoal')) {
+        calGoal = prefs.getDouble('calGoal');
+        emit(CalGoalUpdatedState());
+      } else {
+        prefs.setDouble('calGoal', 2000.0).then((value) {
+          calGoal = 2000.0;
+          emit(CalGoalUpdatedState());
+        });
+      }
+    });
+  }
+
 }
