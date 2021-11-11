@@ -92,13 +92,15 @@ class _FoodDateState extends State<FoodDate> {
 
   _setPortionTotal() {
     print('set portion total:  ${_portionController.text}g');
-    if (_portionController.text == '1') {// selected gram unit
-      _sizeController.value= TextEditingValue(text:'100');
+    if (_portionController.text == '1') {
+      // selected gram unit
+      _sizeController.value = TextEditingValue(text: '100');
       setState(() {
         _budgetTotal = 100;
       });
-    }else{ // selected anything except the gram
-      _sizeController.value= TextEditingValue(text:'1');
+    } else {
+      // selected anything except the gram
+      _sizeController.value = TextEditingValue(text: '1');
       setState(() {
         _budgetTotal = 1;
       });

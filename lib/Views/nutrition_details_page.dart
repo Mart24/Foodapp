@@ -21,6 +21,7 @@ class NutritionalDetailsPage extends StatelessWidget {
           listener: (BuildContext context, DairyStates states) {},
           builder: (BuildContext context, DairyStates states) {
             DairyCubit cubit = DairyCubit.instance(context);
+            double calGoal = cubit.calGoal;
             print(cubit.proteinPercent);
             return SingleChildScrollView(
               child: Container(
@@ -160,7 +161,7 @@ class NutritionalDetailsPage extends StatelessWidget {
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     Text(
-                                      '${(100 - ((2000 - cubit.kCalSum) / 2000) * 100).toStringAsFixed(0)}%',
+                                      '${(100 - ((calGoal - cubit.kCalSum) / calGoal) * 100).toStringAsFixed(0)}%',
                                       style: TextStyle(fontSize: 16),
                                     ),
                                     Text(
