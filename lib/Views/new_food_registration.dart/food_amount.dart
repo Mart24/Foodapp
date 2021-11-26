@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_app/Models/fooddata_json.dart';
 import 'package:food_app/Models/ingredients.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import 'package:food_app/Views/constants.dart';
@@ -134,6 +135,26 @@ class _FoodDateState extends State<FoodDate> {
         // title: Text(AppLocalizations.of(context).chooseamountstext),
         title: Text(widget.trip.name),
         actions: [
+          // GestureDetector(
+          //   child: FooddataSQLJSON.isFavorite
+          //       ? Icon(Icons.favorite, color: Colors.red)
+          //       : Icon(Icons.favorite, color: Colors.grey),
+          //   onTap: () {
+          //     if (FooddataSQLJSON.isFavorite) {
+          //       databaseController.deleteMovie(FooddataSQLJSON.productid);
+          //       _movie.favorite = false;
+          //       if (mounted) {
+          //         setState(() {});
+          //       }
+          //     } else {
+          //       databaseController.insertMovie(_movie);
+          //       _movie.favorite = true;
+          //       if (mounted) {
+          //         setState(() {});
+          //       }
+          //     }
+          //   },
+          // ),
           IconButton(onPressed: () {}, icon: Icon(Icons.save)),
           IconButton(
               onPressed: () => Utils.openEmail(

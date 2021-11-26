@@ -12,6 +12,7 @@ import 'package:food_app/Widgets/rounded_button.dart';
 import 'package:food_app/shared/productOne_cubit.dart';
 import 'package:food_app/shared/productTwo_cubit.dart';
 import 'package:food_app/shared/search_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'comparison_view.dart';
 
@@ -51,7 +52,8 @@ class _CompareSearch1State extends State<CompareSearch1> {
               child: TextField(
                 autofocus: true,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Type something'),
+                    border: OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context).typesomething),
                 onChanged: (value) {
                   keyword = value;
                   setState(() {});
@@ -75,14 +77,15 @@ class _CompareSearch1State extends State<CompareSearch1> {
                           subtitle: Text(snapshot.data[index].brand),
                           // Text(snapshot.data[index].productid.toString()),
                           // trailing: Text(snapshot.data[index].productid.toString()),
+                          trailing: Text(
+                              '${snapshot.data[index].kcal.toString()} Kcal'),
                           onTap: () {
-                            Trip t= Trip.empty();
+                            Trip t = Trip.empty();
                             t.name = snapshot.data[index].foodname;
                             t.id = snapshot.data[index].productid;
                             // push the amount value to the summary page
 
-                            print(
-                                'product1 tapped: ${t.name} ${t.id}');
+                            print('product1 tapped: ${t.name} ${t.id}');
                             // (ProductOneCubit.instance(context))
                             //     .deleteChosenItem();
                             (ProductOneCubit.instance(context))
@@ -105,7 +108,7 @@ class _CompareSearch1State extends State<CompareSearch1> {
     ProductOneCubit productOneCubit = ProductOneCubit.instance(context);
     body = BlocConsumer<ProductOneCubit, ProductOneStates>(
       buildWhen: (previous, current) {
-        if (current ==previous) {
+        if (current == previous) {
           return false;
         } else {
           return true;
@@ -150,11 +153,10 @@ class _CompareSearch1State extends State<CompareSearch1> {
       },
     );
 
-
     // print('Comparison page of Product: ${widget.productNumber}');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search your product 1'),
+        title: Text('Product 1'),
         backgroundColor: kPrimaryColor,
         actions: [
           IconButton(
@@ -166,9 +168,6 @@ class _CompareSearch1State extends State<CompareSearch1> {
     );
   }
 }
-
-
-
 
 class CompareSearch2 extends StatefulWidget {
   // final int productNumber;
@@ -200,12 +199,15 @@ class _CompareSearch2State extends State<CompareSearch2> {
               child: TextField(
                 autofocus: true,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Type something'),
+                    border: OutlineInputBorder(),
+                    labelText: AppLocalizations.of(context).typesomething),
                 onChanged: (value) {
                   keyword = value;
                   setState(() {});
                 },
               ),
+
+              //
             ),
             Container(
               height: 800,
@@ -224,18 +226,18 @@ class _CompareSearch2State extends State<CompareSearch2> {
                           subtitle: Text(snapshot.data[index].brand),
                           // Text(snapshot.data[index].productid.toString()),
                           // trailing: Text(snapshot.data[index].productid.toString()),
+                          trailing: Text(
+                              '${snapshot.data[index].kcal.toString()} Kcal)'),
                           onTap: () {
-                            Trip t= Trip.empty();
+                            Trip t = Trip.empty();
                             t.name = snapshot.data[index].foodname;
                             t.id = snapshot.data[index].productid;
                             // push the amount value to the summary page
-                            print(
-                                'product2 tapped: ${t.name} ${t.id}');
+                            print('product2 tapped: ${t.name} ${t.id}');
                             // (ProductTwoCubit.instance(context))
                             //     .deleteChosenItem();
                             (ProductTwoCubit.instance(context))
                                 .searchedItemChoose(t);
-
                           },
                         );
                       });
@@ -254,7 +256,7 @@ class _CompareSearch2State extends State<CompareSearch2> {
     ProductTwoCubit productTwoCubit = ProductTwoCubit.instance(context);
     body = BlocConsumer<ProductTwoCubit, ProductTwoStates>(
       buildWhen: (previous, current) {
-        if (current ==previous) {
+        if (current == previous) {
           return false;
         } else {
           return true;
@@ -298,11 +300,10 @@ class _CompareSearch2State extends State<CompareSearch2> {
       },
     );
 
-
     // print('Comparison page of Product: ${widget.productNumber}');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search your product 2'),
+        title: Text('Product 2'),
         backgroundColor: kPrimaryColor,
         actions: [
           IconButton(

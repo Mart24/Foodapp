@@ -22,54 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final newTrip = Trip(
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      // null,
-      // null,
-      // null,
-      // null,
-      // null,
-      // null,
-      // null,
-      // null,
-      null);
-
   @override
   Widget build(BuildContext context) {
     print('rebuild dashboard');
@@ -143,13 +95,14 @@ class _HomePageState extends State<HomePage> {
                       DairyCubit cubit = DairyCubit.instance(context);
                       double diff = cubit.kCalSum;
                       double calGoal = cubit.calGoal;
+                      double saveGoal = cubit.saveco2Goal;
                       double kCalSum = cubit.kCalSum;
                       double circularPercent = diff / calGoal;
                       if (circularPercent > 1) {
                         circularPercent = 1;
                       }
                       double diff2 = cubit.co2Sum;
-                      double barPercent = diff2 / 5.0;
+                      double barPercent = diff2 / saveGoal;
                       if (barPercent > 1) {
                         barPercent = 1;
                       }
@@ -166,7 +119,9 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(height: 20),
 
                         LinearCo2Indecator(
-                            barPercent: barPercent, cubit: cubit),
+                          barPercent: barPercent,
+                          cubit: cubit,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -370,7 +325,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Spacer(),
                     //Icon(Icons.emoji_nature),
-                    Text("${trip.co2.toStringAsFixed(1)} co2"),
+                    Text("${trip.co2.toStringAsFixed(1)} CO₂"),
                   ],
                 ),
               ],
@@ -500,7 +455,9 @@ class CaloriesIndecator extends StatelessWidget {
             //   textAlign: TextAlign.center,
             // ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(
+                left: 10.0,
+              ),
               child: Text.rich(TextSpan(
                   style: GoogleFonts.roboto(
                     fontSize: 20,
@@ -519,10 +476,10 @@ class CaloriesIndecator extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: CircularPercentIndicator(
-              radius: 165.0,
-              lineWidth: 7.5,
+              radius: 145.0,
+              lineWidth: 6.5,
               animation: true,
               backgroundColor: Colors.grey[350],
               percent: circularPercent,
@@ -530,7 +487,8 @@ class CaloriesIndecator extends StatelessWidget {
                 "${diff.toStringAsFixed(0)} Kcal",
                 style: TextStyle(fontSize: 20),
               ),
-              progressColor: kPrimaryColor,
+              progressColor: calculateBackgroundColorCircularindicator(
+                  circularPercent: circularPercent),
               circularStrokeCap: CircularStrokeCap.round,
             ),
           ),
@@ -546,7 +504,7 @@ class CaloriesIndecator extends StatelessWidget {
               padding: const EdgeInsets.only(right: 5.0),
               child: Text.rich(
                 TextSpan(style: TextStyle(fontSize: 20), children: <TextSpan>[
-                  TextSpan(text: 'Over '),
+                  TextSpan(text: 'Over     '),
                   TextSpan(
                     text: '${((calGoal - kCalSum).toStringAsFixed(0))}',
                     style: TextStyle(
@@ -568,6 +526,14 @@ class CaloriesIndecator extends StatelessWidget {
   }
 }
 
+Color calculateBackgroundColorCircularindicator({double circularPercent}) {
+  if (circularPercent < 1) {
+    return kPrimaryColor;
+  } else {
+    return Colors.red;
+  }
+}
+
 class LinearCo2Indecator extends StatelessWidget {
   const LinearCo2Indecator({
     Key key,
@@ -582,24 +548,27 @@ class LinearCo2Indecator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            new LinearPercentIndicator(
-              animation: true,
-              backgroundColor: Colors.grey[350],
-              // backgroundColor: calculateBackgroundColor(barPercent: barPercent),
-              width: 300.0,
-              lineHeight: 25.0,
-              percent: barPercent,
-              progressColor: calculateBackgroundColor(barPercent: barPercent),
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(top: 14.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              new LinearPercentIndicator(
+                animation: true,
+                backgroundColor: Colors.grey[350],
+                // backgroundColor: calculateBackgroundColor(barPercent: barPercent),
+                width: 300.0,
+                lineHeight: 25.0,
+                percent: barPercent,
+                progressColor: calculateBackgroundColor(barPercent: barPercent),
+              ),
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 7.0, bottom: 7.0),
           child: Padding(
-            padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(right: 8.0, left: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -610,16 +579,29 @@ class LinearCo2Indecator extends StatelessWidget {
                       fontSize: 20,
                     ),
                     children: <TextSpan>[
-                      TextSpan(text: 'Co2 '),
+                      TextSpan(text: 'CO₂ '),
                       TextSpan(
                         text: '${cubit.co2Sum.toStringAsFixed(1)}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: kPrimaryColor),
                       ),
-                      TextSpan(text: 'kg', style: TextStyle(fontSize: 12)),
+                      TextSpan(text: ' kg/CO₂', style: TextStyle(fontSize: 12)),
+                    ])),
+                Text.rich(TextSpan(
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(text: 'Max. '),
+                      TextSpan(
+                        text: '${cubit.saveco2Goal.toStringAsFixed(1)}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: kPrimaryColor),
+                      ),
+                      TextSpan(text: ' kg/CO₂', style: TextStyle(fontSize: 12)),
                     ])),
 
-                Text('max 5.0 kg')
+                // Text('max 5.0 kg/Co²')
               ],
             ),
           ),
@@ -630,10 +612,10 @@ class LinearCo2Indecator extends StatelessWidget {
 }
 
 Color calculateBackgroundColor({double barPercent}) {
-  if (barPercent > 0.99) {
+  if (barPercent > 0.999) {
     return Colors.redAccent;
-  } else if (barPercent > 0.60) {
-    return Colors.orangeAccent;
+    // } else if (barPercent > 0.516) {
+    //   return Colors.orangeAccent;
   } else {
     return kPrimaryColor;
   }
@@ -668,10 +650,10 @@ class CarbsProtienFatRow extends StatelessWidget {
                   Icon(
                     Icons.circle,
                     color: kPrimaryColor,
-                    size: 10,
+                    size: 12,
                   ),
                   Text.rich(TextSpan(
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 16),
                       children: <TextSpan>[
                         TextSpan(text: AppLocalizations.of(context).carbstext),
                         TextSpan(
@@ -701,12 +683,12 @@ class CarbsProtienFatRow extends StatelessWidget {
                   Icon(
                     Icons.circle,
                     color: kPrimaryColor,
-                    size: 10,
+                    size: 12,
                   ),
 
                   Text.rich(TextSpan(
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                       ),
                       children: <TextSpan>[
                         TextSpan(
@@ -737,11 +719,11 @@ class CarbsProtienFatRow extends StatelessWidget {
                   Icon(
                     Icons.circle,
                     color: kPrimaryColor,
-                    size: 10,
+                    size: 12,
                   ),
 
                   Text.rich(TextSpan(
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 16),
                       children: <TextSpan>[
                         TextSpan(text: AppLocalizations.of(context).fatstext),
                         TextSpan(
@@ -828,7 +810,7 @@ class CategoryTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String energy = '${kcalSum.toStringAsFixed(0)} kCal';
-    String climate = '${co2Sum.toStringAsFixed(1)} kg/Co²';
+    String climate = '${co2Sum.toStringAsFixed(1)} kg/CO₂';
     return Container(
       height: 50,
       margin: EdgeInsets.all(5),

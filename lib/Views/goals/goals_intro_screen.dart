@@ -217,9 +217,9 @@ class _Header extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context).goalheader2ntext,
                     style: GoogleFonts.yantramanav(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),

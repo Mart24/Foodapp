@@ -87,8 +87,8 @@ class _ComparisonViewState extends State<ComparisonView> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          content:
-                              Text('Are you sure you want to delete your goal'),
+                          content: Text(
+                              'Are you sure you want to delete your product'),
                           actions: [
                             ElevatedButton(
                               onPressed: () {

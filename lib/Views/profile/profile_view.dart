@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Services/auth_service.dart';
-import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/profile/accounts_settings_view.dart';
 import 'package:food_app/Views/profile/app_information_view.dart';
-import 'package:food_app/Views/profile/body.dart';
 import 'package:food_app/Views/profile/goal_settings_view.dart';
 import 'package:food_app/Views/profile/utils.dart';
-import 'package:food_app/Views/size_config.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:food_app/Widgets/Provider_Auth.dart';
 import 'package:food_app/Widgets/profile_buttons.dart';
-import 'package:food_app/Widgets/profile_info.dart';
+import 'package:food_app/Widgets/theme_provider.dart';
+import 'package:provider/provider.dart' as provider1;
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Profiel extends StatelessWidget {
   static const keyDarkMode = 'key-dark-mode';
 
   @override
   Widget build(BuildContext context) {
-    final text = MediaQuery.of(context).platformBrightness == Brightness.dark
-        ? 'Darktheme'
-        : 'LightTheme';
+    // final text = MediaQuery.of(context).platformBrightness == Brightness.dark
+    //     ? 'Darktheme'
+    //     : 'LightTheme';
     //   SizeConfig().init(context);
     // return Scaffold(
     //   body: Body(),
@@ -44,31 +42,33 @@ class Profiel extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.all(16),
           children: [
-            buildDarkMode(),
+            buildDarkMode(context),
             SettingsGroup(title: 'Goals', children: <Widget>[
               GoalSettingsPage(),
             ]),
             SettingsGroup(title: 'General', children: <Widget>[
               AccountPage(),
               buildLogout(context),
-              buildDeleteaccount(),
+              buildDeleteaccount(context),
             ]),
             //  const SizedBox(height: 12),
             SettingsGroup(title: 'Feedback', children: <Widget>[
               const SizedBox(
                 height: 8,
               ),
-              buildReportBug(),
+              buildReportBug(context),
               //  buildSendFeedback(),
             ]),
-            SettingsGroup(title: 'App Information', children: <Widget>[
-              const SizedBox(
-                height: 8,
-              ),
-              AppInformationPage(),
-            ]),
+            SettingsGroup(
+                title: AppLocalizations.of(context).appinformation,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  AppInformationPage(),
+                ]),
           ],
         ),
       ),
@@ -76,7 +76,7 @@ class Profiel extends StatelessWidget {
   }
 
   Widget buildLogout(context) => SimpleSettingsTile(
-        title: 'Logout',
+        title: AppLocalizations.of(context).signout,
         subtitle: '',
         leading: Iconwidget(icon: Icons.logout, color: Colors.greenAccent),
         onTap: () async {
@@ -93,8 +93,8 @@ class Profiel extends StatelessWidget {
         },
       );
 
-  Widget buildDeleteaccount() => SimpleSettingsTile(
-        title: 'Delete account',
+  Widget buildDeleteaccount(context) => SimpleSettingsTile(
+        title: AppLocalizations.of(context).deleteaccount,
         subtitle: '',
         leading: Iconwidget(icon: Icons.delete, color: Colors.pink),
         onTap: () => Utils.openEmail(
@@ -104,8 +104,8 @@ class Profiel extends StatelessWidget {
         ),
       );
 
-  Widget buildReportBug() => SimpleSettingsTile(
-        title: 'Report Bug',
+  Widget buildReportBug(context) => SimpleSettingsTile(
+        title: AppLocalizations.of(context).reportbug,
         subtitle: '',
         leading: Iconwidget(icon: Icons.report, color: Colors.teal),
         onTap: () => Utils.openEmail(
@@ -115,18 +115,24 @@ class Profiel extends StatelessWidget {
         ),
       );
 
-  Widget buildSendFeedback() => SimpleSettingsTile(
-        title: 'Send Feedback',
-        subtitle: '',
-        leading: Iconwidget(icon: Icons.thumb_up, color: Colors.purple),
-        onTap: () {},
-      );
-
-  Widget buildDarkMode() => SwitchSettingsTile(
+  Widget buildDarkMode(context) {
+    //  DairyCubit cubit = DairyCubit.instance(context);
+    final themeProvider = provider1.Provider.of<ThemeProvider>(context);
+    // bool isDarkMode = cubit.isDarkMode;
+    return SwitchSettingsTile(
       settingKey: keyDarkMode,
+      defaultValue: themeProvider.isDarkMode,
       leading: Iconwidget(icon: Icons.dark_mode, color: Colors.black54),
       title: 'Dark Mode',
-      enabledLabel: 'Coming soon',
-      disabledLabel: 'Coming soon',
-      onChange: null);
+      enabledLabel: AppLocalizations.of(context).darkmodetext1,
+      disabledLabel: AppLocalizations.of(context).darkmodetext2,
+      onChange: (newdarkmode) {
+        final provider =
+            provider1.Provider.of<ThemeProvider>(context, listen: false);
+        provider.toggleTheme(newdarkmode);
+        //  cubit.setDarkMode(newdarkmode);
+        debugPrint('Darkmode: $newdarkmode');
+      },
+    );
+  }
 }

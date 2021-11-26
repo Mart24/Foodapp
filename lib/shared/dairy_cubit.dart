@@ -246,10 +246,10 @@ class DairyCubit extends Cubit<DairyStates> {
 
   double calGoal = 2000.0;
 
-  setCalGoal(double goal) async {
-    calGoal = goal;
+  setCalGoal(double goal1) async {
+    calGoal = goal1;
     SharedPreferences.getInstance().then((prefs) {
-      prefs.setDouble('calGoal', goal).then((value) {
+      prefs.setDouble('calGoal', goal1).then((value) {
         emit(CalGoalUpdatedState());
       });
     });
@@ -269,4 +269,53 @@ class DairyCubit extends Cubit<DairyStates> {
     });
   }
 
+  double saveco2Goal = 5.0;
+
+  setSaveGoal(double co2savegoal) async {
+    saveco2Goal = co2savegoal;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setDouble('saveGoal', co2savegoal).then((value) {
+        emit(SaveGoalUpdatedState());
+      });
+    });
+  }
+
+  getSaveGoal() async {
+    SharedPreferences.getInstance().then((prefs) {
+      if (prefs.containsKey('saveGoal')) {
+        saveco2Goal = prefs.getDouble('saveGoal');
+        emit(SaveGoalUpdatedState());
+      } else {
+        prefs.setDouble('saveGoal', 5.0).then((value) {
+          saveco2Goal = 5.0;
+          emit(SaveGoalUpdatedState());
+        });
+      }
+    });
+  }
+
+  // bool isDarkMode = true;
+
+  // setDarkMode(bool darkmodevalue) async {
+  //   isDarkMode = darkmodevalue;
+  //   SharedPreferences.getInstance().then((prefs) {
+  //     prefs.setBool('saveDark', darkmodevalue).then((value) {
+  //       emit(SaveGoalUpdatedState());
+  //     });
+  //   });
+  // }
+
+  // getdarkmode() async {
+  //   SharedPreferences.getInstance().then((prefs) {
+  //     if (prefs.containsKey('saveDark')) {
+  //       isDarkMode = prefs.getBool('saveDark');
+  //       emit(SaveGoalUpdatedState());
+  //     } else {
+  //       prefs.setBool('saveDark', true).then((value) {
+  //         isDarkMode = true;
+  //         emit(SaveGoalUpdatedState());
+  //       });
+  //     }
+  //   });
+  // }
 }

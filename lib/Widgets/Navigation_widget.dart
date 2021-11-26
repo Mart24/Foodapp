@@ -4,6 +4,7 @@ import 'package:food_app/Models/ingredients.dart';
 import 'package:food_app/Views/compare_feature/compare_page.dart';
 import 'package:food_app/Views/goals/goals_home.dart';
 import 'package:food_app/Views/dashboard_diary_view.dart';
+import 'package:food_app/Views/new_food_registration.dart/food_search1.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/productOne_cubit.dart';
 import 'package:food_app/shared/productTwo_cubit.dart';

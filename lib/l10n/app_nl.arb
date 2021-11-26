@@ -17,10 +17,10 @@
    "askemail": "Stuur email",
    "backtologin": "Terug naar log in",
    "resetpassword": "Verander Wachtwoord",
-   "eatentext": "Eten  ",
+   "eatentext": "Gegeten",
     "carbstext": " Koolh. ",
-    "proteintext": " Eiwitten ",
-    "fatstext": " Vetten ",
+    "proteintext": " Eiwit ",
+    "fatstext": " Vet ",
     "breakfast": "Ontbijt",
     "otherstext": "Overig",
     "diarytext": "Dagboek",
@@ -74,8 +74,37 @@
     "goalheaderntext": "Neem een spaardoel",
     "goalheader2ntext": "Onder 5 kg/Co² per dag spaar je uit",
     "goalbuttontext": "Ga verder",
-    "comparevietheadertext": "Vergelijk producten"
+    "comparevietheadertext": "Vergelijk producten",
 
+
+    "yourco2goal": "Jouw CO₂ bespaar doel",
+    "saved": "Bespaard ",
+    "goal": "Doel ",
+    "thisweek": "Deze week ",
+    "youhaveeaten": "Je hebt gegeten ",
+    "yousaved": "Je bespaarde ",
+    "savegoal": "Spaar doel",
+    "co2tosave": "CO₂ nog te gaan ",
+    "goalreachedin": "Doel behaald in ",
+    "day": "Dag",
+    "co2eaten": "CO₂ gegeten",
+    "co2saved": "CO₂ bespaard",
+    "questiongoal" : "Weet je zeker dat je je bespaar doel wilt verwijderen",
+    "no": "Nee",
+    "yes": "Ja",
+
+    "darkmodetext1": "Beter voor je ogen en accuduur",
+    "darkmodetext2": "Shine bright like a diamond",
+    "goalsettings": "Stel je doelen in",
+    "goalsettingssubtitle": "Calorie doel en CO₂ doel",
+    "ygoalsettingsco2": "CO₂ doel",
+    "accountsettings": "Account Instellingen",
+    "settings": "Instellingen",
+    "signout": "Log uit",
+    "deleteaccount": "Verwijder account",
+    "reportbug": "Meld een bug",
+    "appinformation": "App Informatie",
+    "licenses": "Licensies"
 
     }
     

@@ -131,7 +131,38 @@
     "goalbuttontext": "Set a Co² Goal",
 
 
-    "comparevietheadertext": "Compare products"
+    "comparevietheadertext": "Compare products",
+
+    "yourco2goal": "Your CO₂ save goal",
+    "saved": "Saved",
+    "goal": "Goal",
+    "thisweek": "This week ",
+    "youhaveeaten": "You have eaten ",
+    "yousaved": "You saved ",
+    "savegoal": "Save goal",
+    "co2tosave": "CO₂ to save ",
+    "goalreachedin": "Goal reached in ",
+    "day": "Day",
+    "co2eaten": "CO₂ eaten",
+    "co2saved": "CO₂ saved",
+    "questiongoal" : "Are you sure you want to delete your goal",
+    "no": "No",
+    "yes": "Yes",
+
+    "darkmodetext1": "Better for your eyes and battery",
+    "darkmodetext2": "Let there be light",
+    "goalsettings": "Goal Settings",
+    "goalsettingssubtitle": "Calorie goal and CO₂ goal",
+    "ygoalsettingsco2": "CO₂ goal",
+    "accountsettings": "Account Settings",
+    "settings": "Settings",
+    "signout": "Sign out",
+    "deleteaccount": "Delete profile",
+    "reportbug": "Report Bug",
+    "appinformation": "App Information",
+    "licenses": "Licenses"
+    
+
     
 
 

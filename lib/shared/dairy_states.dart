@@ -19,3 +19,5 @@ class GetUserTripsListState extends DairyStates {}
 class StreamUpdatedState extends DairyStates {}
 
 class CalGoalUpdatedState extends DairyStates {}
+
+class SaveGoalUpdatedState extends DairyStates {}

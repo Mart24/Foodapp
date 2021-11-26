@@ -120,9 +120,11 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
                             itemBuilder: (context, index) {
                               return ListTile(
                                 title: Text(snapshot.data[index].foodname),
-                                subtitle: Text(snapshot.data[index].brand),
+                                subtitle: Text(
+                                    '${snapshot.data[index].category}, ${snapshot.data[index].brand}'),
                                 // Text(snapshot.data[index].productid.toString()),
-                                // trailing: Text(snapshot.data[index].productid.toString()),
+                                trailing: Text(
+                                    '${snapshot.data[index].kcal.toString()} Kcal'),
                                 onTap: () {
                                   widget.trip.name =
                                       snapshot.data[index].foodname;

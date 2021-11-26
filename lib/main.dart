@@ -9,6 +9,7 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart'
 import 'package:food_app/Widgets/theme_provider.dart';
 import 'package:food_app/shared/productOne_cubit.dart';
 import 'package:food_app/shared/productTwo_cubit.dart';
+import 'package:provider/provider.dart' as provider1;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/l10n.dart';
 import 'package:food_app/shared/app_cubit.dart';
@@ -86,61 +87,66 @@ void main() async {
 class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
-  Widget build(BuildContext context) {
-    return Provider(
-      auth: AuthService(),
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (BuildContext context) => AppCubit(),
-          ),
-          BlocProvider(
-            create: (BuildContext context) => DairyCubit()
-              ..getUsersTripsList(Source.cache)
-              ..getCalGoal(),
-          ),
-          BlocProvider(
-            create: (BuildContext context) => GoalCubit(),
-          ),
-          BlocProvider(
-            create: (BuildContext context) => SearchCubit(),
-          ),
-          BlocProvider(
-            create: (BuildContext context) => ProductTwoCubit(),
-          ),
-          BlocProvider(
-            create: (BuildContext context) => ProductOneCubit(),
-          ),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Test123',
-          // theme: ThemeData(
-          //   primarySwatch: Colors.green,
-          //   backgroundColor: Colors.yellow,
-          // ),
-          themeMode: ThemeMode.system,
-          theme: Mythemes.lightTheme,
-          darkTheme: Mythemes.darkTheme,
-          home: HomeController(),
-          routes: <String, WidgetBuilder>{
-            '/signUp': (BuildContext context) =>
-                SignUpView(authFormType: AuthFormType.signUp),
-            '/signIn': (BuildContext context) =>
-                SignUpView(authFormType: AuthFormType.signIn),
-            '/home': (BuildContext context) => HomeController(),
-          },
-          supportedLocales: L10n.all,
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => provider1.ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        builder: (context, _) {
+          final themeProvider = provider1.Provider.of<ThemeProvider>(context);
+          return Provider(
+            auth: AuthService(),
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (BuildContext context) => AppCubit(),
+                ),
+                BlocProvider(
+                  create: (BuildContext context) => DairyCubit()
+                    ..getUsersTripsList(Source.cache)
+                    ..getCalGoal()
+                    ..getSaveGoal(),
+                ),
+                BlocProvider(
+                  create: (BuildContext context) => GoalCubit(),
+                ),
+                BlocProvider(
+                  create: (BuildContext context) => SearchCubit(),
+                ),
+                BlocProvider(
+                  create: (BuildContext context) => ProductTwoCubit(),
+                ),
+                BlocProvider(
+                  create: (BuildContext context) => ProductOneCubit(),
+                ),
+              ],
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Test123',
+                // theme: ThemeData(
+                //   primarySwatch: Colors.green,
+                //   backgroundColor: Colors.yellow,
+                // ),
+                themeMode: themeProvider.themeMode,
+                theme: Mythemes.lightTheme,
+                darkTheme: Mythemes.darkTheme,
+                home: HomeController(),
+                routes: <String, WidgetBuilder>{
+                  '/signUp': (BuildContext context) =>
+                      SignUpView(authFormType: AuthFormType.signUp),
+                  '/signIn': (BuildContext context) =>
+                      SignUpView(authFormType: AuthFormType.signIn),
+                  '/home': (BuildContext context) => HomeController(),
+                },
+                supportedLocales: L10n.all,
+                localizationsDelegates: [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+              ),
+            ),
+          );
+        },
+      );
 }
 
 class HomeController extends StatelessWidget {

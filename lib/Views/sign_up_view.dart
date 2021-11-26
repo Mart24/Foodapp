@@ -89,32 +89,44 @@ class _SignUpViewState extends State<SignUpView> {
     final _height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Container(
-        color: colorlightgreen,
-        height: _height,
-        width: _width,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: _height * 0.025),
-                showAlert(),
-                SizedBox(height: _height * 0.025),
-                buildHeaderText(),
-                SizedBox(height: _height * 0.05),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: buildInputs() + buildButtons(),
+      body: Stack(
+        children: [
+          Container(
+            // color: colorlightgreen,
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                colorFilter: new ColorFilter.mode(
+                    Colors.black.withOpacity(0.4), BlendMode.darken),
+                image: new AssetImage("assets/background.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            height: _height,
+            width: _width,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: _height * 0.025),
+                    showAlert(),
+                    SizedBox(height: _height * 0.025),
+                    buildHeaderText(),
+                    SizedBox(height: _height * 0.05),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          children: buildInputs() + buildButtons(),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -173,6 +185,7 @@ class _SignUpViewState extends State<SignUpView> {
       style: TextStyle(
         fontSize: 35,
         fontWeight: FontWeight.bold,
+        color: Colors.white,
       ),
     );
   }
@@ -185,7 +198,7 @@ class _SignUpViewState extends State<SignUpView> {
         TextFormField(
           validator: EmailValidator.validate,
           keyboardType: TextInputType.emailAddress,
-          style: TextStyle(fontSize: 22.0),
+          style: TextStyle(fontSize: 22.0, color: Colors.black),
           decoration: buildSignUpInputDecoration("Email".trim()),
           onSaved: (value) => _email = value,
         ),
@@ -199,7 +212,7 @@ class _SignUpViewState extends State<SignUpView> {
       textFields.add(
         TextFormField(
           validator: NameValidator.validate,
-          style: TextStyle(fontSize: 22.0),
+          style: TextStyle(fontSize: 22.0, color: Colors.black),
           decoration:
               buildSignUpInputDecoration(AppLocalizations.of(context).name),
           onSaved: (value) => _name = value,
@@ -213,7 +226,7 @@ class _SignUpViewState extends State<SignUpView> {
       TextFormField(
         validator: EmailValidator.validate,
         keyboardType: TextInputType.emailAddress,
-        style: TextStyle(fontSize: 22.0),
+        style: TextStyle(fontSize: 22.0, color: Colors.black),
         decoration: buildSignUpInputDecoration("Email".trim()),
         onSaved: (value) => _email = value,
       ),
@@ -222,7 +235,7 @@ class _SignUpViewState extends State<SignUpView> {
     textFields.add(
       TextFormField(
         validator: PasswordValidator.validate,
-        style: TextStyle(fontSize: 22.0),
+        style: TextStyle(fontSize: 22.0, color: Colors.black),
         decoration:
             buildSignUpInputDecoration(AppLocalizations.of(context).password),
         obscureText: true,
@@ -236,10 +249,11 @@ class _SignUpViewState extends State<SignUpView> {
 
   InputDecoration buildSignUpInputDecoration(String hint) {
     return InputDecoration(
+      hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey),
       hintText: hint,
       filled: true,
       fillColor: Colors.white,
-      focusColor: Colors.white,
+      focusColor: Colors.grey,
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white, width: 0.0)),
       contentPadding:
@@ -271,11 +285,11 @@ class _SignUpViewState extends State<SignUpView> {
     return [
       Container(
         width: MediaQuery.of(context).size.width * 0.7,
-        child: RaisedButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-          color: Colors.white,
-          textColor: primaryColor,
+        child: ElevatedButton(
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          // color: Colors.white,
+          // textColor: primaryColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -287,10 +301,10 @@ class _SignUpViewState extends State<SignUpView> {
         ),
       ),
       showForgotPassword(_showForgotPassword),
-      FlatButton(
+      TextButton(
         child: Text(
           _switchButtonText,
-          //      style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
           switchFormState(_newFormState);
@@ -302,10 +316,10 @@ class _SignUpViewState extends State<SignUpView> {
 
   Widget showForgotPassword(bool visible) {
     return Visibility(
-      child: FlatButton(
+      child: TextButton(
         child: Text(
           AppLocalizations.of(context).forgotpassword,
-          //   style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
           setState(() {

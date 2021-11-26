@@ -14,9 +14,9 @@ class DatabaseGService {
   Database _db;
 
   initDatabase() async {
-    _db = await openDatabase('assets/groentevlees.db');
+    _db = await openDatabase('assets/exampledatadb.db');
     var databasePath = await getDatabasesPath();
-    var path = join(databasePath, 'groentevlees.db');
+    var path = join(databasePath, 'exampledatadb.db');
 
     //Check if DB exists
     var exists = await databaseExists(path);
@@ -30,7 +30,7 @@ class DatabaseGService {
       } catch (_) {}
 
       //Copy from assets
-      ByteData data = await rootBundle.load(join("assets", "groentevlees.db"));
+      ByteData data = await rootBundle.load(join("assets", "exampledatadb.db"));
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
@@ -58,16 +58,6 @@ class DatabaseGService {
         .map((foodddata) => FooddataSQLJSON.fromJson(foodddata))
         .toList();
   }
-
-  // myname like 'jack' then 0 else 1 end, myname ASC
-  // Future<List<FooddataSQLJSON>> searchFooddata(String keyword) async {
-  //   final db = await initDatabase();
-  //   List<Map> list = await _db
-  //       .query('exampledata', where: 'name LIKE ?', whereArgs: ['%keyword%']);
-  //   return list
-  //       .map((foodddata) => FooddataSQLJSON.fromJson(foodddata))
-  //       .toList();
-  // }
 
   dispose() {
     _db.close();
