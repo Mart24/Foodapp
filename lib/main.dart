@@ -10,7 +10,6 @@ import 'package:food_app/Widgets/theme_provider.dart';
 import 'package:food_app/shared/productOne_cubit.dart';
 import 'package:food_app/shared/productTwo_cubit.dart';
 import 'package:provider/provider.dart' as provider1;
-import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/l10n.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/dairy_cubit.dart';
@@ -62,11 +61,11 @@ class MyBlocObserver extends BlocObserver {
   }
 }
 
-_incrementCounter() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  int goal = prefs.getInt('goal');
-  // await prefs.setInt('counter', counter);
-}
+// _incrementCounter() async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   int goal = prefs.getInt('goal');
+//   // await prefs.setInt('counter', counter);
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
