@@ -9,7 +9,7 @@ class AccountPage extends StatelessWidget {
         title: AppLocalizations.of(context).accountsettings,
         subtitle: AppLocalizations.of(context).settings,
         leading: Iconwidget(
-          icon: Icons.person,
+          faIcon: Icons.person,
           color: Colors.green,
         ),
         child: SettingsScreen(
@@ -23,6 +23,6 @@ class AccountPage extends StatelessWidget {
 Widget buildAccountInfo() => SimpleSettingsTile(
       title: 'Account info',
       subtitle: '',
-      leading: Iconwidget(icon: Icons.person, color: Colors.purple),
+      leading: Iconwidget(faIcon: Icons.person, color: Colors.purple),
       onTap: () {},
     );

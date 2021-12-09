@@ -128,594 +128,603 @@ class _FoodDateState extends State<FoodDate> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        // title: Text(AppLocalizations.of(context).chooseamountstext),
-        title: Text(widget.trip.name),
-        actions: [
-          // GestureDetector(
-          //   child: FooddataSQLJSON.isFavorite
-          //       ? Icon(Icons.favorite, color: Colors.red)
-          //       : Icon(Icons.favorite, color: Colors.grey),
-          //   onTap: () {
-          //     if (FooddataSQLJSON.isFavorite) {
-          //       databaseController.deleteMovie(FooddataSQLJSON.productid);
-          //       _movie.favorite = false;
-          //       if (mounted) {
-          //         setState(() {});
-          //       }
-          //     } else {
-          //       databaseController.insertMovie(_movie);
-          //       _movie.favorite = true;
-          //       if (mounted) {
-          //         setState(() {});
-          //       }
-          //     }
-          //   },
-          // ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.save)),
-          IconButton(
-              onPressed: () => Utils.openEmail(
-                    toEmail: 'martijnformer24@gmail.com',
-                    subject:
-                        'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
-                    body: 'I have a question or suggestion for this product',
-                  ),
-              icon: Icon(Icons.message)),
-
-          //   onPressed: () => Utils.openEmail(
-          //     toEmail: 'martijnformer24@gmail.com',
-          //     subject:
-          //         'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
-          //     body: 'I have a question or suggestion for this product',
-          //   ),
-          //   child: Text(AppLocalizations.of(context).reporttext),
-          // ),
-        ],
-      ),
-      body: Center(
-        child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('fdd')
-                .doc(widget.trip.id.toString())
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return const Text("Loading...");
-              var foodDocument = snapshot.data;
-
-              final nutriscoreType = widget.trip.nutriscoreimage();
-              final ecoscoreType = widget.trip.ecoscoreimage();
-              //nutriscore
-              String nutriscore = foodDocument['nutriscore'];
-              //ecoscore
-              String ecoscore = foodDocument['ecoscore'];
-              // Plantbase string
-              String plantbased = foodDocument['plantbased'];
-              // Calorieën double
-              double kcal = ((foodDocument['kcal'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              // Calorieën CO2
-              double co2 = ((foodDocument['co2'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              // Calorieën Koolhydraten
-              double koolhy = ((foodDocument['carbs'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              // Calorieën Eiwitten
-              double protein = ((foodDocument['proteins'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              // Calorieën Vetten
-              double fat = ((foodDocument['fat'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              double saturatedfat = ((foodDocument['saturatedfat'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              double sugars = ((foodDocument['sugars'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              double dietaryfiber = ((foodDocument['dietaryfiber'].toDouble()) *
-                  ((double.tryParse(_sizeController.text) ?? 100)) *
-                  ((double.tryParse(_portionController.text) ?? 1)) *
-                  0.01.toDouble());
-              // double salt = ((foodDocument['salt'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double alcohol = ((foodDocument['alcohol'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double natrium = ((foodDocument['natrium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double kalium = ((foodDocument['kalium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double calcium = ((foodDocument['calcium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double magnesium = ((foodDocument['magnesium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double iron = ((foodDocument['iron'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double selenium = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double zink = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitA = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitB = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitC = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitE = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitB1 = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitB2 = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitB6 = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double vitB12 = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double foliumzuur = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double niacine = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double jodium = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-              // double fosfor = ((foodDocument['selenium'].toDouble()) *
-              //     ((double.tryParse(_budgetController.text) ?? 100)) *
-              //     0.01.toDouble());
-
-              return Container(
-                child: Column(children: <Widget>[
-                  Text(
-                    "${foodDocument['name']}",
-                    style: new TextStyle(fontSize: 24.0),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: InputBar(
-                      sizeController: _sizeController,
-                      portionController: _portionController,
-                      portionUnitController: _portionUnitController,
-                      id: widget.trip.id.toString(),
+    return GestureDetector(
+      onTap: () {
+        // call this method here to hide soft keyboard
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          // title: Text(AppLocalizations.of(context).chooseamountstext),
+          title: Text(widget.trip.name),
+          actions: [
+            // GestureDetector(
+            //   child: FooddataSQLJSON.isFavorite
+            //       ? Icon(Icons.favorite, color: Colors.red)
+            //       : Icon(Icons.favorite, color: Colors.grey),
+            //   onTap: () {
+            //     if (FooddataSQLJSON.isFavorite) {
+            //       databaseController.deleteMovie(FooddataSQLJSON.productid);
+            //       _movie.favorite = false;
+            //       if (mounted) {
+            //         setState(() {});
+            //       }
+            //     } else {
+            //       databaseController.insertMovie(_movie);
+            //       _movie.favorite = true;
+            //       if (mounted) {
+            //         setState(() {});
+            //       }
+            //     }
+            //   },
+            // ),
+            IconButton(onPressed: () {}, icon: Icon(Icons.save)),
+            IconButton(
+                onPressed: () => Utils.openEmail(
+                      toEmail: 'martijnformer24@gmail.com',
+                      subject:
+                          'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
+                      body: 'I have a question or suggestion for this product',
                     ),
-                  ),
-                  // Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
+                icon: Icon(Icons.message)),
+
+            //   onPressed: () => Utils.openEmail(
+            //     toEmail: 'martijnformer24@gmail.com',
+            //     subject:
+            //         'Melding van product: ${widget.trip.name}: ${widget.trip.id}',
+            //     body: 'I have a question or suggestion for this product',
+            //   ),
+            //   child: Text(AppLocalizations.of(context).reporttext),
+            // ),
+          ],
+        ),
+        body: Center(
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('fdd')
+                  .doc(widget.trip.id.toString())
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return const Text("Loading...");
+                var foodDocument = snapshot.data;
+
+                final nutriscoreType = widget.trip.nutriscoreimage();
+                final ecoscoreType = widget.trip.ecoscoreimage();
+                //nutriscore
+                String nutriscore = foodDocument['nutriscore'];
+                //ecoscore
+                String ecoscore = foodDocument['ecoscore'];
+                // Plantbase string
+                String plantbased = foodDocument['plantbased'];
+                // Calorieën double
+                double kcal = ((foodDocument['kcal'].toDouble()) *
+                    ((double.tryParse(_sizeController.text) ?? 100)) *
+                    ((double.tryParse(_portionController.text) ?? 1)) *
+                    0.01.toDouble());
+                // Calorieën CO2
+                double co2 = ((foodDocument['co2'].toDouble()) *
+                    ((double.tryParse(_sizeController.text) ?? 100)) *
+                    ((double.tryParse(_portionController.text) ?? 1)) *
+                    0.01.toDouble());
+                // Calorieën Koolhydraten
+                double koolhy = ((foodDocument['carbs'].toDouble()) *
+                    ((double.tryParse(_sizeController.text) ?? 100)) *
+                    ((double.tryParse(_portionController.text) ?? 1)) *
+                    0.01.toDouble());
+                // Calorieën Eiwitten
+                double protein = ((foodDocument['proteins'].toDouble()) *
+                    ((double.tryParse(_sizeController.text) ?? 100)) *
+                    ((double.tryParse(_portionController.text) ?? 1)) *
+                    0.01.toDouble());
+                // Calorieën Vetten
+                double fat = ((foodDocument['fat'].toDouble()) *
+                    ((double.tryParse(_sizeController.text) ?? 100)) *
+                    ((double.tryParse(_portionController.text) ?? 1)) *
+                    0.01.toDouble());
+                double saturatedfat =
+                    ((foodDocument['saturatedfat'].toDouble()) *
+                        ((double.tryParse(_sizeController.text) ?? 100)) *
+                        ((double.tryParse(_portionController.text) ?? 1)) *
+                        0.01.toDouble());
+                double sugars = ((foodDocument['sugars'].toDouble()) *
+                    ((double.tryParse(_sizeController.text) ?? 100)) *
+                    ((double.tryParse(_portionController.text) ?? 1)) *
+                    0.01.toDouble());
+                double dietaryfiber =
+                    ((foodDocument['dietaryfiber'].toDouble()) *
+                        ((double.tryParse(_sizeController.text) ?? 100)) *
+                        ((double.tryParse(_portionController.text) ?? 1)) *
+                        0.01.toDouble());
+                // double salt = ((foodDocument['salt'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double alcohol = ((foodDocument['alcohol'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double natrium = ((foodDocument['natrium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double kalium = ((foodDocument['kalium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double calcium = ((foodDocument['calcium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double magnesium = ((foodDocument['magnesium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double iron = ((foodDocument['iron'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double selenium = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double zink = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitA = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitB = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitC = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitE = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitB1 = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitB2 = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitB6 = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double vitB12 = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double foliumzuur = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double niacine = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double jodium = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+                // double fosfor = ((foodDocument['selenium'].toDouble()) *
+                //     ((double.tryParse(_budgetController.text) ?? 100)) *
+                //     0.01.toDouble());
+
+                return Container(
+                  child: Column(children: <Widget>[
+                    Text(
+                      "${foodDocument['name']}",
+                      style: new TextStyle(fontSize: 24.0),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: InputBar(
+                        sizeController: _sizeController,
+                        portionController: _portionController,
+                        portionUnitController: _portionUnitController,
+                        id: widget.trip.id.toString(),
+                      ),
+                    ),
+                    // Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          RaisedButton(
+                            child: Text(
+                                "${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
+                            onPressed: () => _selectDate(context),
+                            // await displayDateRangePicker(context);
+                            //   },
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(left: 8.0),
+                          //   child: Text(
+                          //       "Datum: ${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
+                          // ),
+
+                          DropdownButton(
+                            hint: Text('Breakfast'),
+                            value: categoryChoice,
+                            onChanged: (newValue) {
+                              setState(() {
+                                categoryChoice = newValue;
+                              });
+                              print(categoryChoice);
+                            },
+                            items: categoryItem.map((valueItem) {
+                              return DropdownMenuItem(
+                                value: valueItem,
+                                child: Text(valueItem),
+                              );
+                            }).toList(),
+                          ),
+                          RaisedButton(
+                            child: Text(AppLocalizations.of(context).savetext),
+                            onPressed: () {
+                              //  widget.trip.startDate = _startDate;
+                              // widget.trip.endDate = _endDate;
+                              widget.trip.kcal = kcal;
+                              widget.trip.co2 = co2;
+                              widget.trip.carbs = koolhy;
+                              widget.trip.protein = protein;
+                              widget.trip.fat = fat;
+                              widget.trip.sugars = sugars;
+                              widget.trip.dietaryfiber = dietaryfiber;
+
+                              widget.trip.saturatedfat = saturatedfat;
+                              widget.trip.eatDate = _eattime;
+                              widget.trip.amount = (_sizeController.text == "")
+                                  ? 0
+                                  : double.parse(_sizeController.text);
+                              widget.trip.categorie = categoryChoice;
+                              widget.trip.plantbased = plantbased;
+                              widget.trip.nutriscore = nutriscore;
+                              widget.trip.ecoscore = ecoscore;
+                              widget.trip.amountUnit =
+                                  _portionUnitController.text;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        NewFoodSummaryView(trip: widget.trip)),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        RaisedButton(
-                          child: Text(
-                              "${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
-                          onPressed: () => _selectDate(context),
-                          // await displayDateRangePicker(context);
-                          //   },
+                        Container(
+                          child: nutriscoreType[nutriscore],
+                          width: 100,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(left: 8.0),
-                        //   child: Text(
-                        //       "Datum: ${DateFormat('dd/MM/yyyy').format(_eattime).toString()}"),
-                        // ),
-
-                        DropdownButton(
-                          hint: Text('Breakfast'),
-                          value: categoryChoice,
-                          onChanged: (newValue) {
-                            setState(() {
-                              categoryChoice = newValue;
-                            });
-                            print(categoryChoice);
-                          },
-                          items: categoryItem.map((valueItem) {
-                            return DropdownMenuItem(
-                              value: valueItem,
-                              child: Text(valueItem),
-                            );
-                          }).toList(),
-                        ),
-                        RaisedButton(
-                          child: Text(AppLocalizations.of(context).savetext),
-                          onPressed: () {
-                            //  widget.trip.startDate = _startDate;
-                            // widget.trip.endDate = _endDate;
-                            widget.trip.kcal = kcal;
-                            widget.trip.co2 = co2;
-                            widget.trip.carbs = koolhy;
-                            widget.trip.protein = protein;
-                            widget.trip.fat = fat;
-                            widget.trip.sugars = sugars;
-                            widget.trip.dietaryfiber = dietaryfiber;
-
-                            widget.trip.saturatedfat = saturatedfat;
-                            widget.trip.eatDate = _eattime;
-                            widget.trip.amount = (_sizeController.text == "")
-                                ? 0
-                                : double.parse(_sizeController.text);
-                            widget.trip.categorie = categoryChoice;
-                            widget.trip.plantbased = plantbased;
-                            widget.trip.nutriscore = nutriscore;
-                            widget.trip.ecoscore = ecoscore;
-                            widget.trip.amountUnit =
-                                _portionUnitController.text;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      NewFoodSummaryView(trip: widget.trip)),
-                            );
-                          },
+                        Container(
+                          alignment: Alignment.center,
+                          child: ecoscoreType[ecoscore],
+                          width: 100,
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        child: nutriscoreType[nutriscore],
-                        width: 100,
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: ecoscoreType[ecoscore],
-                        width: 100,
-                      ),
-                    ],
-                  ),
 
-                  TextButton(
-                    child: Text(
-                      AppLocalizations.of(context).macronutrients,
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    TextButton(
+                      child: Text(
+                        AppLocalizations.of(context).macronutrients,
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      onPressed: null,
                     ),
-                    onPressed: null,
-                  ),
 
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: Table(
-                          columnWidths: {
-                            0: FractionColumnWidth(0.40),
-                            1: FractionColumnWidth(0.45),
-                          },
-                          textBaseline: TextBaseline.alphabetic,
-                          defaultVerticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                          children: [
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  AppLocalizations.of(context).energy,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          child: Table(
+                            columnWidths: {
+                              0: FractionColumnWidth(0.40),
+                              1: FractionColumnWidth(0.45),
+                            },
+                            textBaseline: TextBaseline.alphabetic,
+                            defaultVerticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            children: [
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    AppLocalizations.of(context).energy,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "${kcal.toStringAsFixed(1)} kcal",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  'Co²',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                Text(
+                                  "${kcal.toStringAsFixed(1)} kcal",
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                              ),
-                              Text(
-                                "${co2.toStringAsFixed(1)} kg/co²",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  AppLocalizations.of(context).carbsfulltext,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                              ]),
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    'Co²',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "${koolhy.toStringAsFixed(1)} g",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  AppLocalizations.of(context).proteinfulltext,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                Text(
+                                  "${co2.toStringAsFixed(1)} kg/co²",
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                              ),
-                              Text(
-                                "${protein.toStringAsFixed(1)} g",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  AppLocalizations.of(context).fatstext,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                              ]),
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    AppLocalizations.of(context).carbsfulltext,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "${fat.toStringAsFixed(1)} g",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  AppLocalizations.of(context).saturatedfats,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                Text(
+                                  "${koolhy.toStringAsFixed(1)} g",
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                              ),
-                              Text(
-                                "${saturatedfat.toStringAsFixed(1)} g",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  AppLocalizations.of(context).sugartext,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                              ]),
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    AppLocalizations.of(context)
+                                        .proteinfulltext,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "${sugars.toStringAsFixed(1)} g",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  AppLocalizations.of(context).fiberstext,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                Text(
+                                  "${protein.toStringAsFixed(1)} g",
+                                  style: TextStyle(fontSize: 18),
                                 ),
-                              ),
-                              Text(
-                                "${dietaryfiber.toStringAsFixed(1)} g",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                            TableRow(children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  'Plantbased',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                              ]),
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    AppLocalizations.of(context).fatstext,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "$plantbased",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ]),
-                          ],
+                                Text(
+                                  "${fat.toStringAsFixed(1)} g",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ]),
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    AppLocalizations.of(context).saturatedfats,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  "${saturatedfat.toStringAsFixed(1)} g",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ]),
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    AppLocalizations.of(context).sugartext,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  "${sugars.toStringAsFixed(1)} g",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ]),
+                              TableRow(children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Text(
+                                    AppLocalizations.of(context).fiberstext,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  "${dietaryfiber.toStringAsFixed(1)} g",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ]),
+                              // TableRow(children: [
+                              //   Padding(
+                              //     padding:
+                              //         const EdgeInsets.symmetric(vertical: 10.0),
+                              //     child: Text(
+                              //       'Plantbased',
+                              //       style: TextStyle(
+                              //           fontSize: 18,
+                              //           fontWeight: FontWeight.bold),
+                              //     ),
+                              //   ),
+                              //   Text(
+                              //     "$plantbased",
+                              //     style: TextStyle(fontSize: 18),
+                              //   ),
+                              // ]),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       "Calories ${kcal.toStringAsFixed(1)}",
-                  //       style: new TextStyle(fontSize: 16.0),
-                  //     ),
-                  //     Text(
-                  //       "Co2 ${co2.toStringAsFixed(2)}",
-                  //       style: new TextStyle(fontSize: 16.0),
-                  //     ),
-                  //     Text(
-                  //       "Carbs ${koolhy.toStringAsFixed(1)}",
-                  //       style: new TextStyle(fontSize: 16.0),
-                  //     ),
-                  //     Text(
-                  //       "Protein ${protein.toStringAsFixed(1)}",
-                  //       style: new TextStyle(fontSize: 16.0),
-                  //     ),
-                  //   ],
-                  // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       "Calories ${kcal.toStringAsFixed(1)}",
+                    //       style: new TextStyle(fontSize: 16.0),
+                    //     ),
+                    //     Text(
+                    //       "Co2 ${co2.toStringAsFixed(2)}",
+                    //       style: new TextStyle(fontSize: 16.0),
+                    //     ),
+                    //     Text(
+                    //       "Carbs ${koolhy.toStringAsFixed(1)}",
+                    //       style: new TextStyle(fontSize: 16.0),
+                    //     ),
+                    //     Text(
+                    //       "Protein ${protein.toStringAsFixed(1)}",
+                    //       style: new TextStyle(fontSize: 16.0),
+                    //     ),
+                    //   ],
+                    // ),
 
-                  // Text(
-                  //   "Fat ${fat.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "Saturatedfat ${saturatedfat.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "Sugars ${sugars.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "Dietary Fiver ${dietaryfiber.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "plantbased $plantbased",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "nutriscore $nutriscore",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
+                    // Text(
+                    //   "Fat ${fat.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "Saturatedfat ${saturatedfat.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "Sugars ${sugars.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "Dietary Fiver ${dietaryfiber.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "plantbased $plantbased",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "nutriscore $nutriscore",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
 
-                  // VANAFFFF HIERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRBOVEN IS GOED
-// ImageIcon(nutriscore.containsKey(trip.plantbased)
-//                              ? nutriscoreimage[trip.plantbased]
-//                              : nutriscoreimage["n"],)
-                  // child: (plantType.containsKey(trip.plantbased))
-                  //           ? plantType[trip.plantbased]
-                  //           : plantType["n"],
+                    // VANAFFFF HIERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRBOVEN IS GOED
+                    // ImageIcon(nutriscore.containsKey(trip.plantbased)
+                    //                              ? nutriscoreimage[trip.plantbased]
+                    //                              : nutriscoreimage["n"],)
+                    // child: (plantType.containsKey(trip.plantbased))
+                    //           ? plantType[trip.plantbased]
+                    //           : plantType["n"],
 
-                  // Text(
-                  //   "salt ${salt.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "alcohol ${alcohol.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "natrium ${natrium.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "kalium ${kalium.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "calcium ${calcium.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "magnesium ${magnesium.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "iron ${iron.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "selenium ${selenium.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "zink ${zink.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitA ${vitA.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitB ${vitB.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitC ${vitC.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitE ${vitE.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitB1 ${vitB1.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitB2 ${vitB2.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitB6 ${vitB6.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitB12 ${vitB12.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "vitB6 ${vitB6.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "foliumzuur ${foliumzuur.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "niacine ${niacine.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "jodium ${jodium.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                  // Text(
-                  //   "fosfor ${fosfor.toStringAsFixed(1)}",
-                  //   style: new TextStyle(fontSize: 16.0),
-                  // ),
-                ]),
-              );
-            }),
+                    // Text(
+                    //   "salt ${salt.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "alcohol ${alcohol.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "natrium ${natrium.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "kalium ${kalium.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "calcium ${calcium.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "magnesium ${magnesium.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "iron ${iron.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "selenium ${selenium.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "zink ${zink.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitA ${vitA.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitB ${vitB.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitC ${vitC.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitE ${vitE.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitB1 ${vitB1.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitB2 ${vitB2.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitB6 ${vitB6.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitB12 ${vitB12.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "vitB6 ${vitB6.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "foliumzuur ${foliumzuur.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "niacine ${niacine.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "jodium ${jodium.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                    // Text(
+                    //   "fosfor ${fosfor.toStringAsFixed(1)}",
+                    //   style: new TextStyle(fontSize: 16.0),
+                    // ),
+                  ]),
+                );
+              }),
+        ),
       ),
     );
   }

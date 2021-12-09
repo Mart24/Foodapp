@@ -41,62 +41,66 @@ class _CompareSearch1State extends State<CompareSearch1> {
   String scanResult;
 
   Widget myWidget() {
-    return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //     Text(scanResult == null ? 'Scan a code!' : 'Scan Result : $scanResult'),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                autofocus: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: AppLocalizations.of(context).typesomething),
-                onChanged: (value) {
-                  keyword = value;
-                  setState(() {});
-                },
+    return GestureDetector(
+      child: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              //     Text(scanResult == null ? 'Scan a code!' : 'Scan Result : $scanResult'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: AppLocalizations.of(context).typesomething),
+                  onChanged: (value) {
+                    keyword = value;
+                    setState(() {});
+                  },
+                ),
               ),
-            ),
-            Container(
-              height: 800,
-              child: FutureBuilder<List<FooddataSQLJSON>>(
-                future: dbService.searchGFooddata(keyword),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData)
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(snapshot.data[index].foodname),
-                          subtitle: Text(snapshot.data[index].brand),
-                          // Text(snapshot.data[index].productid.toString()),
-                          // trailing: Text(snapshot.data[index].productid.toString()),
-                          trailing: Text(
-                              '${snapshot.data[index].kcal.toString()} Kcal'),
-                          onTap: () {
-                            Trip t = Trip.empty();
-                            t.name = snapshot.data[index].foodname;
-                            t.id = snapshot.data[index].productid;
-                            // push the amount value to the summary page
+              Container(
+                height: 800,
+                child: FutureBuilder<List<FooddataSQLJSON>>(
+                  future: dbService.searchGFooddata(keyword),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData)
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    return ListView.builder(
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(snapshot.data[index].foodname),
+                            subtitle: Text(snapshot.data[index].brand),
+                            // Text(snapshot.data[index].productid.toString()),
+                            // trailing: Text(snapshot.data[index].productid.toString()),
+                            trailing: Text(
+                                '${snapshot.data[index].kcal.toString()} Kcal'),
+                            onTap: () {
+                              Trip t = Trip.empty();
+                              t.name = snapshot.data[index].foodname;
+                              t.id = snapshot.data[index].productid;
+                              // push the amount value to the summary page
 
-                            print('product1 tapped: ${t.name} ${t.id}');
-                            // (ProductOneCubit.instance(context))
-                            //     .deleteChosenItem();
-                            (ProductOneCubit.instance(context))
-                                .searchedItemChoose(t);
-                          },
-                        );
-                      });
-                },
+                              print('product1 tapped: ${t.name} ${t.id}');
+                              // (ProductOneCubit.instance(context))
+                              //     .deleteChosenItem();
+                              (ProductOneCubit.instance(context))
+                                  .searchedItemChoose(t);
+                            },
+                          );
+                        });
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -219,6 +223,8 @@ class _CompareSearch2State extends State<CompareSearch2> {
                       child: CircularProgressIndicator(),
                     );
                   return ListView.builder(
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
                         return ListTile(

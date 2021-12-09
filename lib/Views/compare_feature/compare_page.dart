@@ -95,28 +95,31 @@ class _ComparePageState extends State<ComparePage> {
         margin: EdgeInsets.all(2),
         // height: double.infinity,
         // color: Colors.black,
-        child: ListView(controller: scrollController, children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ProductOne(
-                    scrollController: scrollController,
-                    newTrip: newTrip,
-                  ),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  ProductTwo(
-                    scrollController: scrollController,
-                    newTrip: newTrip,
-                  ),
-                ]),
-          ),
-        ]),
+        child: ListView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            controller: scrollController,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height,
+                child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ProductOne(
+                        scrollController: scrollController,
+                        newTrip: newTrip,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      ProductTwo(
+                        scrollController: scrollController,
+                        newTrip: newTrip,
+                      ),
+                    ]),
+              ),
+            ]),
       ),
     );
   }

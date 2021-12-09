@@ -176,6 +176,7 @@ class Trip {
     kcal = snapshotAsMap['kcal'];
     co2 = snapshotAsMap['co2'];
     carbs = snapshotAsMap['carbs'];
+    fat = snapshotAsMap['fat'];
     protein = snapshotAsMap['protein'];
     nutriscore = snapshotAsMap['nutriscore'];
     ecoscore = snapshotAsMap['ecoscore'];

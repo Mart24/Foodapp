@@ -9,8 +9,8 @@ import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Widgets/custom_button.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:food_app/shared/goal_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// import 'package:food_app/shared/dairy_cubit.dart';
 import 'package:intl/intl.dart';
 
 class GoalsAddScreen extends StatefulWidget {
@@ -35,7 +35,9 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
       key: _formKey,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Goals add screen'),
+          title: Text(
+            AppLocalizations.of(context).titlegoalsaddcsreen,
+          ),
           backgroundColor: kPrimaryColor,
         ),
         body: Column(
@@ -104,7 +106,8 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                                       color: Colors.white,
                                     ),
                                     label: Text(
-                                      'Add Image',
+                                      AppLocalizations.of(context)
+                                          .buttonaddimage,
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () {
@@ -118,7 +121,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                       Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
-                          'Title',
+                          AppLocalizations.of(context).title,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -143,7 +146,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                         padding: const EdgeInsets.all(5.0),
                         child: Row(children: [
                           Text(
-                            'Co2 Goal',
+                            AppLocalizations.of(context).co2goal,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -184,7 +187,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                             width: 10,
                           ),
                           Text(
-                            'kg/Co2',
+                            'kg/CO₂',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -222,7 +225,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                             );
                           },
                           child: Text(
-                            'Start Date',
+                            AppLocalizations.of(context).startdate,
                             style: TextStyle(
                                 //color: Theme.of(context).primaryColor,
                                 // color: Colors.white,
@@ -276,7 +279,7 @@ class _GoalsAddScreenState extends State<GoalsAddScreen> {
                   print('not valid');
                 }
               },
-              text: Text('Save Goal'),
+              text: Text(AppLocalizations.of(context).buttonsavegoal),
             )
           ],
         ),

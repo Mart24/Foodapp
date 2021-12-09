@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Iconwidget extends StatelessWidget {
-  final IconData icon;
+  final IconData faIcon;
   final Color color;
 
   const Iconwidget({
     Key key,
-    this.icon,
+    this.faIcon,
     this.color,
   }) : super(key: key);
 
@@ -17,6 +18,6 @@ class Iconwidget extends StatelessWidget {
           shape: BoxShape.circle,
           color: color,
         ),
-        child: Icon(icon, color: Colors.white),
+        child: Icon(faIcon, color: Colors.white),
       );
 }

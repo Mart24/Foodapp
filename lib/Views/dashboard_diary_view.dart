@@ -97,11 +97,15 @@ class _HomePageState extends State<HomePage> {
                       double calGoal = cubit.calGoal;
                       double saveGoal = cubit.saveco2Goal;
                       double kCalSum = cubit.kCalSum;
+
                       double circularPercent = diff / calGoal;
                       if (circularPercent > 1) {
                         circularPercent = 1;
                       }
                       double diff2 = cubit.co2Sum;
+                      double benzine = diff2 * (1000 / 120);
+                      double douchen = diff2 * 12;
+                      double charging = diff2 * 127;
                       double barPercent = diff2 / saveGoal;
                       if (barPercent > 1) {
                         barPercent = 1;
@@ -125,7 +129,12 @@ class _HomePageState extends State<HomePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            ImpactButton(),
+                            ImpactButton(
+                              cubit: cubit,
+                              benzine: benzine,
+                              douchen: douchen,
+                              charging: charging,
+                            ),
                             DetailsButton(),
                           ],
                         ),
@@ -768,7 +777,16 @@ class DetailsButton extends StatelessWidget {
 class ImpactButton extends StatelessWidget {
   const ImpactButton({
     Key key,
+    @required this.cubit,
+    @required this.benzine,
+    @required this.douchen,
+    @required this.charging,
   }) : super(key: key);
+
+  final DairyCubit cubit;
+  final double benzine;
+  final double douchen;
+  final double charging;
 
   @override
   Widget build(BuildContext context) {
@@ -780,8 +798,8 @@ class ImpactButton extends StatelessWidget {
               return CustomDialogBox(
                 title: "Jouw klimaat impact",
                 descriptions:
-                    "Hii all this is a custom dialog in flutter and  you will be use in your flutter applications",
-                text: "Yes",
+                    "Jouw klimaat impact is ${cubit.co2Sum.toStringAsFixed(1)} kg/CO₂. Dat staat gelijk aan ${benzine.toStringAsFixed(1)} km autorijden, ${douchen.toStringAsFixed(1)} minuten douchen of ${charging.toStringAsFixed(1)} keer je mobiel opladen",
+                text: "Sluit",
               );
             });
       },

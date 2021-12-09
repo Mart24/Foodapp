@@ -12,7 +12,7 @@ class AppInformationPage extends StatelessWidget {
             title: AppLocalizations.of(context).appinformation,
             subtitle: 'Privacy, Licenses etc.',
             leading: Iconwidget(
-              icon: Icons.smartphone,
+              faIcon: Icons.smartphone,
               color: Colors.green,
             ),
             child: SettingsScreen(
@@ -29,13 +29,13 @@ class AppInformationPage extends StatelessWidget {
 Widget buildPrivacyAgreement() => SimpleSettingsTile(
       title: 'Privacy Policy',
       subtitle: '',
-      leading: Iconwidget(icon: Icons.security, color: Colors.purple),
+      leading: Iconwidget(faIcon: Icons.security, color: Colors.purple),
       onTap: () => Utils.openLink(url: 'https://eatmission.app'),
     );
 Widget buildLicensesPage(context) => SimpleSettingsTile(
       title: 'Licenses overview',
       subtitle: '',
-      leading: Iconwidget(icon: Icons.list, color: Colors.purple),
+      leading: Iconwidget(faIcon: Icons.list, color: Colors.purple),
       onTap: () =>
           showLicensePage(context: context, applicationName: "Eatmission"),
     );

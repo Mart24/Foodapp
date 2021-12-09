@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/shared/app_cubit.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GraphsScreen extends StatefulWidget {
   @override
@@ -69,12 +70,12 @@ class _GraphsScreenState extends State<GraphsScreen>
               borderRadius: BorderRadius.circular(5),
             ),
             controller: tabController,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             labelColor: Colors.white,
             tabs: [
               Text('1 Week'),
-              Text('1 Month'),
-              Text('3 Months'),
+              Text('1 ${AppLocalizations.of(context).month}'),
+              Text('3 ${AppLocalizations.of(context).months}'),
             ],
           ),
         ),
@@ -121,24 +122,25 @@ class OneWeekGraph extends StatelessWidget {
                   tooltipBehavior: TooltipBehavior(enable: true),
                   primaryYAxis: NumericAxis(
                       title: AxisTitle(
-                          text: 'Calories',
+                          text: AppLocalizations.of(context).calories,
                           textStyle: TextStyle(
                               color: Color.fromRGBO(75, 135, 185, 1))),
                       labelAlignment: LabelAlignment.start),
                   enableAxisAnimation: true,
+
                   // adding multiple axis
                   axes: <ChartAxis>[
                     NumericAxis(
                         name: 'yAxis',
                         opposedPosition: true,
                         title: AxisTitle(
-                            text: 'kg-Co2',
+                            text: 'kg-CO₂',
                             textStyle: TextStyle(
                                 color: Color.fromRGBO(192, 108, 132, 1))))
                   ],
                   series: <LineSeries<double, DateTime>>[
                     LineSeries<double, DateTime>(
-                        name: 'Calories',
+                        name: AppLocalizations.of(context).calories,
                         dataSource: appCubit.oneWeekCals,
                         xValueMapper: (double calories, int index) {
                           return DateTime.parse(
@@ -150,7 +152,7 @@ class OneWeekGraph extends StatelessWidget {
                         },
                         yValueMapper: (double calories, int index) => calories),
                     LineSeries<double, DateTime>(
-                        name: 'Co2',
+                        name: 'CO₂',
                         dataSource: appCubit.oneWeekCo2,
                         xValueMapper: (double co2, int index) {
                           return DateTime.parse(
@@ -230,7 +232,7 @@ class OneMonthGraph extends StatelessWidget {
                         },
                         yValueMapper: (double calories, int index) => calories),
                     LineSeries<double, DateTime>(
-                      name: 'Co2',
+                      name: 'kg/CO₂',
                       dataSource: appCubit.oneMonthCo2,
                       xValueMapper: (double co2, int index) {
                         return DateTime.parse(

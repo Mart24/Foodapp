@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/Views/constants.dart';
 import 'package:food_app/Views/goals/graphs_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'goals_screen.dart';
 
@@ -47,8 +48,8 @@ class _GoalsHomeState extends State<GoalsHome>
               ),
               labelColor: Colors.white,
               tabs: [
-                Tab(child: Text('Goals')),
-                Tab(child: Text('Graphs')),
+                Tab(child: Text(AppLocalizations.of(context).goals)),
+                Tab(child: Text(AppLocalizations.of(context).graphs)),
               ],
               onTap: (index) {
                 setState(() {

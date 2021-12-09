@@ -14,7 +14,7 @@ class GoalSettingsPage extends StatelessWidget {
         title: AppLocalizations.of(context).goalsettings,
         subtitle: AppLocalizations.of(context).goalsettingssubtitle,
         leading: Iconwidget(
-          icon: Icons.whatshot,
+          faIcon: Icons.whatshot,
           color: Colors.green,
         ),
         child: SettingsScreen(

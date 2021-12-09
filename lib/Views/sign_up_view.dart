@@ -89,6 +89,7 @@ class _SignUpViewState extends State<SignUpView> {
     final _height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -104,24 +105,30 @@ class _SignUpViewState extends State<SignUpView> {
             height: _height,
             width: _width,
             child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: _height * 0.025),
-                    showAlert(),
-                    SizedBox(height: _height * 0.025),
-                    buildHeaderText(),
-                    SizedBox(height: _height * 0.05),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          children: buildInputs() + buildButtons(),
+              child: GestureDetector(
+                onTap: () {
+                  print('Clicked outside');
+                  FocusScope.of(context).unfocus();
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: _height * 0.025),
+                      showAlert(),
+                      SizedBox(height: _height * 0.025),
+                      buildHeaderText(),
+                      SizedBox(height: _height * 0.05),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            children: buildInputs() + buildButtons(),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

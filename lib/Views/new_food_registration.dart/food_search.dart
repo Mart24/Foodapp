@@ -87,63 +87,71 @@ class _NewFoodIntakeState extends State<NewFoodIntake> {
         },
         builder: (context, state) {
           return SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  //     Text(scanResult == null ? 'Scan a code!' : 'Scan Result : $scanResult'),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      autofocus: true,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText:
-                              AppLocalizations.of(context).typesomething),
-                      onChanged: (value) {
-                        keyword = value;
-                        setState(() {});
-                      },
+            child: GestureDetector(
+              onTap: () {
+                print('Clicked outside');
+                FocusScope.of(context).unfocus();
+              },
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    //     Text(scanResult == null ? 'Scan a code!' : 'Scan Result : $scanResult'),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        autofocus: true,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText:
+                                AppLocalizations.of(context).typesomething),
+                        onChanged: (value) {
+                          keyword = value;
+                          setState(() {});
+                        },
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 800,
-                    child: FutureBuilder<List<FooddataSQLJSON>>(
-                      future: dbService.searchGFooddata(keyword),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData)
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        return ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(snapshot.data[index].foodname),
-                                subtitle: Text(
-                                    '${snapshot.data[index].category}, ${snapshot.data[index].brand}'),
-                                // Text(snapshot.data[index].productid.toString()),
-                                trailing: Text(
-                                    '${snapshot.data[index].kcal.toString()} Kcal'),
-                                onTap: () {
-                                  widget.trip.name =
-                                      snapshot.data[index].foodname;
-                                  widget.trip.id =
-                                      snapshot.data[index].productid;
-                                  // push the amount value to the summary page
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            FoodDate(trip: widget.trip)),
-                                  );
-                                },
-                              );
-                            });
-                      },
+                    Container(
+                      height: 800,
+                      child: FutureBuilder<List<FooddataSQLJSON>>(
+                        future: dbService.searchGFooddata(keyword),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData)
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          return ListView.builder(
+                              keyboardDismissBehavior:
+                                  ScrollViewKeyboardDismissBehavior.onDrag,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text(snapshot.data[index].foodname),
+                                  subtitle: Text(
+                                      '${snapshot.data[index].category}, ${snapshot.data[index].brand}'),
+                                  // Text(snapshot.data[index].productid.toString()),
+                                  trailing: Text(
+                                      '${snapshot.data[index].kcal.toString()} Kcal'),
+                                  onTap: () {
+                                    widget.trip.name =
+                                        snapshot.data[index].foodname;
+                                    widget.trip.id =
+                                        snapshot.data[index].productid;
+                                    // push the amount value to the summary page
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              FoodDate(trip: widget.trip)),
+                                    );
+                                  },
+                                );
+                              });
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

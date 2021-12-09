@@ -15,7 +15,7 @@
     "@introtexteone": {
       "description": "The second title in the introduction screen"
      },
-    "introtexttwo": "A lot of CO² emissions come for example from the production of meat and dairy products.",
+    "introtexttwo": "A lot of CO₂ emissions come for example from the production of meat and dairy products.",
     "@introtexteone": {
       "description": "The second text in the introduction screen"
     },
@@ -71,7 +71,7 @@
     "@resetpassword": {
       "description": "reset password text"
     },
-    "eatentext": "Eaten",
+    "eatentext": "Eaten    ",
     "carbstext": " Carbs ",
     "proteintext": " Proteins ",
     "fatstext": " Fats ",
@@ -92,6 +92,7 @@
     "energy": "Energy",
     "carbsfulltext": "Carbohydrates",
     "proteinfulltext": "Proteins",
+    "fatsfulltext": "Fats",
     "saturatedfats": "Saturated Fats",
     "sugartext": "Sugars",
     "fiberstext": "Fibers",
@@ -121,21 +122,21 @@
     "goal1atext": "Think of a Goal",
     "goal1btext": "It can be anything, a train ticket, clothing basket, car ride etc.",
     "goal2atext": "Calculate Goal",
-    "goal2btext": "Search online for the amount of CO² it costs",
+    "goal2btext": "Search online for the amount of CO₂ it costs",
     "goal3atext": "Fill goal in this App",
-    "goal3btext": "Stay below 300 kg/Co² for a reachable goal",
+    "goal3btext": "Stay below 300 kg/CO₂ for a reachable goal",
     "goal4atext": "Start eating sustainable",
     "goal4btext": "Fill in your starting data. The more sustainable your diet, the more you save!",
-    "goalheaderntext": "Set a Co² goal",
-    "goalheader2ntext": "Each day below the 5kg/Co² is saved",
-    "goalbuttontext": "Set a Co² Goal",
+    "goalheaderntext": "Set a CO₂ goal",
+    "goalheader2ntext": "Each day below the 5kg/CO₂ is saved",
+    "goalbuttontext": "Set a CO₂ Goal",
 
 
     "comparevietheadertext": "Compare products",
 
     "yourco2goal": "Your CO₂ save goal",
-    "saved": "Saved",
-    "goal": "Goal",
+    "saved": "Saved ",
+    "goal": "Goal ",
     "thisweek": "This week ",
     "youhaveeaten": "You have eaten ",
     "yousaved": "You saved ",
@@ -148,6 +149,19 @@
     "questiongoal" : "Are you sure you want to delete your goal",
     "no": "No",
     "yes": "Yes",
+    "titlegoalsaddcsreen": "Goals add screen",
+    "title": "Title",
+    "co2goal": "CO₂ Goal",
+    "startdate": "Start Date",
+    "buttonsavegoal": "Save Goal",
+    "buttonaddimage": "Add image",
+
+    "goals": "Goals",
+    "graphs": "Graphs",
+    "month": "Month",
+    "months": "Months",
+    "calories": "Calories",
+
 
     "darkmodetext1": "Better for your eyes and battery",
     "darkmodetext2": "Let there be light",
